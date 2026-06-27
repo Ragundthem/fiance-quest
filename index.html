@@ -337,6 +337,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
       </optgroup>
     </select>
   </div>
+  <div class="fg"><label class="fl">Card / Account (updates balance automatically)</label><select class="fs" id="t-acct"><option value="">None</option></select></div>
   <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('txn')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveTxn()">Add ✓</button></div>
 </div></div>
 
@@ -731,8 +732,79 @@ function setTxnType(type){
   if(eBtn){eBtn.className='btn '+(type==='expense'?'btn-r':'btn-s');eBtn.style.width='100%';}
   if(iBtn){iBtn.className='btn '+(type==='income'?'btn-g':'btn-s');iBtn.style.width='100%';}
 }
-function openAddTxn(){document.getElementById('t-date').value=new Date().toISOString().split('T')[0];document.getElementById('t-amt').value='';document.getElementById('t-desc').value='';setTxnType('expense');openM('txn');}
-function saveTxn(){const desc=document.getElementById('t-desc').value.trim();const amt=parseFloat(document.getElementById('t-amt').value);const date=document.getElementById('t-date').value||new Date().toISOString().split('T')[0];const cat=document.getElementById('t-cat').value;if(!desc||isNaN(amt)||amt<=0){toast('Fill in description and amount','err');return;}S.transactions.push({id:Date.now(),desc,amt,type:_txnType,cat,date});save();closeM('txn');render();toast((_txnType==='income'?'💵 +':'💸 -')+'$'+amt.toFixed(2)+' logged!');}
+function openAddTxn(){
+  document.getElementById('t-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('t-amt').value='';
+  document.getElementById('t-desc').value='';
+  // Populate account dropdown
+  var sel=document.getElementById('t-acct');
+  sel.innerHTML='<option value="">None</option>';
+  S.accounts.forEach(function(a){
+    var opt=document.createElement('option');
+    opt.value=a.id;
+    opt.textContent=a.icon+' '+a.name+' ('+a.type+')';
+    sel.appendChild(opt);
+  });
+  // Also list debts as card options
+  S.debts.filter(function(d){return !d.cleared;}).forEach(function(d){
+    var opt=document.createElement('option');
+    opt.value='debt_'+d.id;
+    opt.textContent='💳 '+d.name+' (card — updates balance)';
+    sel.appendChild(opt);
+  });
+  setTxnType('expense');
+  openM('txn');
+}
+function saveTxn(){
+  var desc=document.getElementById('t-desc').value.trim();
+  var amt=parseFloat(document.getElementById('t-amt').value);
+  var date=document.getElementById('t-date').value||new Date().toISOString().split('T')[0];
+  var cat=document.getElementById('t-cat').value;
+  var acctVal=document.getElementById('t-acct').value;
+  if(!desc||isNaN(amt)||amt<=0){toast('Fill in description and amount','err');return;}
+
+  var acctId=null;
+  var debtId=null;
+  if(acctVal.indexOf('debt_')===0){
+    debtId=parseInt(acctVal.replace('debt_',''));
+  } else if(acctVal){
+    acctId=parseInt(acctVal);
+  }
+
+  S.transactions.push({id:Date.now(),desc:desc,amt:amt,type:_txnType,cat:cat,date:date,acctId:acctId,debtId:debtId});
+
+  // Update account balance
+  if(acctId){
+    var a=S.accounts.find(function(x){return x.id===acctId;});
+    if(a){
+      if(_txnType==='income') a.bal=+(a.bal+amt).toFixed(2);
+      else a.bal=+(a.bal-amt).toFixed(2);
+    }
+  }
+
+  // Update debt balance if expense charged to a card
+  if(debtId&&_txnType==='expense'){
+    var d=S.debts.find(function(x){return x.id===debtId;});
+    if(d){
+      d.bal=+(d.bal+amt).toFixed(2);
+      if(d.bal>d.orig) d.orig=d.bal;
+      d.cleared=false;
+      toast('💳 $'+amt.toFixed(2)+' charged to '+d.name+' — balance updated!');
+    }
+  } else if(debtId&&_txnType==='income'){
+    // Paying off a card via income entry
+    var d=S.debts.find(function(x){return x.id===debtId;});
+    if(d){
+      d.bal=Math.max(0,+(d.bal-amt).toFixed(2));
+      if(d.bal===0) d.cleared=true;
+      toast('💸 $'+amt.toFixed(2)+' payment to '+d.name+' — balance updated!');
+    }
+  } else {
+    toast((_txnType==='income'?'💵 +':'💸 -')+'$'+amt.toFixed(2)+' logged!');
+  }
+
+  save();closeM('txn');render();
+}
 function delTxn(id){if(!confirm('Delete this transaction?'))return;S.transactions=S.transactions.filter(x=>x.id!==id);save();render();toast('🗑 Transaction removed');}
 function saveAcct(){const name=document.getElementById('a-name').value.trim();const type=document.getElementById('a-type').value;const bal=parseFloat(document.getElementById('a-bal').value)||0;const icon=document.getElementById('a-icon').value||'🏦';if(!name){toast('Enter account name','err');return;}S.accounts.push({id:Date.now(),name,type,bal,icon});save();closeM('acct');render();toast('🏦 '+name+' added!');['a-name','a-bal','a-icon'].forEach(id=>document.getElementById(id).value='');}
 function openUpdAcct(id){const a=S.accounts.find(x=>x.id===id);_updAcctId=id;document.getElementById('upd-acct-title').textContent='✏️ Update — '+a.name;document.getElementById('ua-bal').value=a.bal;openM('upd-acct');}
