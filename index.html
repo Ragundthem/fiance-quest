@@ -544,6 +544,43 @@ function doChangePin(){
 document.addEventListener('touchstart',()=>{if(document.getElementById('app').style.display!=='none')resetLock();},{passive:true});
 document.addEventListener('click',()=>{if(document.getElementById('app').style.display!=='none')resetLock();});
 
+
+// ── SYNC HELPERS — keep debts and accounts in sync ──
+function syncDebtToAcct(debtId){
+  // When a debt balance changes, find matching account and update it
+  var d=S.debts.find(function(x){return x.id===debtId;});
+  if(!d)return;
+  // Match by name (case-insensitive partial match)
+  var a=S.accounts.find(function(x){
+    return x.type==='credit'&&(
+      x.name.toLowerCase().indexOf(d.name.toLowerCase().split(' ').pop())!==-1||
+      d.name.toLowerCase().indexOf(x.name.toLowerCase().split(' ').pop())!==-1
+    );
+  });
+  if(a){
+    // Credit card accounts store balance as negative (debt)
+    a.bal=+(- d.bal).toFixed(2);
+  }
+}
+function syncAcctToDebt(acctId){
+  // When an account balance changes, find matching debt and update it
+  var a=S.accounts.find(function(x){return x.id===acctId;});
+  if(!a||a.type!=='credit')return;
+  var d=S.debts.find(function(x){
+    return !x.cleared&&(
+      x.name.toLowerCase().indexOf(a.name.toLowerCase().split(' ').pop())!==-1||
+      a.name.toLowerCase().indexOf(x.name.toLowerCase().split(' ').pop())!==-1
+    );
+  });
+  if(d){
+    // Account balance is negative for credit cards, debt balance is positive
+    var newBal=Math.abs(a.bal);
+    d.bal=+newBal.toFixed(2);
+    if(newBal>d.orig)d.orig=+newBal.toFixed(2);
+    d.cleared=(newBal===0);
+  }
+}
+
 // ── NAVIGATION ──
 function go(tab){
   _tab=tab;
@@ -668,12 +705,32 @@ function saveDebt(){
   if(_editDebtId!==null){const d=S.debts.find(x=>x.id===_editDebtId);Object.assign(d,{name,bal,apr,close,due,pri});if(bal>0)d.cleared=false;toast('✏️ '+name+' updated!');}
   else{S.debts.push({id:Date.now(),name,bal,orig:bal,apr,due,close,pri,cleared:false});toast('⚔️ Tracking: '+name);}
   save();closeM('debt');render();
+  var latestDebt=(_editDebtId!==null)?S.debts.find(function(x){return x.id===_editDebtId;}):S.debts[S.debts.length-1];
+  if(latestDebt)syncDebtToAcct(latestDebt.id);
 }
 function delDebt(id){const d=S.debts.find(x=>x.id===id);if(!confirm('Remove "'+d.name+'"?'))return;S.debts=S.debts.filter(x=>x.id!==id);save();render();toast('🗑 '+d.name+' removed');}
 function openPay(id){const d=S.debts.find(x=>x.id===id);_payDebtId=id;document.getElementById('pay-title').textContent='💸 Pay — '+d.name;document.getElementById('pay-bal').textContent='$'+d.bal.toFixed(2);document.getElementById('pay-amt').value='';openM('pay');}
-function doPayment(){const amt=parseFloat(document.getElementById('pay-amt').value);if(!amt||amt<=0){toast('Enter a valid amount','err');return;}const d=S.debts.find(x=>x.id===_payDebtId);d.bal=Math.max(0,+(d.bal-amt).toFixed(2));if(d.bal===0)d.cleared=true;save();closeM('pay');render();toast(d.cleared?'🔥 '+d.name+' DESTROYED!':'💸 $'+amt.toFixed(2)+' crushed!');}
+function doPayment(){
+  var amt=parseFloat(document.getElementById('pay-amt').value);
+  if(!amt||amt<=0){toast('Enter a valid amount','err');return;}
+  var d=S.debts.find(function(x){return x.id===_payDebtId;});
+  d.bal=Math.max(0,+(d.bal-amt).toFixed(2));
+  if(d.bal===0)d.cleared=true;
+  syncDebtToAcct(d.id);
+  save();closeM('pay');render();
+  toast(d.cleared?'🔥 '+d.name+' DESTROYED!':'💸 $'+amt.toFixed(2)+' crushed!');
+}
 function openCharge(id){const d=S.debts.find(x=>x.id===id);_chargeDebtId=id;document.getElementById('charge-title').textContent='📈 Update — '+d.name;document.getElementById('charge-bal').textContent='$'+d.bal.toFixed(2);document.getElementById('charge-amt').value='';openM('charge');}
-function doCharge(){const amt=parseFloat(document.getElementById('charge-amt').value);if(isNaN(amt)||amt<0){toast('Enter a valid amount','err');return;}const d=S.debts.find(x=>x.id===_chargeDebtId);const type=document.getElementById('charge-type').value;if(type==='set'){d.bal=amt;if(amt>d.orig)d.orig=amt;d.cleared=false;}else{d.bal=+(d.bal+amt).toFixed(2);if(d.bal>d.orig)d.orig=d.bal;d.cleared=false;}save();closeM('charge');render();toast('📈 Balance updated: $'+d.bal.toFixed(2));}
+function doCharge(){
+  var amt=parseFloat(document.getElementById('charge-amt').value);
+  if(isNaN(amt)||amt<0){toast('Enter a valid amount','err');return;}
+  var d=S.debts.find(function(x){return x.id===_chargeDebtId;});
+  var type=document.getElementById('charge-type').value;
+  if(type==='set'){d.bal=amt;if(amt>d.orig)d.orig=amt;d.cleared=false;}
+  else{d.bal=+(d.bal+amt).toFixed(2);if(d.bal>d.orig)d.orig=d.bal;d.cleared=false;}
+  syncDebtToAcct(d.id);
+  save();closeM('charge');render();toast('📈 Balance updated: $'+d.bal.toFixed(2));
+}
 
 // ── BILLS ──
 function rBills(){
@@ -808,7 +865,15 @@ function saveTxn(){
 function delTxn(id){if(!confirm('Delete this transaction?'))return;S.transactions=S.transactions.filter(x=>x.id!==id);save();render();toast('🗑 Transaction removed');}
 function saveAcct(){const name=document.getElementById('a-name').value.trim();const type=document.getElementById('a-type').value;const bal=parseFloat(document.getElementById('a-bal').value)||0;const icon=document.getElementById('a-icon').value||'🏦';if(!name){toast('Enter account name','err');return;}S.accounts.push({id:Date.now(),name,type,bal,icon});save();closeM('acct');render();toast('🏦 '+name+' added!');['a-name','a-bal','a-icon'].forEach(id=>document.getElementById(id).value='');}
 function openUpdAcct(id){const a=S.accounts.find(x=>x.id===id);_updAcctId=id;document.getElementById('upd-acct-title').textContent='✏️ Update — '+a.name;document.getElementById('ua-bal').value=a.bal;openM('upd-acct');}
-function doUpdAcct(){const bal=parseFloat(document.getElementById('ua-bal').value);if(isNaN(bal)){toast('Enter a valid balance','err');return;}const a=S.accounts.find(x=>x.id===_updAcctId);a.bal=bal;save();closeM('upd-acct');render();toast('✓ '+a.name+' updated');}
+function doUpdAcct(){
+  var bal=parseFloat(document.getElementById('ua-bal').value);
+  if(isNaN(bal)){toast('Enter a valid balance','err');return;}
+  var a=S.accounts.find(function(x){return x.id===_updAcctId;});
+  a.bal=bal;
+  syncAcctToDebt(_updAcctId);
+  save();closeM('upd-acct');render();
+  toast('✓ '+a.name+' updated — debt tab synced!');
+}
 function delAcct(id){const a=S.accounts.find(x=>x.id===id);if(!confirm('Remove "'+a.name+'"?'))return;S.accounts=S.accounts.filter(x=>x.id!==id);save();render();toast('🗑 Account removed');}
 
 // ── GOALS ──
