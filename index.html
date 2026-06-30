@@ -239,6 +239,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
     <button class="nb" id="nb-goals" onclick="go('goals')"><span class="ni">🎯</span><span class="nl">Goals</span></button>
     <button class="nb" id="nb-plan" onclick="go('plan')"><span class="ni">📋</span><span class="nl">Plan</span></button>
     <button class="nb" id="nb-strategy" onclick="go('strategy')"><span class="ni">🧠</span><span class="nl">Tips</span></button>
+    <button class="nb" id="nb-achievements" onclick="go('achievements')"><span class="ni">🏆</span><span class="nl">Awards</span></button>
   </nav>
 </div>
 
@@ -274,6 +275,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
     <div class="fg"><label class="fl">Due Day</label><input class="fi" id="d-due" type="number" placeholder="27" min="1" max="31"></div>
   </div>
   <div class="fg"><label class="fl">Priority (1 = kill first)</label><input class="fi" id="d-pri" type="number" placeholder="1" min="1"></div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Debt Type</label><select class="fs" id="d-type"><option value="credit_card">💳 Credit Card</option><option value="student_loan">🎓 Student Loan</option><option value="car_loan">🚗 Car Loan</option><option value="personal_loan">💵 Personal Loan</option><option value="medical">🏥 Medical Debt</option><option value="other">📦 Other</option></select></div>
+    <div class="fg"><label class="fl">Credit Limit ($) <span style="color:var(--dim);font-size:9px;">cards only</span></label><input class="fi" id="d-limit" type="number" placeholder="0" min="0"></div>
+  </div>
   <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('debt')">Cancel</button><button class="btn btn-r" style="flex:2" id="debt-btn" onclick="saveDebt()">Add Debt</button></div>
 </div></div>
 
@@ -356,7 +361,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 <div class="ov" id="m-upd-acct"><div class="modal">
   <div class="mhandle" onclick="closeM('upd-acct')"></div>
   <div class="mtitle" id="upd-acct-title">✏️ Update Balance</div>
-  <div class="fg"><label class="fl">New Balance ($)</label><input class="fi" id="ua-bal" type="number" placeholder="0.00" step="0.01"></div>
+  <div class="fg"><label class="fl">Balance Owed ($) — enter positive amount</label><input class="fi" id="ua-bal" type="number" placeholder="0.00" step="0.01" min="0"></div>
   <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('upd-acct')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="doUpdAcct()">Update ✓</button></div>
 </div></div>
 
@@ -408,9 +413,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 const DEF={
   name:'Ralique',income:4000,paycheck:2000,misc:500,creditScore:620,creditTarget:750,autoLock:true,lockMins:5,
   debts:[
-    {id:1,name:'Capital One Quicksilver',bal:500,orig:500,apr:27,due:27,close:2,pri:1,cleared:false},
-    {id:2,name:'Credit One',bal:462,orig:462,apr:27,due:28,close:4,pri:2,cleared:false},
-    {id:3,name:'Capital One Savor',bal:1007,orig:1007,apr:27,due:7,close:13,pri:3,cleared:false},
+    {id:1,name:'Capital One Quicksilver',bal:500,orig:500,apr:27,due:27,close:2,pri:1,cleared:false,type:'credit_card',limit:2000},
+    {id:2,name:'Credit One',bal:462,orig:462,apr:27,due:28,close:4,pri:2,cleared:false,type:'credit_card',limit:1000},
+    {id:3,name:'Capital One Savor',bal:1007,orig:1007,apr:27,due:7,close:13,pri:3,cleared:false,type:'credit_card',limit:2000},
   ],
   bills:[
     {id:1,name:'Rent',amt:300,due:1,icon:'🏠',paid:false},
@@ -440,6 +445,7 @@ const DEF={
     {id:10,title:'Buy car after score hits 680+',desc:'Sell truck first. Every 20 pts = better APR = hundreds saved on the loan.',date:'SEPT+',pri:'low',done:false},
   ],
   transactions:[],
+  achievements:[],
   accounts:[
     {id:1,name:'Checking',type:'checking',bal:0,icon:'🏦'},
     {id:2,name:'Quicksilver',type:'credit',bal:-500,icon:'💳'},
@@ -462,6 +468,7 @@ function lLoad(){
     const d=localStorage.getItem('fq5');
     if(d){S=JSON.parse(d);}else{S=JSON.parse(JSON.stringify(DEF));}
     if(!S.transactions)S.transactions=[];
+    if(!S.achievements)S.achievements=[];
     if(!S.accounts)S.accounts=JSON.parse(JSON.stringify(DEF.accounts));
     if(!S.planItems)S.planItems=JSON.parse(JSON.stringify(DEF.planItems));
     if(!S.goals)S.goals=JSON.parse(JSON.stringify(DEF.goals));
@@ -471,7 +478,7 @@ function lLoad(){
     if(!S.lockMins)S.lockMins=5;
   }catch(e){S=JSON.parse(JSON.stringify(DEF));}
 }
-function save(){lSave();}
+function save(){masterSync();lSave();checkAchievements();}
 
 // ── PIN ──
 const PK='fq_pin';
@@ -545,40 +552,199 @@ document.addEventListener('touchstart',()=>{if(document.getElementById('app').st
 document.addEventListener('click',()=>{if(document.getElementById('app').style.display!=='none')resetLock();});
 
 
-// ── SYNC HELPERS — keep debts and accounts in sync ──
-function syncDebtToAcct(debtId){
-  // When a debt balance changes, find matching account and update it
-  var d=S.debts.find(function(x){return x.id===debtId;});
-  if(!d)return;
-  // Match by name (case-insensitive partial match)
-  var a=S.accounts.find(function(x){
-    return x.type==='credit'&&(
-      x.name.toLowerCase().indexOf(d.name.toLowerCase().split(' ').pop())!==-1||
-      d.name.toLowerCase().indexOf(x.name.toLowerCase().split(' ').pop())!==-1
-    );
+// ── MASTER SYNC — single source of truth ──
+// Links debts to accounts by storing debtId on each account
+// Called after EVERY data change so all tabs always show the same numbers
+
+function masterSync(){
+  // For each debt, find its linked account and keep balance in sync
+  S.debts.forEach(function(d){
+    // Find account that is linked to this debt
+    var linked = S.accounts.find(function(a){ return a.linkedDebtId===d.id; });
+    if(linked){
+      // Credit card account balance = negative of debt balance
+      linked.bal = +(- d.bal).toFixed(2);
+      linked.name = d.name; // keep name in sync too
+    }
   });
-  if(a){
-    // Credit card accounts store balance as negative (debt)
-    a.bal=+(- d.bal).toFixed(2);
+
+  // For each credit account that has a linkedDebtId, make sure the debt matches
+  S.accounts.forEach(function(a){
+    if(a.type==='credit'&&a.linkedDebtId){
+      var d=S.debts.find(function(x){return x.id===a.linkedDebtId;});
+      if(d){
+        // If account was updated directly, sync back to debt
+        var expectedBal = +(Math.abs(a.bal)).toFixed(2);
+        if(Math.abs(expectedBal - d.bal) > 0.01){
+          d.bal = expectedBal;
+          if(d.bal > d.orig) d.orig = d.bal;
+          d.cleared = (d.bal === 0);
+        }
+      }
+    }
+  });
+}
+
+function autoLinkDebtsToAccounts(){
+  // Auto-link debts to accounts on first load or when new debt/account added
+  // Match by similar name
+  S.debts.forEach(function(d){
+    // Already linked?
+    var alreadyLinked = S.accounts.find(function(a){ return a.linkedDebtId===d.id; });
+    if(alreadyLinked) return;
+    // Find credit account with similar name
+    var match = S.accounts.find(function(a){
+      if(a.type!=='credit') return false;
+      if(a.linkedDebtId) return false; // already linked to another debt
+      var dn = d.name.toLowerCase();
+      var an = a.name.toLowerCase();
+      // check if any word matches
+      var dWords = dn.split(' ');
+      var aWords = an.split(' ');
+      return dWords.some(function(w){ return w.length>3 && aWords.some(function(aw){ return aw.indexOf(w)!==-1||w.indexOf(aw)!==-1; }); });
+    });
+    if(match){
+      match.linkedDebtId = d.id;
+      match.type = 'credit';
+      match.bal = +(- d.bal).toFixed(2);
+    } else {
+      // No match found — create an account for this debt automatically
+      S.accounts.push({
+        id: Date.now()+Math.floor(Math.random()*1000),
+        name: d.name,
+        type: 'credit',
+        bal: +(- d.bal).toFixed(2),
+        icon: '💳',
+        linkedDebtId: d.id
+      });
+    }
+  });
+}
+
+
+// ── ACHIEVEMENTS ENGINE ──
+var ALL_ACHIEVEMENTS = [
+  // DEBT
+  {id:'debt_first_payment',icon:'⚔️',title:'First Blood',desc:'Make your first debt payment',cat:'debt',check:function(){return S.debts.some(function(d){return d.orig>d.bal&&d.bal>0;});}},
+  {id:'debt_first_cleared',icon:'💀',title:'Debt Slayer I',desc:'Pay off your first card completely',cat:'debt',check:function(){return S.debts.some(function(d){return d.cleared;});}},
+  {id:'debt_all_cleared',icon:'🔥',title:'Debt Slayer II',desc:'All debts cleared to $0',cat:'debt',check:function(){return S.debts.length>0&&S.debts.every(function(d){return d.cleared||d.bal===0;});}},
+  {id:'debt_500',icon:'💸',title:'$500 Destroyed',desc:'Pay down $500 in total debt',cat:'debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=500;}},
+  {id:'debt_1000',icon:'💣',title:'$1,000 Destroyed',desc:'Pay down $1,000 in total debt',cat:'debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=1000;}},
+  {id:'debt_2000',icon:'🏆',title:'$2,000 Destroyed',desc:'Pay down $2,000 in total debt',cat:'debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=2000;}},
+  // SAVINGS / GOALS
+  {id:'save_100',icon:'🌱',title:'First Seed',desc:'Save your first $100',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=100;});}},
+  {id:'save_500',icon:'💰',title:'Stack Starter',desc:'Save $500 toward any goal',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=500;});}},
+  {id:'save_1000',icon:'💵',title:'Grand Stack',desc:'Save $1,000 toward any goal',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=1000;});}},
+  {id:'save_4500',icon:'🏠',title:'Apartment Ready',desc:'Save $4,500 — move out unlocked',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=4500;});}},
+  {id:'save_10k',icon:'🚀',title:'10K Club',desc:'Save $10,000 total across all goals',cat:'savings',check:function(){return S.goals.reduce(function(s,g){return s+g.cur;},0)>=10000;}},
+  {id:'goal_complete',icon:'🎯',title:'Mission Complete',desc:'Reach 100% on any goal',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=g.tgt;});}},
+  // CREDIT
+  {id:'credit_620',icon:'📊',title:'Fair Fighter',desc:'Credit score reached 620',cat:'credit',check:function(){return S.creditScore>=620;}},
+  {id:'credit_660',icon:'📈',title:'Rising Star',desc:'Credit score reached 660',cat:'credit',check:function(){return S.creditScore>=660;}},
+  {id:'credit_700',icon:'⭐',title:'Good Standing',desc:'Credit score reached 700',cat:'credit',check:function(){return S.creditScore>=700;}},
+  {id:'credit_740',icon:'💎',title:'Excellent Credit',desc:'Credit score reached 740+',cat:'credit',check:function(){return S.creditScore>=740;}},
+  {id:'utilization_30',icon:'🛡️',title:'Under Control',desc:'Credit utilization below 30%',cat:'credit',check:function(){
+    var cards=S.debts.filter(function(d){return d.type==='credit_card'&&d.limit>0;});
+    if(!cards.length)return false;
+    var totalBal=cards.reduce(function(s,d){return s+d.bal;},0);
+    var totalLim=cards.reduce(function(s,d){return s+d.limit;},0);
+    return totalLim>0&&(totalBal/totalLim)<0.3;
+  }},
+  {id:'utilization_10',icon:'🏅',title:'Elite Utilization',desc:'Credit utilization below 10%',cat:'credit',check:function(){
+    var cards=S.debts.filter(function(d){return d.type==='credit_card'&&d.limit>0;});
+    if(!cards.length)return false;
+    var totalBal=cards.reduce(function(s,d){return s+d.bal;},0);
+    var totalLim=cards.reduce(function(s,d){return s+d.limit;},0);
+    return totalLim>0&&(totalBal/totalLim)<0.1;
+  }},
+  // INCOME / TRACKING
+  {id:'first_txn',icon:'📝',title:'Tracker Activated',desc:'Log your first transaction',cat:'tracking',check:function(){return S.transactions.length>=1;}},
+  {id:'txn_30',icon:'📅',title:'30 Day Tracker',desc:'Log 30 transactions',cat:'tracking',check:function(){return S.transactions.length>=30;}},
+  {id:'income_4k',icon:'💼',title:'$4K Month',desc:'Log $4,000+ income in a month',cat:'tracking',check:function(){
+    var now=new Date();
+    var mInc=S.transactions.filter(function(t){var d=new Date(t.date);return t.type==='income'&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).reduce(function(s,t){return s+t.amt;},0);
+    return mInc>=4000;
+  }},
+  {id:'net_worth_positive',icon:'📊',title:'Net Positive',desc:'Achieve a positive net worth',cat:'tracking',check:function(){return S.accounts.reduce(function(s,a){return s+a.bal;},0)>0;}},
+  // PLAN
+  {id:'plan_5',icon:'✅',title:'Action Taker',desc:'Complete 5 plan items',cat:'plan',check:function(){return S.planItems.filter(function(p){return p.done;}).length>=5;}},
+  {id:'plan_all',icon:'🏁',title:'Plan Complete',desc:'Complete all plan items',cat:'plan',check:function(){return S.planItems.length>0&&S.planItems.every(function(p){return p.done;});}},
+  // LEVEL
+  {id:'level_3',icon:'⚡',title:'Grinder',desc:'Reach Level 3',cat:'level',check:function(){
+    var td=S.debts.reduce(function(s,d){return s+d.bal;},0);
+    var to=S.debts.reduce(function(s,d){return s+d.orig;},0);
+    return to>0&&((to-td)/to)>=0.3;
+  }},
+  {id:'level_5',icon:'👑',title:'Debt Slayer Supreme',desc:'Reach Level 5 — all debt gone',cat:'level',check:function(){
+    return S.debts.length>0&&S.debts.every(function(d){return d.cleared||d.bal===0;});
+  }},
+];
+
+function checkAchievements(){
+  var newlyEarned=[];
+  ALL_ACHIEVEMENTS.forEach(function(a){
+    var alreadyHave=S.achievements.indexOf(a.id)!==-1;
+    if(!alreadyHave&&a.check()){
+      S.achievements.push(a.id);
+      newlyEarned.push(a);
+    }
+  });
+  if(newlyEarned.length){
+    lSave();
+    // Show toast for each new achievement (staggered)
+    newlyEarned.forEach(function(a,i){
+      setTimeout(function(){
+        toast('🏆 Achievement Unlocked: '+a.icon+' '+a.title,'');
+      },i*2000);
+    });
   }
 }
-function syncAcctToDebt(acctId){
-  // When an account balance changes, find matching debt and update it
-  var a=S.accounts.find(function(x){return x.id===acctId;});
-  if(!a||a.type!=='credit')return;
-  var d=S.debts.find(function(x){
-    return !x.cleared&&(
-      x.name.toLowerCase().indexOf(a.name.toLowerCase().split(' ').pop())!==-1||
-      a.name.toLowerCase().indexOf(x.name.toLowerCase().split(' ').pop())!==-1
-    );
+
+function getUtilization(){
+  var cards=S.debts.filter(function(d){return d.type==='credit_card'&&d.limit>0&&!d.cleared;});
+  if(!cards.length)return null;
+  var totalBal=cards.reduce(function(s,d){return s+d.bal;},0);
+  var totalLim=cards.reduce(function(s,d){return s+d.limit;},0);
+  return totalLim>0?{pct:Math.round(totalBal/totalLim*100),bal:totalBal,lim:totalLim,cards:cards}:null;
+}
+
+function getDebtTypeIcon(type){
+  var icons={credit_card:'💳',student_loan:'🎓',car_loan:'🚗',personal_loan:'💵',medical:'🏥',other:'📦'};
+  return icons[type]||'📦';
+}
+function getDebtTypeLabel(type){
+  var labels={credit_card:'Credit Card',student_loan:'Student Loan',car_loan:'Car Loan',personal_loan:'Personal Loan',medical:'Medical',other:'Other'};
+  return labels[type]||'Debt';
+}
+
+
+function rAchievements(){
+  var cats={debt:'⚔️ Debt',savings:'💰 Savings',credit:'📊 Credit',tracking:'📋 Tracking',plan:'📋 Plan',level:'⚡ Level'};
+  var earned=S.achievements;
+  var total=ALL_ACHIEVEMENTS.length;
+  var earnedCount=earned.length;
+  var h='<div class="sh" style="margin-top:13px;"><div class="st">🏆 Achievements</div></div>';
+  h+='<div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">';
+  h+='<div style="flex:1;"><div class="xtrack" style="margin-bottom:4px;"><div class="xfill xp" style="width:'+Math.round(earnedCount/total*100)+'%"></div></div>';
+  h+='<div style="font-size:10px;color:var(--muted);font-family:var(--mono);">'+earnedCount+' / '+total+' unlocked</div></div>';
+  h+='<div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--purple);">'+Math.round(earnedCount/total*100)+'%</div></div>';
+
+  // Group by category
+  var catKeys=Object.keys(cats);
+  catKeys.forEach(function(cat){
+    var catAch=ALL_ACHIEVEMENTS.filter(function(a){return a.cat===cat;});
+    h+='<div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 8px;">'+cats[cat]+'</div>';
+    catAch.forEach(function(a){
+      var isEarned=earned.indexOf(a.id)!==-1;
+      h+='<div style="background:var(--bg2);border:1px solid '+(isEarned?'var(--green)':'var(--border)')+';border-radius:var(--r);padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px;opacity:'+(isEarned?'1':'0.5')+';">';
+      h+='<div style="font-size:28px;line-height:1;flex-shrink:0;">'+(isEarned?a.icon:'🔒')+'</div>';
+      h+='<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:'+(isEarned?'var(--text)':'var(--muted)')+';">'+a.title+'</div>';
+      h+='<div style="font-size:11px;color:var(--muted);margin-top:2px;">'+a.desc+'</div></div>';
+      if(isEarned)h+='<div style="font-family:var(--mono);font-size:10px;color:var(--green);">✓ EARNED</div>';
+      h+='</div>';
+    });
   });
-  if(d){
-    // Account balance is negative for credit cards, debt balance is positive
-    var newBal=Math.abs(a.bal);
-    d.bal=+newBal.toFixed(2);
-    if(newBal>d.orig)d.orig=+newBal.toFixed(2);
-    d.cleared=(newBal===0);
-  }
+  return h;
 }
 
 // ── NAVIGATION ──
@@ -647,6 +813,13 @@ function rHUD(){
     <div class="irow"><span class="ilbl">Gas + misc</span><span class="ival mn">−$${S.misc}</span></div>
     <div class="irow"><span class="ilbl" style="color:var(--text);font-weight:600;">After bills + misc</span><span class="ival hi">${left>=0?'$':'-$'}${Math.abs(left).toFixed(0)}</span></div>
   </div>
+  <div class="sh"><div class="st">🏆 Achievements</div><button class="ab ap" onclick="go('achievements')">View All</button></div>
+  ${(function(){
+    var earned=ALL_ACHIEVEMENTS.filter(function(a){return S.achievements.indexOf(a.id)!==-1;});
+    var total=ALL_ACHIEVEMENTS.length;
+    if(!earned.length)return '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;font-size:11px;color:var(--muted);font-family:var(--mono);">No achievements yet — start paying down debt to unlock your first one.</div>';
+    return '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:10px;"><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">'+earned.map(function(a){return '<span title="'+a.title+'" style="font-size:22px;cursor:pointer;">'+a.icon+'</span>';}).join('')+'</div><div style="font-size:10px;color:var(--muted);font-family:var(--mono);">'+earned.length+'/'+total+' unlocked</div><div class="xtrack" style="margin-top:6px;"><div class="xfill xp" style="width:'+Math.round(earned.length/total*100)+'%"></div></div></div>';
+  })()}
   <div class="sh"><div class="st">💸 Next Paycheck ($${S.paycheck.toLocaleString()})</div></div>
   <div class="ibar">
     <div class="irow"><span class="ilbl">Paycheck</span><span class="ival pl">+$${S.paycheck.toLocaleString()}</span></div>
@@ -666,7 +839,26 @@ function rDebts(){
   const sorted=[...S.debts].sort((a,b)=>a.pri-b.pri);
   const td=S.debts.reduce((s,d)=>s+d.bal,0);
   const ti=S.debts.reduce((s,d)=>s+(d.apr/100/12*d.bal),0);
+  let util=getUtilization();
+  let utilPanel='';
+  if(util){
+    let uColor=util.pct>=70?'var(--red)':util.pct>=30?'var(--amber)':'var(--green)';
+    let uBar=util.pct>=70?'xr':util.pct>=30?'xa':'xg';
+    let uMsg=util.pct>=70?'⚠️ DANGER — Score is being crushed. Pay down immediately.':util.pct>=30?'⚠️ WARNING — Above 30%. Score is being hurt. Get below 30%.':'✓ GOOD — Keep this under 30% at all times.';
+    utilPanel=`<div class="card" style="border-color:${uColor};margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">CREDIT UTILIZATION</div>
+        <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:${uColor};">${util.pct}%</div>
+      </div>
+      <div class="xtrack" style="height:10px;margin-bottom:8px;"><div class="xfill ${uBar}" style="width:${Math.min(100,util.pct)}%;background:${uColor};"></div></div>
+      <div style="font-size:11px;color:${uColor};margin-bottom:6px;">${uMsg}</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.7;">Balance: $${util.bal.toFixed(0)} / Limit: $${util.lim.toFixed(0)}<br>
+      ${util.cards.map(function(c){var u=c.limit>0?Math.round(c.bal/c.limit*100):0;var uc=u>=70?'var(--red)':u>=30?'var(--amber)':'var(--green)';return '<span style="color:var(--muted);">'+c.name.split(' ').pop()+': </span><span style="color:'+uc+';font-family:var(--mono);">'+u+'%</span> &nbsp;';}).join('')}
+      </div>
+    </div>`;
+  }
   let h=`<div class="sh" style="margin-top:13px;"><div class="st">⚔️ Debts</div><button class="ab ar" onclick="openAddDebt()">+ Add</button></div>
+  ${utilPanel}
   <div class="ibar"><div class="irow"><span class="ilbl">Total balance</span><span class="ival mn">$${td.toFixed(2)}</span></div><div class="irow"><span class="ilbl">Monthly interest burning</span><span class="ival mn">~$${ti.toFixed(2)}</span></div></div>`;
   if(!sorted.length)return h+'<div class="empty"><strong>ALL DEBTS CLEARED 🔥</strong>Stack savings now.</div>';
   sorted.forEach(d=>{
@@ -692,8 +884,13 @@ function rDebts(){
   });
   return h;
 }
-function openAddDebt(){_editDebtId=null;document.getElementById('debt-title').textContent='⚔️ Add Debt';document.getElementById('debt-btn').textContent='Add Debt';['d-name','d-bal','d-apr','d-close','d-due','d-pri'].forEach(id=>document.getElementById(id).value='');openM('debt');}
-function openEditDebt(id){const d=S.debts.find(x=>x.id===id);_editDebtId=id;document.getElementById('debt-title').textContent='✏️ Edit — '+d.name;document.getElementById('debt-btn').textContent='Save Changes';document.getElementById('d-name').value=d.name;document.getElementById('d-bal').value=d.bal;document.getElementById('d-apr').value=d.apr;document.getElementById('d-close').value=d.close;document.getElementById('d-due').value=d.due;document.getElementById('d-pri').value=d.pri;openM('debt');}
+function openAddDebt(){_editDebtId=null;document.getElementById('debt-title').textContent='⚔️ Add Debt';document.getElementById('debt-btn').textContent='Add Debt';['d-name','d-bal','d-apr','d-close','d-due','d-pri','d-limit'].forEach(id=>document.getElementById(id).value='');document.getElementById('d-type').value='credit_card';openM('debt');}
+function openEditDebt(id){const d=S.debts.find(x=>x.id===id);_editDebtId=id;document.getElementById('debt-title').textContent='✏️ Edit — '+d.name;document.getElementById('debt-btn').textContent='Save Changes';document.getElementById('d-name').value=d.name;document.getElementById('d-bal').value=d.bal;
+  document.getElementById('d-apr').value=d.apr;document.getElementById('d-close').value=d.close;
+  document.getElementById('d-due').value=d.due;document.getElementById('d-pri').value=d.pri;
+  document.getElementById('d-type').value=d.type||'credit_card';
+  document.getElementById('d-limit').value=d.limit||0;
+  openM('debt');}
 function saveDebt(){
   const name=document.getElementById('d-name').value.trim();
   const bal=parseFloat(document.getElementById('d-bal').value);
@@ -702,11 +899,17 @@ function saveDebt(){
   const due=parseInt(document.getElementById('d-due').value)||1;
   const pri=parseInt(document.getElementById('d-pri').value)||1;
   if(!name||isNaN(bal)){toast('Enter name and balance','err');return;}
-  if(_editDebtId!==null){const d=S.debts.find(x=>x.id===_editDebtId);Object.assign(d,{name,bal,apr,close,due,pri});if(bal>0)d.cleared=false;toast('✏️ '+name+' updated!');}
-  else{S.debts.push({id:Date.now(),name,bal,orig:bal,apr,due,close,pri,cleared:false});toast('⚔️ Tracking: '+name);}
+  if(_editDebtId!==null){const d=S.debts.find(x=>x.id===_editDebtId);
+    var dtype=document.getElementById('d-type').value;
+    var dlimit=parseFloat(document.getElementById('d-limit').value)||d.limit||0;
+    Object.assign(d,{name,bal,apr,close,due,pri,type:dtype,limit:dlimit});
+    if(bal===0){d.cleared=true;}else{d.cleared=false;}
+    toast('✏️ '+name+' updated!');}
+  else{var dtype=document.getElementById('d-type').value;
+    var dlimit=parseFloat(document.getElementById('d-limit').value)||0;
+    S.debts.push({id:Date.now(),name,bal,orig:bal,apr,due,close,pri,cleared:false,type:dtype,limit:dlimit});toast('⚔️ Tracking: '+name);}
+  autoLinkDebtsToAccounts();
   save();closeM('debt');render();
-  var latestDebt=(_editDebtId!==null)?S.debts.find(function(x){return x.id===_editDebtId;}):S.debts[S.debts.length-1];
-  if(latestDebt)syncDebtToAcct(latestDebt.id);
 }
 function delDebt(id){const d=S.debts.find(x=>x.id===id);if(!confirm('Remove "'+d.name+'"?'))return;S.debts=S.debts.filter(x=>x.id!==id);save();render();toast('🗑 '+d.name+' removed');}
 function openPay(id){const d=S.debts.find(x=>x.id===id);_payDebtId=id;document.getElementById('pay-title').textContent='💸 Pay — '+d.name;document.getElementById('pay-bal').textContent='$'+d.bal.toFixed(2);document.getElementById('pay-amt').value='';openM('pay');}
@@ -869,10 +1072,15 @@ function doUpdAcct(){
   var bal=parseFloat(document.getElementById('ua-bal').value);
   if(isNaN(bal)){toast('Enter a valid balance','err');return;}
   var a=S.accounts.find(function(x){return x.id===_updAcctId;});
-  a.bal=bal;
-  syncAcctToDebt(_updAcctId);
+  // For credit cards, user enters positive amount owed
+  // We store as negative internally
+  if(a.type==='credit'){
+    a.bal = +(- Math.abs(bal)).toFixed(2);
+  } else {
+    a.bal = +bal.toFixed(2);
+  }
   save();closeM('upd-acct');render();
-  toast('✓ '+a.name+' updated — debt tab synced!');
+  toast('✓ '+a.name+' updated everywhere!');
 }
 function delAcct(id){const a=S.accounts.find(x=>x.id===id);if(!confirm('Remove "'+a.name+'"?'))return;S.accounts=S.accounts.filter(x=>x.id!==id);save();render();toast('🗑 Account removed');}
 
@@ -1078,6 +1286,69 @@ function rStrategy(){
     tipL('var(--purple)','Music career + finances:','Register with BMI (free) — every stream, sync, and performance earns royalties that go uncollected without registration. DistroKid ($23/yr) puts your music on every platform and you keep 100% of revenue. Zero-cost moves that pay you forever.')
   );
 
+
+  // 5 Credit Factors
+  html+='<div class="sh"><div class="st">📋 The 5 Credit Score Factors</div></div>';
+  html+='<div class="card">';
+
+  // Factor 1: Payment History 35%
+  var allCards=S.debts.filter(function(d){return d.type==='credit_card';});
+  html+='<div style="margin-bottom:12px;">';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
+  html+='<span style="font-size:12px;font-weight:600;">1. Payment History</span>';
+  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">35% of score</span></div>';
+  html+='<div class="xtrack"><div class="xfill xg" style="width:35%"></div></div>';
+  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">The #1 factor. Every on-time payment = points. Every missed payment = major damage. Set up autopay for at least the minimum on every card today. One 30-day late payment can drop your score 60-110 pts.</div></div>';
+
+  // Factor 2: Utilization 30%
+  var util2=getUtilization();
+  var util2pct=util2?util2.pct:0;
+  var util2color=util2pct>=70?'var(--red)':util2pct>=30?'var(--amber)':'var(--green)';
+  html+='<div style="margin-bottom:12px;">';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
+  html+='<span style="font-size:12px;font-weight:600;">2. Credit Utilization</span>';
+  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">30% of score</span></div>';
+  html+='<div class="xtrack"><div class="xfill xa" style="width:30%"></div></div>';
+  html+='<div style="font-size:11px;margin-top:4px;line-height:1.6;">';
+  html+='<span style="color:'+util2color+';font-weight:600;">Your utilization: '+util2pct+'%</span>';
+  html+='<span style="color:var(--muted);"> (target: under 30%, ideal: under 10%)</span><br>';
+  html+='<span style="color:var(--muted);">How much of your available credit you are using. $0 balance = 0% = maximum score impact. Keep each individual card under 30% of its own limit.</span></div></div>';
+
+  // Factor 3: Credit Age 15%
+  html+='<div style="margin-bottom:12px;">';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
+  html+='<span style="font-size:12px;font-weight:600;">3. Length of Credit History</span>';
+  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">15% of score</span></div>';
+  html+='<div class="xtrack"><div class="xfill xb" style="width:15%"></div></div>';
+  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">How long your accounts have been open. The older the better. This is why you NEVER close old cards even at $0 — Quicksilver and Savor stay open forever. Closing them deletes their history and tanks this factor.</div></div>';
+
+  // Factor 4: Credit Mix 10%
+  html+='<div style="margin-bottom:12px;">';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
+  html+='<span style="font-size:12px;font-weight:600;">4. Credit Mix</span>';
+  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">10% of score</span></div>';
+  html+='<div class="xtrack"><div class="xfill xp" style="width:10%"></div></div>';
+  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">Having different types of credit (credit cards + car loan + student loan) shows lenders you can manage multiple types of debt responsibly. You do not need to take on new debt just for this — let it build naturally over time.</div></div>';
+
+  // Factor 5: New Credit 10%
+  html+='<div>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
+  html+='<span style="font-size:12px;font-weight:600;">5. New Credit Inquiries</span>';
+  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--red);">10% of score</span></div>';
+  html+='<div class="xtrack"><div class="xfill xr" style="width:10%"></div></div>';
+  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">Every time you apply for credit a hard inquiry is added. Each one drops your score 5-10 pts and stays for 2 years. Do NOT apply for any new credit right now. Wait until your score hits 700+ before applying for anything new.</div></div>';
+
+  html+='</div>';
+
+  // Tax maximizer section
+  html+=sec('🧾','Maximize Your Tax Return — Action Items',
+    tip('var(--green)','Free federal filing:','AnnualCreditReport.com for credit — IRS.gov/freefile for taxes. Under $79K income = 100% free federal filing. Do not pay TurboTax or H&R Block.')+
+    tip('var(--blue)','Education credits (you qualify):','Pursuing a BS degree? File Form 8863. American Opportunity Credit = up to $2,500/yr back on tuition. Lifetime Learning Credit = up to $2,000. Stack both if eligible. This is real money every April.')+
+    tip('var(--amber)','W-4 adjustment:','If you got a big refund last year you are over-withholding — giving the IRS an interest-free loan. Ask your employer to adjust your W-4 to get more in each paycheck now instead of waiting.')+
+    tip('var(--purple)','Music and side income deductions:','Any income from music, gigs, or side work — track all expenses: home studio equipment, software, streaming subs used for work, phone bill percentage, DistroKid fees. All reduce taxable income dollar for dollar.')+
+    tipL('var(--green)','After debt: Roth IRA:','Open at Fidelity or Vanguard. Contribute up to $7,000/yr after-tax. Grows 100% tax-free. Withdraw in retirement with zero taxes. Single best long-term wealth move available to you right now.')
+  );
+
   return html;
 }
 
@@ -1139,6 +1410,7 @@ function hideToast(){const t=document.getElementById('toast');if(t)t.classList.r
 
 // ── INIT ──
 lLoad();
+autoLinkDebtsToAccounts();
 const isFirst=!localStorage.getItem('fq5');
 document.getElementById('pinSub').textContent=isFirst?'DEFAULT PIN: 1234  (change in Settings)':'ENTER YOUR PIN';
 </script>
