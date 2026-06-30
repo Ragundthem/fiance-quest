@@ -9,16 +9,7 @@
 <meta name="theme-color" content="#0a0a0f">
 <title>Finance Quest</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
-:root{
-  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;
-  --border:#2a2a3d;--bhi:#3d3d5c;
-  --text:#e8e8f0;--muted:#6b6b8a;--dim:#4a4a6a;
-  --green:#00ff9d;--blue:#00b4ff;--purple:#b060ff;--red:#ff4560;--amber:#ffb830;
-  --gd:rgba(0,255,157,.12);--bd:rgba(0,180,255,.12);--rd:rgba(255,69,96,.12);--ad:rgba(255,184,48,.12);--pd:rgba(176,96,255,.12);
-  --r:11px;--font:'Space Grotesk',sans-serif;--mono:'Space Mono',monospace;
-  --sbot:env(safe-area-inset-bottom,0px);--stop:env(safe-area-inset-top,0px);
-}
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;--border:#2a2a3d;--bhi:#3d3d5c;--text:#e8e8f0;--muted:#6b6b8a;--dim:#4a4a6a;--green:#00ff9d;--blue:#00b4ff;--purple:#b060ff;--red:#ff4560;--amber:#ffb830;--gd:rgba(0,255,157,.12);--bd:rgba(0,180,255,.12);--rd:rgba(255,69,96,.12);--ad:rgba(255,184,48,.12);--pd:rgba(176,96,255,.12);--r:11px;--font:system-ui,sans-serif;--mono:monospace;--sbot:env(safe-area-inset-bottom,0px);--stop:env(safe-area-inset-top,0px);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
@@ -31,7 +22,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 .pd.on{background:var(--green);border-color:var(--green);}
 .pd.er{background:var(--red);border-color:var(--red);}
 .pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:230px;}
-.pk{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:17px;font-size:20px;font-weight:600;cursor:pointer;color:var(--text);font-family:var(--mono);text-align:center;-webkit-tap-highlight-color:transparent;user-select:none;}
+.pk{background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:17px;font-size:20px;font-weight:600;cursor:pointer;color:var(--text);font-family:var(--mono);text-align:center;-webkit-tap-highlight-color:transparent;}
 .pk:active{background:var(--bg3);transform:scale(.93);}
 .pk.ghost{background:transparent;border:none;pointer-events:none;}
 .pin-err{font-size:11px;font-family:var(--mono);color:var(--red);height:16px;margin-top:14px;text-align:center;}
@@ -60,6 +51,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 .ar{background:var(--rd);color:var(--red);border:1px solid rgba(255,69,96,.3);}
 .ap{background:var(--pd);color:var(--purple);border:1px solid rgba(176,96,255,.3);}
 .aa{background:var(--ad);color:var(--amber);border:1px solid rgba(255,184,48,.3);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-bottom:10px;}
+.ibar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-bottom:10px;}
+.irow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid var(--border);}
+.irow:last-child{border-bottom:none;}
+.ilbl{color:var(--muted);}
+.ival{font-family:var(--mono);font-weight:600;}
+.ival.pl{color:var(--green);}.ival.mn{color:var(--red);}.ival.hi{color:var(--blue);font-size:14px;}
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
 .sb2{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:11px;}
 .sb2-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono);margin-bottom:3px;}
@@ -79,21 +77,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 .xrow span:last-child{font-family:var(--mono);color:var(--green);}
 .xtrack{background:var(--bg3);border-radius:3px;height:7px;overflow:hidden;margin-bottom:8px;}
 .xfill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.16,1,.3,1);}
-.xg{background:linear-gradient(90deg,#00c97a,var(--green));}
-.xb{background:linear-gradient(90deg,#0077cc,var(--blue));}
-.xr{background:linear-gradient(90deg,#cc2040,var(--red));}
-.xa{background:linear-gradient(90deg,#cc8800,var(--amber));}
-.xp{background:linear-gradient(90deg,#7030cc,var(--purple));}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-bottom:10px;}
-.ibar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-bottom:10px;}
-.irow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px;border-bottom:1px solid var(--border);}
-.irow:last-child{border-bottom:none;}
-.ilbl{color:var(--muted);}
-.ival{font-family:var(--mono);font-weight:600;}
-.ival.pl{color:var(--green);}.ival.mn{color:var(--red);}.ival.hi{color:var(--blue);font-size:14px;}
+.xg{background:linear-gradient(90deg,#00c97a,var(--green));}.xb{background:linear-gradient(90deg,#0077cc,var(--blue));}.xr{background:linear-gradient(90deg,#cc2040,var(--red));}.xa{background:linear-gradient(90deg,#cc8800,var(--amber));}.xp{background:linear-gradient(90deg,#7030cc,var(--purple));}
 .dcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:9px;position:relative;overflow:hidden;}
 .dcard.cleared{opacity:.45;border-color:var(--green);}
-.dcard.cleared::after{content:'CLEARED ✓';position:absolute;top:50%;right:12px;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:var(--green);}
+.dcard.cleared::after{content:'CLEARED';position:absolute;top:50%;right:12px;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:var(--green);}
 .dpri{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;margin-bottom:6px;display:inline-block;}
 .p1{background:var(--rd);color:var(--red);border:1px solid rgba(255,69,96,.3);}
 .p2{background:var(--ad);color:var(--amber);border:1px solid rgba(255,184,48,.3);}
@@ -165,14 +152,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 .danger{background:var(--rd);border:1px solid rgba(255,69,96,.3);border-radius:var(--r);padding:13px;margin-top:12px;}
 .btn{padding:8px 11px;border-radius:7px;border:none;font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;-webkit-tap-highlight-color:transparent;}
 .btn:active{opacity:.8;transform:scale(.97);}
-.btn-g{background:var(--green);color:#0a0a0f;}
-.btn-s{background:var(--bg3);color:var(--text);border:1px solid var(--bhi);}
-.btn-r{background:var(--red);color:#fff;}
-.btn-a{background:var(--amber);color:#0a0a0f;}
-.btn-b{background:var(--blue);color:#0a0a0f;}
-.btn-p{background:var(--purple);color:#fff;}
-.btn-full{width:100%;padding:11px;}
-.btn-sm{padding:5px 9px;font-size:11px;}
+.btn-g{background:var(--green);color:#0a0a0f;}.btn-s{background:var(--bg3);color:var(--text);border:1px solid var(--bhi);}.btn-r{background:var(--red);color:#fff;}.btn-a{background:var(--amber);color:#0a0a0f;}.btn-b{background:var(--blue);color:#0a0a0f;}.btn-p{background:var(--purple);color:#fff;}
+.btn-full{width:100%;padding:11px;}.btn-sm{padding:5px 9px;font-size:11px;}
 .btn-del{background:transparent;color:var(--red);border:1px solid rgba(255,69,96,.3);font-size:11px;padding:5px 9px;border-radius:6px;cursor:pointer;font-family:var(--font);font-weight:600;}
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.87);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .25s;}
 .ov.open{opacity:1;pointer-events:all;}
@@ -194,11 +175,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 .tx{cursor:pointer;opacity:.7;font-size:12px;}
 .empty{text-align:center;padding:26px 14px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7;}
 .empty strong{color:var(--text);font-size:12px;display:block;margin-bottom:5px;}
+.ach-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.ach-item.earned{border-color:var(--green);}
+.util-bar{background:var(--bg2);border-radius:var(--r);padding:12px;margin-bottom:10px;}
 </style>
 </head>
 <body>
 <div id="pinScreen">
-  <div class="pin-logo">⚡ FINANCE QUEST</div>
+  <div class="pin-logo">&#9889; FINANCE QUEST</div>
   <div class="pin-sub" id="pinSub">ENTER PIN</div>
   <div class="pin-dots" id="pinDots">
     <div class="pd" id="pd0"></div><div class="pd" id="pd1"></div>
@@ -216,272 +200,133 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
     <button class="pk" onclick="pinKey('9')">9</button>
     <button class="pk ghost"></button>
     <button class="pk" onclick="pinKey('0')">0</button>
-    <button class="pk" onclick="pinDel()">⌫</button>
+    <button class="pk" onclick="pinDel()">&#9003;</button>
   </div>
   <div class="pin-err" id="pinErr"></div>
   <div class="pin-reset" onclick="pinReset()">Forgot PIN?</div>
 </div>
-
 <div id="app">
   <div class="hdr">
-    <div><div class="logo">⚡ FINANCE QUEST</div><div class="logo-sub">Your Money HUD</div></div>
+    <div><div class="logo">&#9889; FINANCE QUEST</div><div class="logo-sub">Your Money HUD</div></div>
     <div class="hdr-r">
       <div class="lvl-b" id="lvlBadge">LVL 1</div>
-      <button class="hdr-icon" onclick="go('settings')">⚙️</button>
+      <button class="hdr-icon" onclick="go('settings')">&#9881;&#65039;</button>
     </div>
   </div>
   <div class="scroll" id="scroll"><div id="main"></div></div>
   <nav class="bnav">
-    <button class="nb active" id="nb-hud" onclick="go('hud')"><span class="ni">⚡</span><span class="nl">HUD</span></button>
-    <button class="nb" id="nb-debts" onclick="go('debts')"><span class="ni">⚔️</span><span class="nl">Debts</span></button>
-    <button class="nb" id="nb-bills" onclick="go('bills')"><span class="ni">🔁</span><span class="nl">Bills</span></button>
-    <button class="nb" id="nb-money" onclick="go('money')"><span class="ni">💰</span><span class="nl">Money</span></button>
-    <button class="nb" id="nb-goals" onclick="go('goals')"><span class="ni">🎯</span><span class="nl">Goals</span></button>
-    <button class="nb" id="nb-plan" onclick="go('plan')"><span class="ni">📋</span><span class="nl">Plan</span></button>
-    <button class="nb" id="nb-strategy" onclick="go('strategy')"><span class="ni">🧠</span><span class="nl">Tips</span></button>
-    <button class="nb" id="nb-achievements" onclick="go('achievements')"><span class="ni">🏆</span><span class="nl">Awards</span></button>
+    <button class="nb active" id="nb-hud" onclick="go('hud')"><span class="ni">&#9889;</span><span class="nl">HUD</span></button>
+    <button class="nb" id="nb-debts" onclick="go('debts')"><span class="ni">&#9876;&#65039;</span><span class="nl">Debts</span></button>
+    <button class="nb" id="nb-bills" onclick="go('bills')"><span class="ni">&#128257;</span><span class="nl">Bills</span></button>
+    <button class="nb" id="nb-money" onclick="go('money')"><span class="ni">&#128176;</span><span class="nl">Money</span></button>
+    <button class="nb" id="nb-goals" onclick="go('goals')"><span class="ni">&#127919;</span><span class="nl">Goals</span></button>
+    <button class="nb" id="nb-plan" onclick="go('plan')"><span class="ni">&#128203;</span><span class="nl">Plan</span></button>
+    <button class="nb" id="nb-strategy" onclick="go('strategy')"><span class="ni">&#129504;</span><span class="nl">Tips</span></button>
+    <button class="nb" id="nb-awards" onclick="go('awards')"><span class="ni">&#127942;</span><span class="nl">Awards</span></button>
   </nav>
 </div>
-
 <!-- MODALS -->
-<div class="ov" id="m-income"><div class="modal">
-  <div class="mhandle" onclick="closeM('income')"></div>
-  <div class="mtitle">💰 Income & Budget</div>
-  <div class="fg"><label class="fl">Monthly Income (after tax)</label><input class="fi" id="i-inc" type="number" placeholder="4000"></div>
-  <div class="fg"><label class="fl">Biweekly Paycheck</label><input class="fi" id="i-pay" type="number" placeholder="2000"></div>
-  <div class="fg"><label class="fl">Gas + Misc / month</label><input class="fi" id="i-misc" type="number" placeholder="500"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('income')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveIncome()">Save</button></div>
-</div></div>
-
-<div class="ov" id="m-credit"><div class="modal">
-  <div class="mhandle" onclick="closeM('credit')"></div>
-  <div class="mtitle">📊 Credit Score</div>
-  <div class="fg"><label class="fl">Current Score</label><input class="fi" id="c-sc" type="number" placeholder="620" min="300" max="850"></div>
-  <div class="fg"><label class="fl">Target Score</label><input class="fi" id="c-tgt" type="number" placeholder="750" min="300" max="850"></div>
-  <div style="background:var(--bg3);border-radius:7px;padding:9px;font-size:10px;color:var(--muted);line-height:1.8;">300–579 Poor • 580–669 Fair • 670–739 Good • 740+ Very Good</div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('credit')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveCredit()">Save</button></div>
-</div></div>
-
-<div class="ov" id="m-debt"><div class="modal">
-  <div class="mhandle" onclick="closeM('debt')"></div>
-  <div class="mtitle" id="debt-title">⚔️ Add Debt</div>
-  <div class="fg"><label class="fl">Card / Account Name</label><input class="fi" id="d-name" placeholder="e.g. Chase Freedom"></div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Balance ($)</label><input class="fi" id="d-bal" type="number" placeholder="0.00" step="0.01"></div>
-    <div class="fg"><label class="fl">APR (%)</label><input class="fi" id="d-apr" type="number" placeholder="27" step="0.1"></div>
-  </div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Closing Day</label><input class="fi" id="d-close" type="number" placeholder="2" min="1" max="31"></div>
-    <div class="fg"><label class="fl">Due Day</label><input class="fi" id="d-due" type="number" placeholder="27" min="1" max="31"></div>
-  </div>
-  <div class="fg"><label class="fl">Priority (1 = kill first)</label><input class="fi" id="d-pri" type="number" placeholder="1" min="1"></div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Debt Type</label><select class="fs" id="d-type"><option value="credit_card">💳 Credit Card</option><option value="student_loan">🎓 Student Loan</option><option value="car_loan">🚗 Car Loan</option><option value="personal_loan">💵 Personal Loan</option><option value="medical">🏥 Medical Debt</option><option value="other">📦 Other</option></select></div>
-    <div class="fg"><label class="fl">Credit Limit ($) <span style="color:var(--dim);font-size:9px;">cards only</span></label><input class="fi" id="d-limit" type="number" placeholder="0" min="0"></div>
-  </div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('debt')">Cancel</button><button class="btn btn-r" style="flex:2" id="debt-btn" onclick="saveDebt()">Add Debt</button></div>
-</div></div>
-
-<div class="ov" id="m-pay"><div class="modal">
-  <div class="mhandle" onclick="closeM('pay')"></div>
-  <div class="mtitle" id="pay-title">💸 Log Payment</div>
-  <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Balance: <span id="pay-bal" style="color:var(--red);font-family:var(--mono);font-size:14px;"></span></div>
-  <div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="pay-amt" type="number" placeholder="0.00" step="0.01"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('pay')">Cancel</button><button class="btn btn-r" style="flex:2" onclick="doPayment()">🔥 Destroy Debt</button></div>
-</div></div>
-
-<div class="ov" id="m-charge"><div class="modal">
-  <div class="mhandle" onclick="closeM('charge')"></div>
-  <div class="mtitle" id="charge-title">📈 Update Balance</div>
-  <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Current: <span id="charge-bal" style="color:var(--red);font-family:var(--mono);font-size:14px;"></span></div>
-  <div class="fg"><label class="fl">Update Type</label><select class="fs" id="charge-type"><option value="set">Set as new total balance</option><option value="add">Add a charge (increases balance)</option></select></div>
-  <div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="charge-amt" type="number" placeholder="0.00" step="0.01"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('charge')">Cancel</button><button class="btn btn-a" style="flex:2" onclick="doCharge()">Update Balance</button></div>
-</div></div>
-
-<div class="ov" id="m-bill"><div class="modal">
-  <div class="mhandle" onclick="closeM('bill')"></div>
-  <div class="mtitle" id="bill-title">🔁 Add Bill</div>
-  <div class="fg"><label class="fl">Bill Name</label><input class="fi" id="b-name" placeholder="e.g. Spotify"></div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="b-amt" type="number" placeholder="0.00" step="0.01"></div>
-    <div class="fg"><label class="fl">Due Day</label><input class="fi" id="b-due" type="number" placeholder="15" min="0" max="31"></div>
-  </div>
-  <div class="fg"><label class="fl">Icon (emoji)</label><input class="fi" id="b-icon" placeholder="💳" maxlength="4"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('bill')">Cancel</button><button class="btn btn-b" style="flex:2" id="bill-btn" onclick="saveBill()">Add Bill</button></div>
-</div></div>
-
-<div class="ov" id="m-txn"><div class="modal">
-  <div class="mhandle" onclick="closeM('txn')"></div>
-  <div class="mtitle">💸 Add Transaction</div>
-  <div class="fg">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
-      <button id="t-exp" class="btn btn-r" style="width:100%" onclick="setTxnType('expense')">💸 Expense</button>
-      <button id="t-inc" class="btn btn-s" style="width:100%" onclick="setTxnType('income')">💵 Income</button>
-    </div>
-  </div>
-  <div class="fg"><label class="fl">Description</label><input class="fi" id="t-desc" placeholder="e.g. Grocery run"></div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="t-amt" type="number" placeholder="0.00" step="0.01"></div>
-    <div class="fg"><label class="fl">Date</label><input class="fi" id="t-date" type="date"></div>
-  </div>
-  <div class="fg"><label class="fl">Category</label>
-    <select class="fs" id="t-cat">
-      <optgroup label="EXPENSES">
-        <option value="needs">🏠 Needs (rent, food, utilities)</option>
-        <option value="wants">🎮 Wants (dining, fun)</option>
-        <option value="transport">🚗 Transport</option>
-        <option value="subscriptions">📱 Subscriptions</option>
-        <option value="debt">💳 Debt Payment</option>
-        <option value="other_exp">📦 Other Expense</option>
-      </optgroup>
-      <optgroup label="INCOME">
-        <option value="paycheck">💰 Paycheck</option>
-        <option value="side">⚡ Side Income</option>
-        <option value="other_inc">💵 Other Income</option>
-      </optgroup>
-    </select>
-  </div>
-  <div class="fg"><label class="fl">Card / Account (updates balance automatically)</label><select class="fs" id="t-acct"><option value="">None</option></select></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('txn')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveTxn()">Add ✓</button></div>
-</div></div>
-
-<div class="ov" id="m-acct"><div class="modal">
-  <div class="mhandle" onclick="closeM('acct')"></div>
-  <div class="mtitle">🏦 Add Account</div>
-  <div class="fg"><label class="fl">Account Name</label><input class="fi" id="a-name" placeholder="e.g. Chase Checking"></div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Type</label><select class="fs" id="a-type"><option value="checking">🏦 Checking</option><option value="savings">💰 Savings</option><option value="credit">💳 Credit Card</option><option value="cash">💵 Cash</option></select></div>
-    <div class="fg"><label class="fl">Balance ($)</label><input class="fi" id="a-bal" type="number" placeholder="0.00" step="0.01"></div>
-  </div>
-  <div class="fg"><label class="fl">Icon (emoji)</label><input class="fi" id="a-icon" placeholder="🏦" maxlength="4"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('acct')">Cancel</button><button class="btn btn-b" style="flex:2" onclick="saveAcct()">Add Account</button></div>
-</div></div>
-
-<div class="ov" id="m-upd-acct"><div class="modal">
-  <div class="mhandle" onclick="closeM('upd-acct')"></div>
-  <div class="mtitle" id="upd-acct-title">✏️ Update Balance</div>
-  <div class="fg"><label class="fl">Balance Owed ($) — enter positive amount</label><input class="fi" id="ua-bal" type="number" placeholder="0.00" step="0.01" min="0"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('upd-acct')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="doUpdAcct()">Update ✓</button></div>
-</div></div>
-
-<div class="ov" id="m-goal"><div class="modal">
-  <div class="mhandle" onclick="closeM('goal')"></div>
-  <div class="mtitle" id="goal-title">🎯 Add Goal</div>
-  <div class="fg"><label class="fl">Goal Name</label><input class="fi" id="g-name" placeholder="e.g. Emergency Fund"></div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Target ($)</label><input class="fi" id="g-tgt" type="number" placeholder="0.00"></div>
-    <div class="fg"><label class="fl">Saved So Far ($)</label><input class="fi" id="g-cur" type="number" placeholder="0.00"></div>
-  </div>
-  <div class="fg"><label class="fl">Target Date</label><input class="fi" id="g-date" type="date"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('goal')">Cancel</button><button class="btn btn-g" style="flex:2" id="goal-btn" onclick="saveGoal()">Add Goal</button></div>
-</div></div>
-
-<div class="ov" id="m-gd"><div class="modal">
-  <div class="mhandle" onclick="closeM('gd')"></div>
-  <div class="mtitle" id="gd-title">🎯 Add Funds</div>
-  <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Saved: <span id="gd-cur" style="color:var(--blue);font-family:var(--mono);font-size:14px;"></span></div>
-  <div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="gd-amt" type="number" placeholder="0.00" step="0.01"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('gd')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="doGoalDep()">Add Funds ✓</button></div>
-</div></div>
-
-<div class="ov" id="m-plan"><div class="modal">
-  <div class="mhandle" onclick="closeM('plan')"></div>
-  <div class="mtitle" id="plan-title">📋 Add Action Item</div>
-  <div class="fg"><label class="fl">Title</label><input class="fi" id="p-title" placeholder="e.g. Open high-yield savings"></div>
-  <div class="fg"><label class="fl">Description</label><textarea class="fi-ta" id="p-desc" placeholder="Details..."></textarea></div>
-  <div class="g2">
-    <div class="fg"><label class="fl">Date / When</label><input class="fi" id="p-date" placeholder="e.g. AUG 1"></div>
-    <div class="fg"><label class="fl">Priority</label><select class="fs" id="p-pri"><option value="high">🔴 High</option><option value="medium">🟡 Medium</option><option value="low">🟢 Low</option></select></div>
-  </div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('plan')">Cancel</button><button class="btn btn-p" style="flex:2" id="plan-btn" onclick="savePlanItem()">Add Item</button></div>
-</div></div>
-
-<div class="ov" id="m-pin"><div class="modal">
-  <div class="mhandle" onclick="closeM('pin')"></div>
-  <div class="mtitle">🔒 Change PIN</div>
-  <div class="fg"><label class="fl">Current PIN</label><input class="fi" id="pin-old" type="password" inputmode="numeric" maxlength="4" placeholder="••••"></div>
-  <div class="fg"><label class="fl">New PIN (4 digits)</label><input class="fi" id="pin-new" type="password" inputmode="numeric" maxlength="4" placeholder="••••"></div>
-  <div class="fg"><label class="fl">Confirm New PIN</label><input class="fi" id="pin-cf" type="password" inputmode="numeric" maxlength="4" placeholder="••••"></div>
-  <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('pin')">Cancel</button><button class="btn btn-g" style="flex:1" onclick="doChangePin()">Save PIN</button></div>
-</div></div>
-
-<div class="toast" id="toast"><span id="toast-msg"></span><span class="tx" onclick="hideToast()">✕</span></div>
+<div class="ov" id="m-income"><div class="modal"><div class="mhandle" onclick="closeM('income')"></div><div class="mtitle">Income &amp; Budget</div><div class="fg"><label class="fl">Monthly Income (after tax)</label><input class="fi" id="i-inc" type="number" placeholder="4000"></div><div class="fg"><label class="fl">Biweekly Paycheck</label><input class="fi" id="i-pay" type="number" placeholder="2000"></div><div class="fg"><label class="fl">Gas + Misc / month</label><input class="fi" id="i-misc" type="number" placeholder="500"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('income')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveIncome()">Save</button></div></div></div>
+<div class="ov" id="m-credit"><div class="modal"><div class="mhandle" onclick="closeM('credit')"></div><div class="mtitle">Credit Score</div><div class="fg"><label class="fl">Current Score</label><input class="fi" id="c-sc" type="number" placeholder="620" min="300" max="850"></div><div class="fg"><label class="fl">Target Score</label><input class="fi" id="c-tgt" type="number" placeholder="750" min="300" max="850"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('credit')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveCredit()">Save</button></div></div></div>
+<div class="ov" id="m-debt"><div class="modal"><div class="mhandle" onclick="closeM('debt')"></div><div class="mtitle" id="debt-title">Add Debt</div><div class="fg"><label class="fl">Name</label><input class="fi" id="d-name" placeholder="e.g. Chase Freedom"></div><div class="g2"><div class="fg"><label class="fl">Balance ($)</label><input class="fi" id="d-bal" type="number" placeholder="0.00" step="0.01"></div><div class="fg"><label class="fl">APR (%)</label><input class="fi" id="d-apr" type="number" placeholder="27" step="0.1"></div></div><div class="g2"><div class="fg"><label class="fl">Closing Day</label><input class="fi" id="d-close" type="number" placeholder="2" min="1" max="31"></div><div class="fg"><label class="fl">Due Day</label><input class="fi" id="d-due" type="number" placeholder="27" min="1" max="31"></div></div><div class="g2"><div class="fg"><label class="fl">Priority (1=first)</label><input class="fi" id="d-pri" type="number" placeholder="1" min="1"></div><div class="fg"><label class="fl">Credit Limit ($)</label><input class="fi" id="d-limit" type="number" placeholder="0"></div></div><div class="fg"><label class="fl">Type</label><select class="fs" id="d-type"><option value="credit_card">Credit Card</option><option value="student_loan">Student Loan</option><option value="car_loan">Car Loan</option><option value="personal_loan">Personal Loan</option><option value="medical">Medical</option><option value="other">Other</option></select></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('debt')">Cancel</button><button class="btn btn-r" style="flex:2" id="debt-btn" onclick="saveDebt()">Add Debt</button></div></div></div>
+<div class="ov" id="m-pay"><div class="modal"><div class="mhandle" onclick="closeM('pay')"></div><div class="mtitle" id="pay-title">Log Payment</div><div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Balance: <span id="pay-bal" style="color:var(--red);font-family:var(--mono);font-size:14px;"></span></div><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="pay-amt" type="number" placeholder="0.00" step="0.01"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('pay')">Cancel</button><button class="btn btn-r" style="flex:2" onclick="doPayment()">Destroy Debt</button></div></div></div>
+<div class="ov" id="m-charge"><div class="modal"><div class="mhandle" onclick="closeM('charge')"></div><div class="mtitle" id="charge-title">Update Balance</div><div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Current: <span id="charge-bal" style="color:var(--red);font-family:var(--mono);font-size:14px;"></span></div><div class="fg"><label class="fl">Type</label><select class="fs" id="charge-type"><option value="set">Set as new total</option><option value="add">Add a charge</option></select></div><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="charge-amt" type="number" placeholder="0.00" step="0.01"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('charge')">Cancel</button><button class="btn btn-a" style="flex:2" onclick="doCharge()">Update</button></div></div></div>
+<div class="ov" id="m-bill"><div class="modal"><div class="mhandle" onclick="closeM('bill')"></div><div class="mtitle" id="bill-title">Add Bill</div><div class="fg"><label class="fl">Name</label><input class="fi" id="b-name" placeholder="e.g. Spotify"></div><div class="g2"><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="b-amt" type="number" placeholder="0.00" step="0.01"></div><div class="fg"><label class="fl">Due Day</label><input class="fi" id="b-due" type="number" placeholder="15" min="0" max="31"></div></div><div class="fg"><label class="fl">Icon (emoji)</label><input class="fi" id="b-icon" placeholder="&#128179;" maxlength="4"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('bill')">Cancel</button><button class="btn btn-b" style="flex:2" id="bill-btn" onclick="saveBill()">Add Bill</button></div></div></div>
+<div class="ov" id="m-txn"><div class="modal"><div class="mhandle" onclick="closeM('txn')"></div><div class="mtitle">Add Transaction</div><div class="fg"><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"><button id="t-exp" class="btn btn-r" style="width:100%" onclick="setTxnType('expense')">Expense</button><button id="t-inc" class="btn btn-s" style="width:100%" onclick="setTxnType('income')">Income</button></div></div><div class="fg"><label class="fl">Description</label><input class="fi" id="t-desc" placeholder="e.g. Grocery run"></div><div class="g2"><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="t-amt" type="number" placeholder="0.00" step="0.01"></div><div class="fg"><label class="fl">Date</label><input class="fi" id="t-date" type="date"></div></div><div class="fg"><label class="fl">Category</label><select class="fs" id="t-cat"><optgroup label="EXPENSES"><option value="needs">Needs (rent, food)</option><option value="wants">Wants (dining, fun)</option><option value="transport">Transport</option><option value="subscriptions">Subscriptions</option><option value="debt">Debt Payment</option><option value="other_exp">Other Expense</option></optgroup><optgroup label="INCOME"><option value="paycheck">Paycheck</option><option value="side">Side Income</option><option value="other_inc">Other Income</option></optgroup></select></div><div class="fg"><label class="fl">Card / Account (updates balance)</label><select class="fs" id="t-acct"><option value="">None</option></select></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('txn')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveTxn()">Add</button></div></div></div>
+<div class="ov" id="m-acct"><div class="modal"><div class="mhandle" onclick="closeM('acct')"></div><div class="mtitle">Add Account</div><div class="fg"><label class="fl">Name</label><input class="fi" id="a-name" placeholder="e.g. Chase Checking"></div><div class="g2"><div class="fg"><label class="fl">Type</label><select class="fs" id="a-type"><option value="checking">Checking</option><option value="savings">Savings</option><option value="credit">Credit Card</option><option value="cash">Cash</option></select></div><div class="fg"><label class="fl">Balance ($)</label><input class="fi" id="a-bal" type="number" placeholder="0.00" step="0.01"></div></div><div class="fg"><label class="fl">Icon</label><input class="fi" id="a-icon" placeholder="&#127974;" maxlength="4"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('acct')">Cancel</button><button class="btn btn-b" style="flex:2" onclick="saveAcct()">Add Account</button></div></div></div>
+<div class="ov" id="m-upd-acct"><div class="modal"><div class="mhandle" onclick="closeM('upd-acct')"></div><div class="mtitle" id="upd-acct-title">Update Balance</div><div class="fg"><label class="fl">Balance ($) - enter amount owed for credit cards</label><input class="fi" id="ua-bal" type="number" placeholder="0.00" step="0.01" min="0"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('upd-acct')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="doUpdAcct()">Update</button></div></div></div>
+<div class="ov" id="m-goal"><div class="modal"><div class="mhandle" onclick="closeM('goal')"></div><div class="mtitle" id="goal-title">Add Goal</div><div class="fg"><label class="fl">Goal Name</label><input class="fi" id="g-name" placeholder="e.g. Emergency Fund"></div><div class="g2"><div class="fg"><label class="fl">Target ($)</label><input class="fi" id="g-tgt" type="number" placeholder="0.00"></div><div class="fg"><label class="fl">Saved So Far ($)</label><input class="fi" id="g-cur" type="number" placeholder="0.00"></div></div><div class="fg"><label class="fl">Target Date</label><input class="fi" id="g-date" type="date"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('goal')">Cancel</button><button class="btn btn-g" style="flex:2" id="goal-btn" onclick="saveGoal()">Add Goal</button></div></div></div>
+<div class="ov" id="m-gd"><div class="modal"><div class="mhandle" onclick="closeM('gd')"></div><div class="mtitle" id="gd-title">Add Funds</div><div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Saved: <span id="gd-cur" style="color:var(--blue);font-family:var(--mono);font-size:14px;"></span></div><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="gd-amt" type="number" placeholder="0.00" step="0.01"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('gd')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="doGoalDep()">Add Funds</button></div></div></div>
+<div class="ov" id="m-plan"><div class="modal"><div class="mhandle" onclick="closeM('plan')"></div><div class="mtitle" id="plan-title">Add Action Item</div><div class="fg"><label class="fl">Title</label><input class="fi" id="p-title" placeholder="e.g. Open savings account"></div><div class="fg"><label class="fl">Description</label><textarea class="fi-ta" id="p-desc" placeholder="Details..."></textarea></div><div class="g2"><div class="fg"><label class="fl">When</label><input class="fi" id="p-date" placeholder="e.g. AUG 1"></div><div class="fg"><label class="fl">Priority</label><select class="fs" id="p-pri"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('plan')">Cancel</button><button class="btn btn-p" style="flex:2" id="plan-btn" onclick="savePlanItem()">Add Item</button></div></div></div>
+<div class="ov" id="m-pin"><div class="modal"><div class="mhandle" onclick="closeM('pin')"></div><div class="mtitle">Change PIN</div><div class="fg"><label class="fl">Current PIN</label><input class="fi" id="pin-old" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="fg"><label class="fl">New PIN (4 digits)</label><input class="fi" id="pin-new" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="fg"><label class="fl">Confirm New PIN</label><input class="fi" id="pin-cf" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('pin')">Cancel</button><button class="btn btn-g" style="flex:1" onclick="doChangePin()">Save PIN</button></div></div></div>
+<div class="toast" id="toast"><span id="toast-msg"></span><span class="tx" onclick="hideToast()">X</span></div>
 <script>
-'use strict';
+// ============================================================
+// FINANCE QUEST - Clean build, zero template literals
+// All strings use concatenation only
+// ============================================================
+
+// ── STATE ──
+var S = {};
+var _tab='hud', _txnType='expense', _filterCat='all';
+var _editDebtId=null, _editBillId=null, _editGoalId=null, _editPlanId=null;
+var _payDebtId=null, _chargeDebtId=null, _goalDepId=null, _updAcctId=null;
+var _toastTimer=null, _lockTimer=null, _pinBuf='';
+
 // ── DEFAULT DATA ──
-const DEF={
-  name:'Ralique',income:4000,paycheck:2000,misc:500,creditScore:620,creditTarget:750,autoLock:true,lockMins:5,
+var DEF = {
+  name:'Ralique', income:4000, paycheck:2000, misc:500,
+  creditScore:620, creditTarget:750, autoLock:true, lockMins:5,
   debts:[
     {id:1,name:'Capital One Quicksilver',bal:500,orig:500,apr:27,due:27,close:2,pri:1,cleared:false,type:'credit_card',limit:2000},
     {id:2,name:'Credit One',bal:462,orig:462,apr:27,due:28,close:4,pri:2,cleared:false,type:'credit_card',limit:1000},
-    {id:3,name:'Capital One Savor',bal:1007,orig:1007,apr:27,due:7,close:13,pri:3,cleared:false,type:'credit_card',limit:2000},
+    {id:3,name:'Capital One Savor',bal:1007,orig:1007,apr:27,due:7,close:13,pri:3,cleared:false,type:'credit_card',limit:2000}
   ],
   bills:[
-    {id:1,name:'Rent',amt:300,due:1,icon:'🏠',paid:false},
-    {id:2,name:'Car Insurance',amt:253,due:17,icon:'🚗',paid:false},
-    {id:3,name:'iCloud',amt:3,due:7,icon:'☁️',paid:false},
-    {id:4,name:'Google Drive',amt:3,due:19,icon:'📁',paid:false},
-    {id:5,name:'Apple Care',amt:12,due:0,icon:'🍎',paid:false},
-    {id:6,name:'Triple AAA',amt:9,due:23,icon:'🔧',paid:false},
-    {id:7,name:'Amazon Prime',amt:14.99,due:9,icon:'📦',paid:false},
-    {id:8,name:'Todolist x2',amt:10,due:9,icon:'⚠️',paid:false},
+    {id:1,name:'Rent',amt:300,due:1,icon:'home',paid:false},
+    {id:2,name:'Car Insurance',amt:253,due:17,icon:'car',paid:false},
+    {id:3,name:'iCloud',amt:3,due:7,icon:'cloud',paid:false},
+    {id:4,name:'Google Drive',amt:3,due:19,icon:'folder',paid:false},
+    {id:5,name:'Apple Care',amt:12,due:0,icon:'apple',paid:false},
+    {id:6,name:'AAA',amt:9,due:23,icon:'wrench',paid:false},
+    {id:7,name:'Amazon Prime',amt:14.99,due:9,icon:'box',paid:false},
+    {id:8,name:'Todolist x2',amt:10,due:9,icon:'warn',paid:false}
   ],
   goals:[
-    {id:1,name:'🏠 Apartment Fund',cur:0,tgt:4500,date:'2025-09-01',col:'xb'},
-    {id:2,name:'🚗 Car Down Payment',cur:0,tgt:3000,date:'2025-10-01',col:'xp'},
-    {id:3,name:'🛡️ Emergency Fund',cur:0,tgt:1000,date:'2025-12-01',col:'xg'},
+    {id:1,name:'Apartment Fund',cur:0,tgt:4500,date:'2025-09-01',col:'xb'},
+    {id:2,name:'Car Down Payment',cur:0,tgt:3000,date:'2025-10-01',col:'xp'},
+    {id:3,name:'Emergency Fund',cur:0,tgt:1000,date:'2025-12-01',col:'xg'}
   ],
   planItems:[
-    {id:1,title:'Pay 2 cards same day — Jul 8',desc:'Savor min $25 first (due Jul 7). Then wipe Quicksilver ($500) + Credit One ($462). Do it the moment the check hits.',date:'JUL 8',pri:'high',done:false},
-    {id:2,title:'Cancel Todolist double charge',desc:'Paying $10/mo for a duplicate. Cancel both. Use Google Tasks or Apple Reminders — free.',date:'NOW',pri:'high',done:false},
-    {id:3,title:'Pause Amazon Prime',desc:'$14.99/mo. Amazon → Account → Prime → Pause. Reactivate after apartment.',date:'NOW',pri:'high',done:false},
-    {id:4,title:'Wipe Capital One Savor — Jul 22',desc:'Pay $1,007 + ~$10 interest. All 3 cards = $0. Score climbs within 30 days.',date:'JUL 22',pri:'high',done:false},
-    {id:5,title:'List the F-150 for sale',desc:'Facebook Marketplace, Craigslist, CarGurus. Every week it sits = money lost.',date:'NOW',pri:'high',done:false},
-    {id:6,title:'Pull your free credit report',desc:'AnnualCreditReport.com — free. One disputed error = +20-40 pts fast.',date:'NOW',pri:'medium',done:false},
-    {id:7,title:'Aug 8 — pure savings mode',desc:'Zero debt. Stack $1,500+/paycheck toward apartment. Target $4,500 by Sept.',date:'AUG 8',pri:'high',done:false},
-    {id:8,title:'Keep cards open at $0',desc:'Do NOT close Quicksilver or Savor after payoff. History length = points.',date:'JUL 22+',pri:'medium',done:false},
-    {id:9,title:'Research target states to move to',desc:'TX, FL, TN — no state income tax. $4K/mo goes much further. Compare rent costs.',date:'ONGOING',pri:'medium',done:false},
-    {id:10,title:'Buy car after score hits 680+',desc:'Sell truck first. Every 20 pts = better APR = hundreds saved on the loan.',date:'SEPT+',pri:'low',done:false},
+    {id:1,title:'Pay 2 cards same day - Jul 8',desc:'Savor min $25 first. Then wipe Quicksilver ($500) + Credit One ($462). Do it the moment the check hits.',date:'JUL 8',pri:'high',done:false},
+    {id:2,title:'Cancel Todolist double charge',desc:'Paying $10/mo for a duplicate. Use Google Tasks - free.',date:'NOW',pri:'high',done:false},
+    {id:3,title:'Pause Amazon Prime',desc:'$14.99/mo. Amazon > Account > Prime > Pause. Reactivate after apartment.',date:'NOW',pri:'high',done:false},
+    {id:4,title:'Wipe Capital One Savor - Jul 22',desc:'Pay $1,007 + ~$10 interest. All 3 cards = $0. Score climbs.',date:'JUL 22',pri:'high',done:false},
+    {id:5,title:'List the F-150 for sale',desc:'FB Marketplace, Craigslist, CarGurus. Every week it sits = money lost.',date:'NOW',pri:'high',done:false},
+    {id:6,title:'Pull your free credit report',desc:'AnnualCreditReport.com. One disputed error = +20-40 pts.',date:'NOW',pri:'medium',done:false},
+    {id:7,title:'Aug 8 - pure savings mode',desc:'Zero debt. Stack $1,500+/paycheck toward apartment. Target $4,500 by Sept.',date:'AUG 8',pri:'high',done:false},
+    {id:8,title:'Keep cards open at $0',desc:'Do NOT close Quicksilver or Savor after payoff. History = points.',date:'JUL 22+',pri:'medium',done:false},
+    {id:9,title:'Research move states',desc:'TX, FL, TN - no state income tax. $4K/mo goes much further.',date:'ONGOING',pri:'medium',done:false},
+    {id:10,title:'Buy car after score hits 680+',desc:'Sell truck first. Every 20 pts = better APR = hundreds saved.',date:'SEPT+',pri:'low',done:false}
   ],
-  transactions:[],
-  achievements:[],
-  accounts:[
-    {id:1,name:'Checking',type:'checking',bal:0,icon:'🏦'},
-    {id:2,name:'Quicksilver',type:'credit',bal:-500,icon:'💳'},
-    {id:3,name:'Credit One',type:'credit',bal:-462,icon:'💳'},
-    {id:4,name:'Savor',type:'credit',bal:-1007,icon:'💳'},
+  transactions:[], accounts:[
+    {id:1,name:'Checking',type:'checking',bal:0,icon:'bank',linkedDebtId:null},
+    {id:2,name:'Quicksilver',type:'credit',bal:-500,icon:'card',linkedDebtId:1},
+    {id:3,name:'Credit One',type:'credit',bal:-462,icon:'card',linkedDebtId:2},
+    {id:4,name:'Savor',type:'credit',bal:-1007,icon:'card',linkedDebtId:3}
   ],
+  achievements:[]
 };
 
-// ── STATE ──
-let S={};
-let _tab='hud',_txnType='expense',_filterCat='all';
-let _editDebtId=null,_editBillId=null,_editGoalId=null,_editPlanId=null;
-let _payDebtId=null,_chargeDebtId=null,_goalDepId=null,_updAcctId=null;
-let _toastTimer=null,_lockTimer=null,_pinBuf='';
-
 // ── STORAGE ──
-function lSave(){try{localStorage.setItem('fq5',JSON.stringify(S));}catch(e){}}
+function lSave(){try{localStorage.setItem('fq6',JSON.stringify(S));}catch(e){}}
 function lLoad(){
   try{
-    const d=localStorage.getItem('fq5');
+    var d=localStorage.getItem('fq6');
     if(d){S=JSON.parse(d);}else{S=JSON.parse(JSON.stringify(DEF));}
     if(!S.transactions)S.transactions=[];
-    if(!S.achievements)S.achievements=[];
     if(!S.accounts)S.accounts=JSON.parse(JSON.stringify(DEF.accounts));
     if(!S.planItems)S.planItems=JSON.parse(JSON.stringify(DEF.planItems));
     if(!S.goals)S.goals=JSON.parse(JSON.stringify(DEF.goals));
     if(!S.debts)S.debts=JSON.parse(JSON.stringify(DEF.debts));
     if(!S.bills)S.bills=JSON.parse(JSON.stringify(DEF.bills));
+    if(!S.achievements)S.achievements=[];
     if(S.autoLock===undefined)S.autoLock=true;
     if(!S.lockMins)S.lockMins=5;
   }catch(e){S=JSON.parse(JSON.stringify(DEF));}
 }
-function save(){masterSync();lSave();checkAchievements();}
+
+// ── SYNC: debt is master, accounts mirror ──
+function masterSync(){
+  S.debts.forEach(function(d){
+    var linked=S.accounts.find(function(a){return a.linkedDebtId===d.id;});
+    if(linked){linked.bal=+(- d.bal).toFixed(2);}
+  });
+}
+function save(){masterSync();lSave();}
 
 // ── PIN ──
-const PK='fq_pin';
+var PK='fq_pin';
 function getPin(){return localStorage.getItem(PK)||'1234';}
 function pinKey(k){
   if(_pinBuf.length>=4)return;
@@ -493,8 +338,8 @@ function pinDel(){
   if(_pinBuf.length>0){_pinBuf=_pinBuf.slice(0,-1);updatePinDots();}
 }
 function updatePinDots(){
-  for(let i=0;i<4;i++){
-    const d=document.getElementById('pd'+i);
+  for(var i=0;i<4;i++){
+    var d=document.getElementById('pd'+i);
     if(d)d.className='pd'+(i<_pinBuf.length?' on':'');
   }
 }
@@ -502,17 +347,16 @@ function checkPin(){
   if(_pinBuf===getPin()){
     unlockApp();
   }else{
-    document.getElementById('pinErr').textContent='Incorrect PIN — try again';
-    for(let i=0;i<4;i++){const d=document.getElementById('pd'+i);if(d)d.className='pd er';}
-    const dots=document.getElementById('pinDots');
-    if(dots){dots.classList.add('shake');setTimeout(()=>dots.classList.remove('shake'),400);}
-    setTimeout(()=>{_pinBuf='';updatePinDots();document.getElementById('pinErr').textContent='';},900);
+    document.getElementById('pinErr').textContent='Incorrect PIN';
+    for(var i=0;i<4;i++){var d=document.getElementById('pd'+i);if(d)d.className='pd er';}
+    var dots=document.getElementById('pinDots');
+    if(dots){dots.classList.add('shake');setTimeout(function(){dots.classList.remove('shake');},400);}
+    setTimeout(function(){_pinBuf='';updatePinDots();document.getElementById('pinErr').textContent='';},900);
   }
 }
 function unlockApp(){
   document.getElementById('pinScreen').classList.add('gone');
-  const app=document.getElementById('app');
-  app.style.display='flex';
+  document.getElementById('app').style.display='flex';
   render();
   resetLock();
 }
@@ -527,493 +371,311 @@ function resetLock(){
   _lockTimer=setTimeout(lockApp,(S.lockMins||5)*60*1000);
 }
 function pinReset(){
-  const ans=prompt('Enter your name to reset PIN:');
+  var ans=prompt('Enter your name to reset PIN:');
   if(ans&&ans.toLowerCase().trim()===S.name.toLowerCase().trim()){
     localStorage.removeItem(PK);
-    document.getElementById('pinSub').textContent='RESET — USE: 1234';
-    toast('PIN reset to 1234. Change it in Settings.');
-  }else{
-    toast('Name did not match','err');
-  }
+    document.getElementById('pinSub').textContent='RESET - USE: 1234';
+    toast('PIN reset to 1234');
+  }else{toast('Name did not match','err');}
 }
 function doChangePin(){
-  const old=document.getElementById('pin-old').value;
-  const nw=document.getElementById('pin-new').value;
-  const cf=document.getElementById('pin-cf').value;
+  var old=document.getElementById('pin-old').value;
+  var nw=document.getElementById('pin-new').value;
+  var cf=document.getElementById('pin-cf').value;
   if(old!==getPin()){toast('Current PIN incorrect','err');return;}
-  if(nw.length!==4||!/^\d{4}$/.test(nw)){toast('PIN must be exactly 4 digits','err');return;}
+  if(nw.length!==4||!/^\d{4}$/.test(nw)){toast('PIN must be 4 digits','err');return;}
   if(nw!==cf){toast('PINs do not match','err');return;}
   localStorage.setItem(PK,nw);
   closeM('pin');
-  ['pin-old','pin-new','pin-cf'].forEach(id=>document.getElementById(id).value='');
-  toast('🔒 PIN updated!');
+  ['pin-old','pin-new','pin-cf'].forEach(function(id){document.getElementById(id).value='';});
+  toast('PIN updated!');
 }
-document.addEventListener('touchstart',()=>{if(document.getElementById('app').style.display!=='none')resetLock();},{passive:true});
-document.addEventListener('click',()=>{if(document.getElementById('app').style.display!=='none')resetLock();});
-
-
-// ── MASTER SYNC — single source of truth ──
-// Links debts to accounts by storing debtId on each account
-// Called after EVERY data change so all tabs always show the same numbers
-
-function masterSync(){
-  // For each debt, find its linked account and keep balance in sync
-  S.debts.forEach(function(d){
-    // Find account that is linked to this debt
-    var linked = S.accounts.find(function(a){ return a.linkedDebtId===d.id; });
-    if(linked){
-      // Credit card account balance = negative of debt balance
-      linked.bal = +(- d.bal).toFixed(2);
-      linked.name = d.name; // keep name in sync too
-    }
-  });
-
-  // For each credit account that has a linkedDebtId, make sure the debt matches
-  S.accounts.forEach(function(a){
-    if(a.type==='credit'&&a.linkedDebtId){
-      var d=S.debts.find(function(x){return x.id===a.linkedDebtId;});
-      if(d){
-        // If account was updated directly, sync back to debt
-        var expectedBal = +(Math.abs(a.bal)).toFixed(2);
-        if(Math.abs(expectedBal - d.bal) > 0.01){
-          d.bal = expectedBal;
-          if(d.bal > d.orig) d.orig = d.bal;
-          d.cleared = (d.bal === 0);
-        }
-      }
-    }
-  });
-}
-
-function autoLinkDebtsToAccounts(){
-  // Auto-link debts to accounts on first load or when new debt/account added
-  // Match by similar name
-  S.debts.forEach(function(d){
-    // Already linked?
-    var alreadyLinked = S.accounts.find(function(a){ return a.linkedDebtId===d.id; });
-    if(alreadyLinked) return;
-    // Find credit account with similar name
-    var match = S.accounts.find(function(a){
-      if(a.type!=='credit') return false;
-      if(a.linkedDebtId) return false; // already linked to another debt
-      var dn = d.name.toLowerCase();
-      var an = a.name.toLowerCase();
-      // check if any word matches
-      var dWords = dn.split(' ');
-      var aWords = an.split(' ');
-      return dWords.some(function(w){ return w.length>3 && aWords.some(function(aw){ return aw.indexOf(w)!==-1||w.indexOf(aw)!==-1; }); });
-    });
-    if(match){
-      match.linkedDebtId = d.id;
-      match.type = 'credit';
-      match.bal = +(- d.bal).toFixed(2);
-    } else {
-      // No match found — create an account for this debt automatically
-      S.accounts.push({
-        id: Date.now()+Math.floor(Math.random()*1000),
-        name: d.name,
-        type: 'credit',
-        bal: +(- d.bal).toFixed(2),
-        icon: '💳',
-        linkedDebtId: d.id
-      });
-    }
-  });
-}
-
-
-// ── ACHIEVEMENTS ENGINE ──
-var ALL_ACHIEVEMENTS = [
-  // DEBT
-  {id:'debt_first_payment',icon:'⚔️',title:'First Blood',desc:'Make your first debt payment',cat:'debt',check:function(){return S.debts.some(function(d){return d.orig>d.bal&&d.bal>0;});}},
-  {id:'debt_first_cleared',icon:'💀',title:'Debt Slayer I',desc:'Pay off your first card completely',cat:'debt',check:function(){return S.debts.some(function(d){return d.cleared;});}},
-  {id:'debt_all_cleared',icon:'🔥',title:'Debt Slayer II',desc:'All debts cleared to $0',cat:'debt',check:function(){return S.debts.length>0&&S.debts.every(function(d){return d.cleared||d.bal===0;});}},
-  {id:'debt_500',icon:'💸',title:'$500 Destroyed',desc:'Pay down $500 in total debt',cat:'debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=500;}},
-  {id:'debt_1000',icon:'💣',title:'$1,000 Destroyed',desc:'Pay down $1,000 in total debt',cat:'debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=1000;}},
-  {id:'debt_2000',icon:'🏆',title:'$2,000 Destroyed',desc:'Pay down $2,000 in total debt',cat:'debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=2000;}},
-  // SAVINGS / GOALS
-  {id:'save_100',icon:'🌱',title:'First Seed',desc:'Save your first $100',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=100;});}},
-  {id:'save_500',icon:'💰',title:'Stack Starter',desc:'Save $500 toward any goal',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=500;});}},
-  {id:'save_1000',icon:'💵',title:'Grand Stack',desc:'Save $1,000 toward any goal',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=1000;});}},
-  {id:'save_4500',icon:'🏠',title:'Apartment Ready',desc:'Save $4,500 — move out unlocked',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=4500;});}},
-  {id:'save_10k',icon:'🚀',title:'10K Club',desc:'Save $10,000 total across all goals',cat:'savings',check:function(){return S.goals.reduce(function(s,g){return s+g.cur;},0)>=10000;}},
-  {id:'goal_complete',icon:'🎯',title:'Mission Complete',desc:'Reach 100% on any goal',cat:'savings',check:function(){return S.goals.some(function(g){return g.cur>=g.tgt;});}},
-  // CREDIT
-  {id:'credit_620',icon:'📊',title:'Fair Fighter',desc:'Credit score reached 620',cat:'credit',check:function(){return S.creditScore>=620;}},
-  {id:'credit_660',icon:'📈',title:'Rising Star',desc:'Credit score reached 660',cat:'credit',check:function(){return S.creditScore>=660;}},
-  {id:'credit_700',icon:'⭐',title:'Good Standing',desc:'Credit score reached 700',cat:'credit',check:function(){return S.creditScore>=700;}},
-  {id:'credit_740',icon:'💎',title:'Excellent Credit',desc:'Credit score reached 740+',cat:'credit',check:function(){return S.creditScore>=740;}},
-  {id:'utilization_30',icon:'🛡️',title:'Under Control',desc:'Credit utilization below 30%',cat:'credit',check:function(){
-    var cards=S.debts.filter(function(d){return d.type==='credit_card'&&d.limit>0;});
-    if(!cards.length)return false;
-    var totalBal=cards.reduce(function(s,d){return s+d.bal;},0);
-    var totalLim=cards.reduce(function(s,d){return s+d.limit;},0);
-    return totalLim>0&&(totalBal/totalLim)<0.3;
-  }},
-  {id:'utilization_10',icon:'🏅',title:'Elite Utilization',desc:'Credit utilization below 10%',cat:'credit',check:function(){
-    var cards=S.debts.filter(function(d){return d.type==='credit_card'&&d.limit>0;});
-    if(!cards.length)return false;
-    var totalBal=cards.reduce(function(s,d){return s+d.bal;},0);
-    var totalLim=cards.reduce(function(s,d){return s+d.limit;},0);
-    return totalLim>0&&(totalBal/totalLim)<0.1;
-  }},
-  // INCOME / TRACKING
-  {id:'first_txn',icon:'📝',title:'Tracker Activated',desc:'Log your first transaction',cat:'tracking',check:function(){return S.transactions.length>=1;}},
-  {id:'txn_30',icon:'📅',title:'30 Day Tracker',desc:'Log 30 transactions',cat:'tracking',check:function(){return S.transactions.length>=30;}},
-  {id:'income_4k',icon:'💼',title:'$4K Month',desc:'Log $4,000+ income in a month',cat:'tracking',check:function(){
-    var now=new Date();
-    var mInc=S.transactions.filter(function(t){var d=new Date(t.date);return t.type==='income'&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).reduce(function(s,t){return s+t.amt;},0);
-    return mInc>=4000;
-  }},
-  {id:'net_worth_positive',icon:'📊',title:'Net Positive',desc:'Achieve a positive net worth',cat:'tracking',check:function(){return S.accounts.reduce(function(s,a){return s+a.bal;},0)>0;}},
-  // PLAN
-  {id:'plan_5',icon:'✅',title:'Action Taker',desc:'Complete 5 plan items',cat:'plan',check:function(){return S.planItems.filter(function(p){return p.done;}).length>=5;}},
-  {id:'plan_all',icon:'🏁',title:'Plan Complete',desc:'Complete all plan items',cat:'plan',check:function(){return S.planItems.length>0&&S.planItems.every(function(p){return p.done;});}},
-  // LEVEL
-  {id:'level_3',icon:'⚡',title:'Grinder',desc:'Reach Level 3',cat:'level',check:function(){
-    var td=S.debts.reduce(function(s,d){return s+d.bal;},0);
-    var to=S.debts.reduce(function(s,d){return s+d.orig;},0);
-    return to>0&&((to-td)/to)>=0.3;
-  }},
-  {id:'level_5',icon:'👑',title:'Debt Slayer Supreme',desc:'Reach Level 5 — all debt gone',cat:'level',check:function(){
-    return S.debts.length>0&&S.debts.every(function(d){return d.cleared||d.bal===0;});
-  }},
-];
-
-function checkAchievements(){
-  var newlyEarned=[];
-  ALL_ACHIEVEMENTS.forEach(function(a){
-    var alreadyHave=S.achievements.indexOf(a.id)!==-1;
-    if(!alreadyHave&&a.check()){
-      S.achievements.push(a.id);
-      newlyEarned.push(a);
-    }
-  });
-  if(newlyEarned.length){
-    lSave();
-    // Show toast for each new achievement (staggered)
-    newlyEarned.forEach(function(a,i){
-      setTimeout(function(){
-        toast('🏆 Achievement Unlocked: '+a.icon+' '+a.title,'');
-      },i*2000);
-    });
-  }
-}
-
-function getUtilization(){
-  var cards=S.debts.filter(function(d){return d.type==='credit_card'&&d.limit>0&&!d.cleared;});
-  if(!cards.length)return null;
-  var totalBal=cards.reduce(function(s,d){return s+d.bal;},0);
-  var totalLim=cards.reduce(function(s,d){return s+d.limit;},0);
-  return totalLim>0?{pct:Math.round(totalBal/totalLim*100),bal:totalBal,lim:totalLim,cards:cards}:null;
-}
-
-function getDebtTypeIcon(type){
-  var icons={credit_card:'💳',student_loan:'🎓',car_loan:'🚗',personal_loan:'💵',medical:'🏥',other:'📦'};
-  return icons[type]||'📦';
-}
-function getDebtTypeLabel(type){
-  var labels={credit_card:'Credit Card',student_loan:'Student Loan',car_loan:'Car Loan',personal_loan:'Personal Loan',medical:'Medical',other:'Other'};
-  return labels[type]||'Debt';
-}
-
-
-function rAchievements(){
-  var cats={debt:'⚔️ Debt',savings:'💰 Savings',credit:'📊 Credit',tracking:'📋 Tracking',plan:'📋 Plan',level:'⚡ Level'};
-  var earned=S.achievements;
-  var total=ALL_ACHIEVEMENTS.length;
-  var earnedCount=earned.length;
-  var h='<div class="sh" style="margin-top:13px;"><div class="st">🏆 Achievements</div></div>';
-  h+='<div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">';
-  h+='<div style="flex:1;"><div class="xtrack" style="margin-bottom:4px;"><div class="xfill xp" style="width:'+Math.round(earnedCount/total*100)+'%"></div></div>';
-  h+='<div style="font-size:10px;color:var(--muted);font-family:var(--mono);">'+earnedCount+' / '+total+' unlocked</div></div>';
-  h+='<div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--purple);">'+Math.round(earnedCount/total*100)+'%</div></div>';
-
-  // Group by category
-  var catKeys=Object.keys(cats);
-  catKeys.forEach(function(cat){
-    var catAch=ALL_ACHIEVEMENTS.filter(function(a){return a.cat===cat;});
-    h+='<div style="font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 8px;">'+cats[cat]+'</div>';
-    catAch.forEach(function(a){
-      var isEarned=earned.indexOf(a.id)!==-1;
-      h+='<div style="background:var(--bg2);border:1px solid '+(isEarned?'var(--green)':'var(--border)')+';border-radius:var(--r);padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px;opacity:'+(isEarned?'1':'0.5')+';">';
-      h+='<div style="font-size:28px;line-height:1;flex-shrink:0;">'+(isEarned?a.icon:'🔒')+'</div>';
-      h+='<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:'+(isEarned?'var(--text)':'var(--muted)')+';">'+a.title+'</div>';
-      h+='<div style="font-size:11px;color:var(--muted);margin-top:2px;">'+a.desc+'</div></div>';
-      if(isEarned)h+='<div style="font-family:var(--mono);font-size:10px;color:var(--green);">✓ EARNED</div>';
-      h+='</div>';
-    });
-  });
-  return h;
-}
+document.addEventListener('touchstart',function(){if(document.getElementById('app').style.display!=='none')resetLock();},{passive:true});
+document.addEventListener('click',function(){if(document.getElementById('app').style.display!=='none')resetLock();});
 
 // ── NAVIGATION ──
 function go(tab){
   _tab=tab;
-  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('active',b.id==='nb-'+tab));
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.toggle('active',b.id==='nb-'+tab);});
   document.getElementById('scroll').scrollTop=0;
   render();
 }
 function render(){
-  const el=document.getElementById('main');
-  const map={hud:rHUD,debts:rDebts,bills:rBills,money:rMoney,goals:rGoals,plan:rPlan,strategy:rStrategy,settings:rSettings};
+  var el=document.getElementById('main');
+  if(!el)return;
+  var map={hud:rHUD,debts:rDebts,bills:rBills,money:rMoney,goals:rGoals,plan:rPlan,strategy:rStrategy,settings:rSettings,awards:rAwards};
   el.innerHTML=(map[_tab]||rHUD)();
   updateLvl();
 }
 function updateLvl(){
-  const td=S.debts.reduce((s,d)=>s+d.bal,0);
-  const to=S.debts.reduce((s,d)=>s+d.orig,0);
-  const pct=to>0?Math.round((to-td)/to*100):0;
-  let lv='LVL 1';
-  if(pct>=10)lv='LVL 2';if(pct>=30)lv='LVL 3';if(pct>=60)lv='LVL 4';if(pct>=100)lv='LVL 5 🔥';
-  document.getElementById('lvlBadge').textContent=lv;
+  var td=S.debts.reduce(function(s,d){return s+d.bal;},0);
+  var to=S.debts.reduce(function(s,d){return s+d.orig;},0);
+  var pct=to>0?Math.round((to-td)/to*100):0;
+  var lv='LVL 1';
+  if(pct>=10)lv='LVL 2';if(pct>=30)lv='LVL 3';if(pct>=60)lv='LVL 4';if(pct>=100)lv='LVL 5!';
+  var el=document.getElementById('lvlBadge');
+  if(el)el.textContent=lv;
+}
+
+// ── HELPERS ──
+function ord(n){return n+(n===1?'st':n===2?'nd':n===3?'rd':'th');}
+function priL(p){return p===1?'KILL FIRST':p===2?'KILL SECOND':p===3?'KILL LAST':'PRIORITY '+p;}
+function priC(p){return p===1?'p1':p===2?'p2':p===3?'p3':'px';}
+function fmtBal(n){return (n>=0?'$':'-$')+Math.abs(n).toFixed(2);}
+function row(lbl,val,cls){return '<div class="irow"><span class="ilbl">'+lbl+'</span><span class="ival'+(cls?' '+cls:'')+'">'+val+'</span></div>';}
+function xbar(pct,col,h){h=h||7;return '<div class="xtrack" style="height:'+h+'px"><div class="xfill '+col+'" style="width:'+pct+'%"></div></div>';}
+function shead(title){return '<div class="sh"><div class="st">'+title+'</div></div>';}
+function sheadbtn(title,cls,onclick,label){return '<div class="sh"><div class="st">'+title+'</div><button class="ab '+cls+'" onclick="'+onclick+'">'+label+'</button></div>';}
+
+// ── UTILIZATION ──
+function getUtil(){
+  var cards=S.debts.filter(function(d){return d.type==='credit_card'&&d.limit>0&&!d.cleared;});
+  if(!cards.length)return null;
+  var bal=cards.reduce(function(s,d){return s+d.bal;},0);
+  var lim=cards.reduce(function(s,d){return s+d.limit;},0);
+  return lim>0?{pct:Math.round(bal/lim*100),bal:bal,lim:lim,cards:cards}:null;
 }
 
 // ── HUD ──
 function rHUD(){
-  const td=S.debts.reduce((s,d)=>s+d.bal,0);
-  const to=S.debts.reduce((s,d)=>s+d.orig,0);
-  const paid=Math.max(0,to-td);
-  const dpct=to>0?Math.min(100,Math.round(paid/to*100)):0;
-  const apt=S.goals.find(g=>g.name.includes('Apartment'))||S.goals[0];
-  const aptPct=apt?Math.min(100,Math.round(apt.cur/apt.tgt*100)):0;
-  const cPct=Math.min(100,Math.max(0,Math.round((S.creditScore-300)/(Math.max(S.creditTarget,S.creditScore+1)-300)*100)));
-  const bt=S.bills.reduce((s,b)=>s+b.amt,0);
-  const left=S.income-bt-S.misc;
-  const nw=S.accounts.reduce((s,a)=>s+a.bal,0);
-  const now=new Date();
-  const mT=S.transactions.filter(t=>{const d=new Date(t.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
-  const mInc=mT.filter(t=>t.type==='income').reduce((s,t)=>s+t.amt,0);
-  const mExp=mT.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amt,0);
-  return `<div class="pcard">
-    <div class="pname">${S.name}</div>
-    <div class="pcls">CLASS: DEBT SLAYER // MISSION: FINANCIAL FREEDOM</div>
-    <div class="srow">
-      <div class="sbox" onclick="openM('income')"><div class="sbox-l">Income/mo</div><div class="sbox-v cg">$${S.income.toLocaleString()}</div><div class="sbox-h">tap to edit</div></div>
-      <div class="sbox" onclick="go('debts')"><div class="sbox-l">Total Debt</div><div class="sbox-v cr">$${td.toFixed(0)}</div><div class="sbox-h">tap to manage</div></div>
-      <div class="sbox" onclick="openM('credit')"><div class="sbox-l">Credit Score</div><div class="sbox-v ca">${S.creditScore}</div><div class="sbox-h">tap to update</div></div>
-    </div>
-    <div class="xrow"><span>💀 DEBT DESTROYED</span><span>$${paid.toFixed(0)} / $${to.toFixed(0)}</span></div>
-    <div class="xtrack"><div class="xfill xr" style="width:${dpct}%"></div></div>
-    <div class="xrow"><span>🏠 ${apt?apt.name:'APARTMENT FUND'}</span><span>${apt?'$'+apt.cur.toFixed(0)+' / $'+apt.tgt.toFixed(0):'—'}</span></div>
-    <div class="xtrack"><div class="xfill xb" style="width:${aptPct}%"></div></div>
-    <div class="xrow"><span>📊 CREDIT SCORE</span><span>${S.creditScore} → ${S.creditTarget}</span></div>
-    <div class="xtrack"><div class="xfill xa" style="width:${cPct}%"></div></div>
-  </div>
-  <div class="sgrid">
-    <div class="sb2"><div class="sb2-l">Net Worth</div><div class="sb2-v ${nw>=0?'cg':'cr'}">${nw>=0?'$':'-$'}${Math.abs(nw).toFixed(0)}</div><div class="sb2-s">all accounts</div></div>
-    <div class="sb2"><div class="sb2-l">Month Flow</div><div class="sb2-v ${mInc-mExp>=0?'cg':'cr'}">${mInc-mExp>=0?'+':'-'}$${Math.abs(mInc-mExp).toFixed(0)}</div><div class="sb2-s">income vs spend</div></div>
-    <div class="sb2"><div class="sb2-l">Month Income</div><div class="sb2-v cg">$${mInc.toFixed(0)}</div><div class="sb2-s">logged</div></div>
-    <div class="sb2"><div class="sb2-l">Month Spend</div><div class="sb2-v cr">$${mExp.toFixed(0)}</div><div class="sb2-s">logged</div></div>
-  </div>
-  <div class="sh"><div class="st">📅 Monthly Snapshot</div><button class="ab ab2" onclick="openM('income')">✏️ Edit</button></div>
-  <div class="ibar">
-    <div class="irow"><span class="ilbl">Monthly income</span><span class="ival pl">+$${S.income.toLocaleString()}</span></div>
-    <div class="irow"><span class="ilbl">Fixed bills</span><span class="ival mn">−$${bt.toFixed(2)}</span></div>
-    <div class="irow"><span class="ilbl">Gas + misc</span><span class="ival mn">−$${S.misc}</span></div>
-    <div class="irow"><span class="ilbl" style="color:var(--text);font-weight:600;">After bills + misc</span><span class="ival hi">${left>=0?'$':'-$'}${Math.abs(left).toFixed(0)}</span></div>
-  </div>
-  <div class="sh"><div class="st">🏆 Achievements</div><button class="ab ap" onclick="go('achievements')">View All</button></div>
-  ${(function(){
-    var earned=ALL_ACHIEVEMENTS.filter(function(a){return S.achievements.indexOf(a.id)!==-1;});
-    var total=ALL_ACHIEVEMENTS.length;
-    if(!earned.length)return '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;font-size:11px;color:var(--muted);font-family:var(--mono);">No achievements yet — start paying down debt to unlock your first one.</div>';
-    return '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:10px;"><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">'+earned.map(function(a){return '<span title="'+a.title+'" style="font-size:22px;cursor:pointer;">'+a.icon+'</span>';}).join('')+'</div><div style="font-size:10px;color:var(--muted);font-family:var(--mono);">'+earned.length+'/'+total+' unlocked</div><div class="xtrack" style="margin-top:6px;"><div class="xfill xp" style="width:'+Math.round(earned.length/total*100)+'%"></div></div></div>';
-  })()}
-  <div class="sh"><div class="st">💸 Next Paycheck ($${S.paycheck.toLocaleString()})</div></div>
-  <div class="ibar">
-    <div class="irow"><span class="ilbl">Paycheck</span><span class="ival pl">+$${S.paycheck.toLocaleString()}</span></div>
-    <div class="irow"><span class="ilbl">Bills + buffer</span><span class="ival mn">−$550</span></div>
-    <div class="irow"><span class="ilbl">Savor minimum</span><span class="ival mn">−$25</span></div>
-    <div class="irow"><span class="ilbl">Quicksilver WIPE</span><span class="ival mn">−$500</span></div>
-    <div class="irow"><span class="ilbl">Credit One WIPE</span><span class="ival mn">−$462</span></div>
-    <div class="irow"><span class="ilbl" style="color:var(--text);font-weight:600;">Buffer remaining</span><span class="ival hi">$${Math.max(0,S.paycheck-550-25-500-462)}</span></div>
-  </div>`;
+  var td=S.debts.reduce(function(s,d){return s+d.bal;},0);
+  var to=S.debts.reduce(function(s,d){return s+d.orig;},0);
+  var paid=Math.max(0,to-td);
+  var dpct=to>0?Math.min(100,Math.round(paid/to*100)):0;
+  var apt=S.goals.find(function(g){return g.name.indexOf('Apartment')!==-1;})||S.goals[0];
+  var aptPct=apt?Math.min(100,Math.round(apt.cur/apt.tgt*100)):0;
+  var cPct=Math.min(100,Math.max(0,Math.round((S.creditScore-300)/(Math.max(S.creditTarget,S.creditScore+1)-300)*100)));
+  var bt=S.bills.reduce(function(s,b){return s+b.amt;},0);
+  var left=S.income-bt-S.misc;
+  var nw=S.accounts.reduce(function(s,a){return s+a.bal;},0);
+  var now=new Date();
+  var mT=S.transactions.filter(function(t){var d=new Date(t.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
+  var mInc=mT.filter(function(t){return t.type==='income';}).reduce(function(s,t){return s+t.amt;},0);
+  var mExp=mT.filter(function(t){return t.type==='expense';}).reduce(function(s,t){return s+t.amt;},0);
+  var h='';
+  h+='<div class="pcard">';
+  h+='<div class="pname">'+S.name+'</div>';
+  h+='<div class="pcls">DEBT SLAYER // MISSION: FINANCIAL FREEDOM</div>';
+  h+='<div class="srow">';
+  h+='<div class="sbox" onclick="openM(\'income\')"><div class="sbox-l">Income/mo</div><div class="sbox-v cg">$'+S.income.toLocaleString()+'</div><div class="sbox-h">tap to edit</div></div>';
+  h+='<div class="sbox" onclick="go(\'debts\')"><div class="sbox-l">Total Debt</div><div class="sbox-v cr">$'+td.toFixed(0)+'</div><div class="sbox-h">tap to manage</div></div>';
+  h+='<div class="sbox" onclick="openM(\'credit\')"><div class="sbox-l">Credit Score</div><div class="sbox-v ca">'+S.creditScore+'</div><div class="sbox-h">tap to update</div></div>';
+  h+='</div>';
+  h+='<div class="xrow"><span>DEBT DESTROYED</span><span>$'+paid.toFixed(0)+' / $'+to.toFixed(0)+'</span></div>'+xbar(dpct,'xr');
+  h+='<div class="xrow"><span>'+(apt?apt.name:'APARTMENT FUND')+'</span><span>'+(apt?'$'+apt.cur.toFixed(0)+' / $'+apt.tgt.toFixed(0):'--')+'</span></div>'+xbar(aptPct,'xb');
+  h+='<div class="xrow"><span>CREDIT SCORE</span><span>'+S.creditScore+' to '+S.creditTarget+'</span></div>'+xbar(cPct,'xa');
+  h+='</div>';
+  h+='<div class="sgrid">';
+  h+='<div class="sb2"><div class="sb2-l">Net Worth</div><div class="sb2-v '+(nw>=0?'cg':'cr')+'">'+fmtBal(nw)+'</div><div class="sb2-s">all accounts</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Month Flow</div><div class="sb2-v '+(mInc-mExp>=0?'cg':'cr')+'">'+fmtBal(mInc-mExp)+'</div><div class="sb2-s">income vs spend</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Month Income</div><div class="sb2-v cg">$'+mInc.toFixed(0)+'</div><div class="sb2-s">logged</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Month Spend</div><div class="sb2-v cr">$'+mExp.toFixed(0)+'</div><div class="sb2-s">logged</div></div>';
+  h+='</div>';
+  h+=sheadbtn('Monthly Snapshot','ab2',"openM('income')",'Edit');
+  h+='<div class="ibar">'+row('Monthly income','+$'+S.income.toLocaleString(),'pl')+row('Fixed bills','-$'+bt.toFixed(2),'mn')+row('Gas + misc','-$'+S.misc,'mn')+row('After bills + misc',(left>=0?'$':'-$')+Math.abs(left).toFixed(0),'hi')+'</div>';
+  h+=shead('Next Paycheck ($'+S.paycheck.toLocaleString()+')');
+  var buf=Math.max(0,S.paycheck-550-25-500-462);
+  h+='<div class="ibar">'+row('Paycheck','+$'+S.paycheck.toLocaleString(),'pl')+row('Bills + buffer','-$550','mn')+row('Savor minimum','-$25','mn')+row('Quicksilver WIPE','-$500','mn')+row('Credit One WIPE','-$462','mn')+row('Buffer remaining','$'+buf,'hi')+'</div>';
+  return h;
 }
 
 // ── DEBTS ──
-function ord(n){return n+(n===1?'st':n===2?'nd':n===3?'rd':'th');}
-function priL(p){return p===1?'KILL FIRST':p===2?'KILL SECOND':p===3?'KILL LAST':'PRIORITY '+p;}
-function priC(p){return p===1?'p1':p===2?'p2':p===3?'p3':'px';}
 function rDebts(){
-  const sorted=[...S.debts].sort((a,b)=>a.pri-b.pri);
-  const td=S.debts.reduce((s,d)=>s+d.bal,0);
-  const ti=S.debts.reduce((s,d)=>s+(d.apr/100/12*d.bal),0);
-  let util=getUtilization();
-  let utilPanel='';
+  var sorted=[].concat(S.debts).sort(function(a,b){return a.pri-b.pri;});
+  var td=S.debts.reduce(function(s,d){return s+d.bal;},0);
+  var ti=S.debts.reduce(function(s,d){return s+(d.apr/100/12*d.bal);},0);
+  var util=getUtil();
+  var h=sheadbtn('Debts','ar',"openAddDebt()",'+ Add');
   if(util){
-    let uColor=util.pct>=70?'var(--red)':util.pct>=30?'var(--amber)':'var(--green)';
-    let uBar=util.pct>=70?'xr':util.pct>=30?'xa':'xg';
-    let uMsg=util.pct>=70?'⚠️ DANGER — Score is being crushed. Pay down immediately.':util.pct>=30?'⚠️ WARNING — Above 30%. Score is being hurt. Get below 30%.':'✓ GOOD — Keep this under 30% at all times.';
-    utilPanel=`<div class="card" style="border-color:${uColor};margin-bottom:10px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">CREDIT UTILIZATION</div>
-        <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:${uColor};">${util.pct}%</div>
-      </div>
-      <div class="xtrack" style="height:10px;margin-bottom:8px;"><div class="xfill ${uBar}" style="width:${Math.min(100,util.pct)}%;background:${uColor};"></div></div>
-      <div style="font-size:11px;color:${uColor};margin-bottom:6px;">${uMsg}</div>
-      <div style="font-size:10px;color:var(--muted);line-height:1.7;">Balance: $${util.bal.toFixed(0)} / Limit: $${util.lim.toFixed(0)}<br>
-      ${util.cards.map(function(c){var u=c.limit>0?Math.round(c.bal/c.limit*100):0;var uc=u>=70?'var(--red)':u>=30?'var(--amber)':'var(--green)';return '<span style="color:var(--muted);">'+c.name.split(' ').pop()+': </span><span style="color:'+uc+';font-family:var(--mono);">'+u+'%</span> &nbsp;';}).join('')}
-      </div>
-    </div>`;
+    var uc=util.pct>=70?'var(--red)':util.pct>=30?'var(--amber)':'var(--green)';
+    var um=util.pct>=70?'DANGER: Score is being crushed. Pay down NOW.':util.pct>=30?'WARNING: Above 30%. Score is being hurt.':'GOOD: Under 30%. Keep it here.';
+    h+='<div class="card" style="border:1px solid '+uc+';margin-bottom:10px;">';
+    h+='<div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-family:var(--mono);font-size:10px;color:var(--muted);">CREDIT UTILIZATION</span><span style="font-family:var(--mono);font-size:18px;font-weight:700;color:'+uc+';">'+util.pct+'%</span></div>';
+    h+=xbar(Math.min(100,util.pct),'xr',10);
+    h+='<div style="font-size:11px;color:'+uc+';margin-bottom:5px;">'+um+'</div>';
+    h+='<div style="font-size:10px;color:var(--muted);">Balance: $'+util.bal.toFixed(0)+' / Limit: $'+util.lim.toFixed(0)+'</div>';
+    h+='</div>';
   }
-  let h=`<div class="sh" style="margin-top:13px;"><div class="st">⚔️ Debts</div><button class="ab ar" onclick="openAddDebt()">+ Add</button></div>
-  ${utilPanel}
-  <div class="ibar"><div class="irow"><span class="ilbl">Total balance</span><span class="ival mn">$${td.toFixed(2)}</span></div><div class="irow"><span class="ilbl">Monthly interest burning</span><span class="ival mn">~$${ti.toFixed(2)}</span></div></div>`;
-  if(!sorted.length)return h+'<div class="empty"><strong>ALL DEBTS CLEARED 🔥</strong>Stack savings now.</div>';
-  sorted.forEach(d=>{
-    const mi=(d.apr/100/12*d.bal).toFixed(2);
-    const pct=d.orig>0?Math.min(100,Math.round((d.orig-d.bal)/d.orig*100)):100;
-    const xc=d.cleared?'xg':d.pri===1?'xr':d.pri===2?'xa':'xb';
-    h+=`<div class="dcard ${d.cleared?'cleared':''}">
-      <span class="dpri ${priC(d.pri)}">${priL(d.pri)}</span>
-      <div class="dname">${d.name}</div>
-      <div class="dmeta">APR ${d.apr}% • Closes ${ord(d.close)} • Due ${ord(d.due)}</div>
-      <div class="damts"><div class="dbal ${d.cleared?'cv':''}">$${d.bal.toFixed(2)}</div>
-        <div class="drt"><div class="dint">~$${mi}/mo interest</div><div class="ddue">Due ${ord(d.due)}</div></div>
-      </div>
-      <div class="xtrack"><div class="xfill ${xc}" style="width:${pct}%"></div></div>
-      <div style="font-size:9px;color:var(--muted);margin-top:3px;margin-bottom:6px;font-family:var(--mono);">${pct}% destroyed</div>
-      ${!d.cleared?`<div class="dacts">
-        <button class="btn btn-r btn-sm" onclick="openPay(${d.id})">💸 Pay</button>
-        <button class="btn btn-a btn-sm" onclick="openCharge(${d.id})">📈 Charge</button>
-        <button class="btn btn-s btn-sm" onclick="openEditDebt(${d.id})">✏️</button>
-        <button class="btn-del" onclick="delDebt(${d.id})">🗑</button>
-      </div>`:`<button class="btn-del" style="margin-top:4px;" onclick="delDebt(${d.id})">Remove</button>`}
-    </div>`;
+  h+='<div class="ibar">'+row('Total balance','$'+td.toFixed(2),'mn')+row('Monthly interest burning','~$'+ti.toFixed(2),'mn')+'</div>';
+  if(!sorted.length)return h+'<div class="empty"><strong>ALL DEBTS CLEARED</strong>Stack savings now.</div>';
+  sorted.forEach(function(d){
+    var mi=(d.apr/100/12*d.bal).toFixed(2);
+    var pct=d.orig>0?Math.min(100,Math.round((d.orig-d.bal)/d.orig*100)):100;
+    var xc=d.cleared?'xg':d.pri===1?'xr':d.pri===2?'xa':'xb';
+    var tl={credit_card:'Credit Card',student_loan:'Student Loan',car_loan:'Car Loan',personal_loan:'Personal Loan',medical:'Medical',other:'Other'};
+    h+='<div class="dcard'+(d.cleared?' cleared':'')+'">';
+    h+='<div style="display:flex;justify-content:space-between;margin-bottom:5px;">';
+    h+='<span class="dpri '+priC(d.pri)+'">'+priL(d.pri)+'</span>';
+    h+='<span style="font-size:10px;color:var(--muted);">'+(tl[d.type]||'Debt')+(d.limit?' | Limit $'+d.limit:'')+'</span>';
+    h+='</div>';
+    h+='<div class="dname">'+d.name+'</div>';
+    h+='<div class="dmeta">APR '+d.apr+'% | Closes '+ord(d.close)+' | Due '+ord(d.due)+'</div>';
+    h+='<div class="damts"><div class="dbal'+(d.cleared?' cv':'')+'">$'+d.bal.toFixed(2)+'</div><div class="drt"><div class="dint">~$'+mi+'/mo interest</div><div class="ddue">Due '+ord(d.due)+'</div></div></div>';
+    h+=xbar(pct,xc);
+    h+='<div style="font-size:9px;color:var(--muted);margin-top:3px;margin-bottom:6px;">'+pct+'% destroyed</div>';
+    if(!d.cleared){
+      h+='<div class="dacts">';
+      h+='<button class="btn btn-r btn-sm" onclick="openPay('+d.id+')">Pay</button>';
+      h+='<button class="btn btn-a btn-sm" onclick="openCharge('+d.id+')">Update</button>';
+      h+='<button class="btn btn-s btn-sm" onclick="openEditDebt('+d.id+')">Edit</button>';
+      h+='<button class="btn-del" onclick="delDebt('+d.id+')">Remove</button>';
+      h+='</div>';
+    }else{
+      h+='<button class="btn-del" onclick="delDebt('+d.id+')">Remove</button>';
+    }
+    h+='</div>';
   });
   return h;
 }
-function openAddDebt(){_editDebtId=null;document.getElementById('debt-title').textContent='⚔️ Add Debt';document.getElementById('debt-btn').textContent='Add Debt';['d-name','d-bal','d-apr','d-close','d-due','d-pri','d-limit'].forEach(id=>document.getElementById(id).value='');document.getElementById('d-type').value='credit_card';openM('debt');}
-function openEditDebt(id){const d=S.debts.find(x=>x.id===id);_editDebtId=id;document.getElementById('debt-title').textContent='✏️ Edit — '+d.name;document.getElementById('debt-btn').textContent='Save Changes';document.getElementById('d-name').value=d.name;document.getElementById('d-bal').value=d.bal;
-  document.getElementById('d-apr').value=d.apr;document.getElementById('d-close').value=d.close;
-  document.getElementById('d-due').value=d.due;document.getElementById('d-pri').value=d.pri;
-  document.getElementById('d-type').value=d.type||'credit_card';
-  document.getElementById('d-limit').value=d.limit||0;
-  openM('debt');}
+function openAddDebt(){_editDebtId=null;document.getElementById('debt-title').textContent='Add Debt';document.getElementById('debt-btn').textContent='Add Debt';['d-name','d-bal','d-apr','d-close','d-due','d-pri','d-limit'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('d-type').value='credit_card';openM('debt');}
+function openEditDebt(id){var d=S.debts.find(function(x){return x.id===id;});_editDebtId=id;document.getElementById('debt-title').textContent='Edit: '+d.name;document.getElementById('debt-btn').textContent='Save';document.getElementById('d-name').value=d.name;document.getElementById('d-bal').value=d.bal;document.getElementById('d-apr').value=d.apr;document.getElementById('d-close').value=d.close;document.getElementById('d-due').value=d.due;document.getElementById('d-pri').value=d.pri;document.getElementById('d-limit').value=d.limit||0;document.getElementById('d-type').value=d.type||'credit_card';openM('debt');}
 function saveDebt(){
-  const name=document.getElementById('d-name').value.trim();
-  const bal=parseFloat(document.getElementById('d-bal').value);
-  const apr=parseFloat(document.getElementById('d-apr').value)||27;
-  const close=parseInt(document.getElementById('d-close').value)||1;
-  const due=parseInt(document.getElementById('d-due').value)||1;
-  const pri=parseInt(document.getElementById('d-pri').value)||1;
+  var name=document.getElementById('d-name').value.trim();
+  var bal=parseFloat(document.getElementById('d-bal').value);
+  var apr=parseFloat(document.getElementById('d-apr').value)||27;
+  var close=parseInt(document.getElementById('d-close').value)||1;
+  var due=parseInt(document.getElementById('d-due').value)||1;
+  var pri=parseInt(document.getElementById('d-pri').value)||1;
+  var limit=parseFloat(document.getElementById('d-limit').value)||0;
+  var type=document.getElementById('d-type').value||'credit_card';
   if(!name||isNaN(bal)){toast('Enter name and balance','err');return;}
-  if(_editDebtId!==null){const d=S.debts.find(x=>x.id===_editDebtId);
-    var dtype=document.getElementById('d-type').value;
-    var dlimit=parseFloat(document.getElementById('d-limit').value)||d.limit||0;
-    Object.assign(d,{name,bal,apr,close,due,pri,type:dtype,limit:dlimit});
-    if(bal===0){d.cleared=true;}else{d.cleared=false;}
-    toast('✏️ '+name+' updated!');}
-  else{var dtype=document.getElementById('d-type').value;
-    var dlimit=parseFloat(document.getElementById('d-limit').value)||0;
-    S.debts.push({id:Date.now(),name,bal,orig:bal,apr,due,close,pri,cleared:false,type:dtype,limit:dlimit});toast('⚔️ Tracking: '+name);}
-  autoLinkDebtsToAccounts();
+  if(_editDebtId!==null){
+    var d=S.debts.find(function(x){return x.id===_editDebtId;});
+    Object.assign(d,{name:name,bal:bal,apr:apr,close:close,due:due,pri:pri,limit:limit,type:type});
+    if(bal===0)d.cleared=true;else d.cleared=false;
+    toast('Updated: '+name);
+  }else{
+    S.debts.push({id:Date.now(),name:name,bal:bal,orig:bal,apr:apr,due:due,close:close,pri:pri,cleared:false,type:type,limit:limit,linkedDebtId:null});
+    // auto-create linked account for credit cards
+    if(type==='credit_card'){S.accounts.push({id:Date.now()+1,name:name,type:'credit',bal:-bal,icon:'card',linkedDebtId:S.debts[S.debts.length-1].id});}
+    toast('Tracking: '+name);
+  }
   save();closeM('debt');render();
 }
-function delDebt(id){const d=S.debts.find(x=>x.id===id);if(!confirm('Remove "'+d.name+'"?'))return;S.debts=S.debts.filter(x=>x.id!==id);save();render();toast('🗑 '+d.name+' removed');}
-function openPay(id){const d=S.debts.find(x=>x.id===id);_payDebtId=id;document.getElementById('pay-title').textContent='💸 Pay — '+d.name;document.getElementById('pay-bal').textContent='$'+d.bal.toFixed(2);document.getElementById('pay-amt').value='';openM('pay');}
-function doPayment(){
-  var amt=parseFloat(document.getElementById('pay-amt').value);
-  if(!amt||amt<=0){toast('Enter a valid amount','err');return;}
-  var d=S.debts.find(function(x){return x.id===_payDebtId;});
-  d.bal=Math.max(0,+(d.bal-amt).toFixed(2));
-  if(d.bal===0)d.cleared=true;
-  syncDebtToAcct(d.id);
-  save();closeM('pay');render();
-  toast(d.cleared?'🔥 '+d.name+' DESTROYED!':'💸 $'+amt.toFixed(2)+' crushed!');
-}
-function openCharge(id){const d=S.debts.find(x=>x.id===id);_chargeDebtId=id;document.getElementById('charge-title').textContent='📈 Update — '+d.name;document.getElementById('charge-bal').textContent='$'+d.bal.toFixed(2);document.getElementById('charge-amt').value='';openM('charge');}
-function doCharge(){
-  var amt=parseFloat(document.getElementById('charge-amt').value);
-  if(isNaN(amt)||amt<0){toast('Enter a valid amount','err');return;}
-  var d=S.debts.find(function(x){return x.id===_chargeDebtId;});
-  var type=document.getElementById('charge-type').value;
-  if(type==='set'){d.bal=amt;if(amt>d.orig)d.orig=amt;d.cleared=false;}
-  else{d.bal=+(d.bal+amt).toFixed(2);if(d.bal>d.orig)d.orig=d.bal;d.cleared=false;}
-  syncDebtToAcct(d.id);
-  save();closeM('charge');render();toast('📈 Balance updated: $'+d.bal.toFixed(2));
-}
+function delDebt(id){var d=S.debts.find(function(x){return x.id===id;});if(!confirm('Remove "'+d.name+'"?'))return;S.debts=S.debts.filter(function(x){return x.id!==id;});S.accounts=S.accounts.filter(function(a){return a.linkedDebtId!==id;});save();render();toast('Removed: '+d.name);}
+function openPay(id){var d=S.debts.find(function(x){return x.id===id;});_payDebtId=id;document.getElementById('pay-title').textContent='Pay: '+d.name;document.getElementById('pay-bal').textContent='$'+d.bal.toFixed(2);document.getElementById('pay-amt').value='';openM('pay');}
+function doPayment(){var amt=parseFloat(document.getElementById('pay-amt').value);if(!amt||amt<=0){toast('Enter a valid amount','err');return;}var d=S.debts.find(function(x){return x.id===_payDebtId;});d.bal=Math.max(0,+(d.bal-amt).toFixed(2));if(d.bal===0)d.cleared=true;save();closeM('pay');render();toast(d.cleared?d.name+' DESTROYED!':'$'+amt.toFixed(2)+' paid!');}
+function openCharge(id){var d=S.debts.find(function(x){return x.id===id;});_chargeDebtId=id;document.getElementById('charge-title').textContent='Update: '+d.name;document.getElementById('charge-bal').textContent='$'+d.bal.toFixed(2);document.getElementById('charge-amt').value='';openM('charge');}
+function doCharge(){var amt=parseFloat(document.getElementById('charge-amt').value);if(isNaN(amt)||amt<0){toast('Enter a valid amount','err');return;}var d=S.debts.find(function(x){return x.id===_chargeDebtId;});var type=document.getElementById('charge-type').value;if(type==='set'){d.bal=amt;if(amt>d.orig)d.orig=amt;d.cleared=false;}else{d.bal=+(d.bal+amt).toFixed(2);if(d.bal>d.orig)d.orig=d.bal;d.cleared=false;}save();closeM('charge');render();toast('Balance updated: $'+d.bal.toFixed(2));}
 
 // ── BILLS ──
 function rBills(){
-  const total=S.bills.reduce((s,b)=>s+b.amt,0);
-  const paid=S.bills.filter(b=>b.paid).reduce((s,b)=>s+b.amt,0);
-  const sorted=[...S.bills].sort((a,b)=>(a.due||32)-(b.due||32));
-  let h=`<div class="sh" style="margin-top:13px;"><div class="st">🔁 Monthly Bills</div><button class="ab ab2" onclick="openAddBill()">+ Add</button></div>`;
-  if(!sorted.length)h+='<div class="empty"><strong>NO BILLS ADDED</strong>Tap + Add to start</div>';
-  else sorted.forEach(b=>{h+=`<div class="bitem ${b.paid?'paid':''}"><div class="bleft"><div class="bico">${b.icon||'💳'}</div><div><div class="bname">${b.name}</div><div class="bdate">${b.due?'Due '+ord(b.due):'Monthly'}</div></div></div><div class="bright"><div class="bamt">$${b.amt.toFixed(2)}</div><button class="ib" onclick="openEditBill(${b.id})">✏️</button><button class="ib" style="color:var(--red)" onclick="delBill(${b.id})">🗑</button><button class="btog ${b.paid?'ck':''}" onclick="toggleBill(${b.id})">${b.paid?'✓':''}</button></div></div>`;});
-  h+=`<div class="sh" style="margin-top:16px;"><div class="st">📊 Summary</div></div><div class="ibar"><div class="irow"><span class="ilbl">Total monthly bills</span><span class="ival mn">$${total.toFixed(2)}</span></div><div class="irow"><span class="ilbl">Paid this month</span><span class="ival pl">$${paid.toFixed(2)}</span></div><div class="irow"><span class="ilbl">Still due</span><span class="ival ca">$${(total-paid).toFixed(2)}</span></div></div>`;
+  var total=S.bills.reduce(function(s,b){return s+b.amt;},0);
+  var paid=S.bills.filter(function(b){return b.paid;}).reduce(function(s,b){return s+b.amt;},0);
+  var sorted=[].concat(S.bills).sort(function(a,b){return (a.due||32)-(b.due||32);});
+  var h=sheadbtn('Monthly Bills','ab2',"openAddBill()",'+ Add');
+  if(!sorted.length)return h+'<div class="empty"><strong>NO BILLS ADDED</strong>Tap + Add to start</div>';
+  sorted.forEach(function(b){
+    var icons={home:'&#127968;',car:'&#128663;',cloud:'&#9729;',folder:'&#128193;',apple:'&#127822;',wrench:'&#128295;',box:'&#128230;',warn:'&#9888;'};
+    var ico=icons[b.icon]||b.icon||'&#128179;';
+    h+='<div class="bitem'+(b.paid?' paid':'')+'">';
+    h+='<div class="bleft"><div class="bico">'+ico+'</div><div><div class="bname">'+b.name+'</div><div class="bdate">'+(b.due?'Due '+ord(b.due):'Monthly')+'</div></div></div>';
+    h+='<div class="bright"><div class="bamt">$'+b.amt.toFixed(2)+'</div>';
+    h+='<button class="ib" onclick="openEditBill('+b.id+')">E</button>';
+    h+='<button class="ib" style="color:var(--red)" onclick="delBill('+b.id+')">X</button>';
+    h+='<button class="btog'+(b.paid?' ck':'')+'" onclick="toggleBill('+b.id+')">'+(b.paid?'&#10003;':'')+'</button>';
+    h+='</div></div>';
+  });
+  h+=shead('Summary');
+  h+='<div class="ibar">'+row('Total monthly bills','$'+total.toFixed(2),'mn')+row('Paid this month','$'+paid.toFixed(2),'pl')+row('Still due','$'+(total-paid).toFixed(2))+'</div>';
   return h;
 }
-function toggleBill(id){const b=S.bills.find(x=>x.id===id);b.paid=!b.paid;save();render();if(b.paid)toast('✓ '+b.name+' paid!');}
-function openAddBill(){_editBillId=null;document.getElementById('bill-title').textContent='🔁 Add Bill';document.getElementById('bill-btn').textContent='Add Bill';['b-name','b-amt','b-due','b-icon'].forEach(id=>document.getElementById(id).value='');openM('bill');}
-function openEditBill(id){const b=S.bills.find(x=>x.id===id);_editBillId=id;document.getElementById('bill-title').textContent='✏️ Edit — '+b.name;document.getElementById('bill-btn').textContent='Save Changes';document.getElementById('b-name').value=b.name;document.getElementById('b-amt').value=b.amt;document.getElementById('b-due').value=b.due;document.getElementById('b-icon').value=b.icon||'';openM('bill');}
-function saveBill(){const name=document.getElementById('b-name').value.trim();const amt=parseFloat(document.getElementById('b-amt').value);const due=parseInt(document.getElementById('b-due').value)||0;const icon=document.getElementById('b-icon').value||'💳';if(!name||isNaN(amt)){toast('Enter name and amount','err');return;}if(_editBillId!==null){const b=S.bills.find(x=>x.id===_editBillId);Object.assign(b,{name,amt,due,icon});toast('✏️ '+name+' updated!');}else{S.bills.push({id:Date.now(),name,amt,due,icon,paid:false});toast('🔁 '+name+' added!');}save();closeM('bill');render();}
-function delBill(id){const b=S.bills.find(x=>x.id===id);if(!confirm('Remove "'+b.name+'"?'))return;S.bills=S.bills.filter(x=>x.id!==id);save();render();toast('🗑 Removed');}
+function toggleBill(id){var b=S.bills.find(function(x){return x.id===id;});b.paid=!b.paid;save();render();if(b.paid)toast(b.name+' paid!');}
+function openAddBill(){_editBillId=null;document.getElementById('bill-title').textContent='Add Bill';document.getElementById('bill-btn').textContent='Add Bill';['b-name','b-amt','b-due','b-icon'].forEach(function(id){document.getElementById(id).value='';});openM('bill');}
+function openEditBill(id){var b=S.bills.find(function(x){return x.id===id;});_editBillId=id;document.getElementById('bill-title').textContent='Edit: '+b.name;document.getElementById('bill-btn').textContent='Save';document.getElementById('b-name').value=b.name;document.getElementById('b-amt').value=b.amt;document.getElementById('b-due').value=b.due;document.getElementById('b-icon').value=b.icon||'';openM('bill');}
+function saveBill(){var name=document.getElementById('b-name').value.trim();var amt=parseFloat(document.getElementById('b-amt').value);var due=parseInt(document.getElementById('b-due').value)||0;var icon=document.getElementById('b-icon').value||'card';if(!name||isNaN(amt)){toast('Enter name and amount','err');return;}if(_editBillId!==null){var b=S.bills.find(function(x){return x.id===_editBillId;});Object.assign(b,{name:name,amt:amt,due:due,icon:icon});toast('Updated: '+name);}else{S.bills.push({id:Date.now(),name:name,amt:amt,due:due,icon:icon,paid:false});toast(name+' added!');}save();closeM('bill');render();}
+function delBill(id){var b=S.bills.find(function(x){return x.id===id;});if(!confirm('Remove "'+b.name+'"?'))return;S.bills=S.bills.filter(function(x){return x.id!==id;});save();render();toast('Removed');}
 
 // ── MONEY TRACKER ──
-const CAT={needs:'🏠 Needs',wants:'🎮 Wants',transport:'🚗 Transport',subscriptions:'📱 Subscriptions',debt:'💳 Debt',other_exp:'📦 Other',paycheck:'💰 Paycheck',side:'⚡ Side Income',other_inc:'💵 Other Income'};
-const EXP_C=['needs','wants','transport','subscriptions','debt','other_exp'];
-const INC_C=['paycheck','side','other_inc'];
+var CAT={needs:'Needs',wants:'Wants',transport:'Transport',subscriptions:'Subscriptions',debt:'Debt Payment',other_exp:'Other',paycheck:'Paycheck',side:'Side Income',other_inc:'Other Income'};
+var EXP_C=['needs','wants','transport','subscriptions','debt','other_exp'];
+var INC_C=['paycheck','side','other_inc'];
 function rMoney(){
-  const now=new Date();
-  const mT=S.transactions.filter(t=>{const d=new Date(t.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
-  const filtered=_filterCat==='all'?mT:_filterCat==='income'?mT.filter(t=>INC_C.includes(t.cat)):_filterCat==='expense'?mT.filter(t=>EXP_C.includes(t.cat)):mT.filter(t=>t.cat===_filterCat);
-  const tInc=mT.filter(t=>t.type==='income').reduce((s,t)=>s+t.amt,0);
-  const tExp=mT.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amt,0);
-  const net=tInc-tExp;
-  let h=`<div class="sh" style="margin-top:13px;"><div class="st">💰 Money Tracker</div><button class="ab ag" onclick="openAddTxn()">+ Add</button></div>
-  <div class="sgrid">
-    <div class="sb2"><div class="sb2-l">Income</div><div class="sb2-v cg">$${tInc.toFixed(0)}</div><div class="sb2-s">this month</div></div>
-    <div class="sb2"><div class="sb2-l">Expenses</div><div class="sb2-v cr">$${tExp.toFixed(0)}</div><div class="sb2-s">this month</div></div>
-    <div class="sb2"><div class="sb2-l">Net Flow</div><div class="sb2-v ${net>=0?'cg':'cr'}">${net>=0?'+':'-'}$${Math.abs(net).toFixed(0)}</div><div class="sb2-s">cashflow</div></div>
-    <div class="sb2"><div class="sb2-l">Transactions</div><div class="sb2-v cb">${mT.length}</div><div class="sb2-s">this month</div></div>
-  </div>
-  <div class="sh"><div class="st">🏦 Accounts</div><button class="ab ab2" onclick="openM('acct')">+ Add</button></div>
-  ${rAccounts()}
-  <div class="sh"><div class="st">📋 Transactions</div></div>
-  <div class="cats">${[['all','All'],['income','Income'],['expense','Expenses'],['needs','Needs'],['wants','Wants'],['transport','Transport'],['debt','Debt'],['paycheck','Paycheck']].map(([k,l])=>`<button class="cpill ${_filterCat===k?'on':''}" onclick="setFilter('${k}')">${l}</button>`).join('')}</div>
-  ${filtered.length?[...filtered].sort((a,b)=>new Date(b.date)-new Date(a.date)).map(t=>`<div class="txn"><div class="txn-ico" style="background:${t.type==='income'?'var(--gd)':'var(--rd)'};">${t.type==='income'?'💵':'💸'}</div><div class="txn-info"><div class="txn-name">${t.desc}</div><div class="txn-meta">${CAT[t.cat]||t.cat} • ${t.date}</div></div><div class="txn-amt ${t.type==='income'?'inc':'exp'}">${t.type==='income'?'+':'-'}$${t.amt.toFixed(2)}</div><button class="txn-del" onclick="delTxn(${t.id})">🗑</button></div>`).join(''):'<div class="empty"><strong>NO TRANSACTIONS</strong>Tap + Add to log income or expenses</div>'}`;
+  var now=new Date();
+  var mT=S.transactions.filter(function(t){var d=new Date(t.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
+  var cats=[['all','All'],['income','Income'],['expense','Expenses'],['needs','Needs'],['wants','Wants'],['transport','Transport'],['debt','Debt'],['paycheck','Paycheck']];
+  var filtered;
+  if(_filterCat==='all')filtered=mT;
+  else if(_filterCat==='income')filtered=mT.filter(function(t){return INC_C.indexOf(t.cat)!==-1;});
+  else if(_filterCat==='expense')filtered=mT.filter(function(t){return EXP_C.indexOf(t.cat)!==-1;});
+  else filtered=mT.filter(function(t){return t.cat===_filterCat;});
+  var tInc=mT.filter(function(t){return t.type==='income';}).reduce(function(s,t){return s+t.amt;},0);
+  var tExp=mT.filter(function(t){return t.type==='expense';}).reduce(function(s,t){return s+t.amt;},0);
+  var net=tInc-tExp;
+  var h=sheadbtn('Money Tracker','ag',"openAddTxn()",'+ Add');
+  h+='<div class="sgrid">';
+  h+='<div class="sb2"><div class="sb2-l">Income</div><div class="sb2-v cg">$'+tInc.toFixed(0)+'</div><div class="sb2-s">this month</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Expenses</div><div class="sb2-v cr">$'+tExp.toFixed(0)+'</div><div class="sb2-s">this month</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Net Flow</div><div class="sb2-v '+(net>=0?'cg':'cr')+'">'+fmtBal(net)+'</div><div class="sb2-s">cashflow</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Transactions</div><div class="sb2-v cb">'+mT.length+'</div><div class="sb2-s">this month</div></div>';
+  h+='</div>';
+  // Accounts
+  h+=sheadbtn('Accounts','ab2',"openM('acct')",'+ Add');
+  h+=rAccounts();
+  // Filter pills
+  h+=shead('Transactions');
+  h+='<div class="cats">';
+  cats.forEach(function(pair){h+='<button class="cpill'+((_filterCat===pair[0])?' on':'')+'" onclick="setFilter(\''+pair[0]+'\')">'+pair[1]+'</button>';});
+  h+='</div>';
+  // Transactions list
+  var sorted=[].concat(filtered).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+  if(!sorted.length){h+='<div class="empty"><strong>NO TRANSACTIONS</strong>Tap + Add to log income or expenses</div>';}
+  else{
+    sorted.forEach(function(t){
+      var bg=t.type==='income'?'var(--gd)':'var(--rd)';
+      var ico=t.type==='income'?'$+':'$-';
+      var cls=t.type==='income'?'inc':'exp';
+      var sign=t.type==='income'?'+':'-';
+      h+='<div class="txn">';
+      h+='<div class="txn-ico" style="background:'+bg+'">'+ico+'</div>';
+      h+='<div class="txn-info"><div class="txn-name">'+t.desc+'</div><div class="txn-meta">'+(CAT[t.cat]||t.cat)+' | '+t.date+'</div></div>';
+      h+='<div class="txn-amt '+cls+'">'+sign+'$'+t.amt.toFixed(2)+'</div>';
+      h+='<button class="txn-del" onclick="delTxn('+t.id+')">X</button>';
+      h+='</div>';
+    });
+  }
   return h;
 }
 function rAccounts(){
   if(!S.accounts.length)return '<div class="empty"><strong>NO ACCOUNTS</strong>Tap + Add to track accounts</div>';
-  const assets=S.accounts.filter(a=>a.bal>0).reduce((s,a)=>s+a.bal,0);
-  const debts=S.accounts.filter(a=>a.bal<0).reduce((s,a)=>s+Math.abs(a.bal),0);
-  let h=S.accounts.map(a=>`<div class="acct"><div class="acct-l"><div class="acct-ico" style="background:${a.type==='credit'?'var(--rd)':a.type==='savings'?'var(--gd)':'var(--bd)'};">${a.icon||'🏦'}</div><div><div class="acct-name">${a.name}</div><div class="acct-type">${a.type.toUpperCase()}</div></div></div><div style="display:flex;align-items:center;gap:6px;"><div class="acct-bal ${a.bal>=0?'cg':'cr'}">${a.bal>=0?'$':'-$'}${Math.abs(a.bal).toFixed(2)}</div><button class="ib" onclick="openUpdAcct(${a.id})">✏️</button><button class="ib" style="color:var(--red)" onclick="delAcct(${a.id})">🗑</button></div></div>`).join('');
-  h+=`<div class="ibar" style="margin-top:4px;"><div class="irow"><span class="ilbl">Total assets</span><span class="ival pl">$${assets.toFixed(2)}</span></div><div class="irow"><span class="ilbl">Total debt</span><span class="ival mn">$${debts.toFixed(2)}</span></div><div class="irow"><span class="ilbl" style="color:var(--text);font-weight:600;">Net worth</span><span class="ival ${assets-debts>=0?'pl hi':'mn hi'}">${assets-debts>=0?'$':'-$'}${Math.abs(assets-debts).toFixed(2)}</span></div></div>`;
+  var assets=S.accounts.filter(function(a){return a.bal>0;}).reduce(function(s,a){return s+a.bal;},0);
+  var debts=S.accounts.filter(function(a){return a.bal<0;}).reduce(function(s,a){return s+Math.abs(a.bal);},0);
+  var h='';
+  S.accounts.forEach(function(a){
+    var owed=Math.abs(a.bal).toFixed(2);
+    var balColor=a.type==='credit'?(a.bal<0?'cr':'cg'):(a.bal>=0?'cg':'cr');
+    var prefix=a.type==='credit'?(a.bal<0?'Owes $':'+$'):(a.bal>=0?'$':'-$');
+    var bg=a.type==='credit'?'var(--rd)':a.type==='savings'?'var(--gd)':'var(--bd)';
+    h+='<div class="acct">';
+    h+='<div class="acct-l"><div class="acct-ico" style="background:'+bg+'">$</div><div><div class="acct-name">'+a.name+'</div><div class="acct-type">'+a.type.toUpperCase()+'</div></div></div>';
+    h+='<div style="display:flex;align-items:center;gap:6px;">';
+    h+='<div class="acct-bal '+balColor+'">'+prefix+owed+'</div>';
+    h+='<button class="ib" onclick="openUpdAcct('+a.id+')">E</button>';
+    h+='<button class="ib" style="color:var(--red)" onclick="delAcct('+a.id+')">X</button>';
+    h+='</div></div>';
+  });
+  h+='<div class="ibar" style="margin-top:4px;">';
+  h+=row('Total assets','$'+assets.toFixed(2),'pl');
+  h+=row('Total debt','$'+debts.toFixed(2),'mn');
+  h+=row('Net worth',(assets-debts>=0?'$':'-$')+Math.abs(assets-debts).toFixed(2),(assets-debts>=0?'pl hi':'mn hi'));
+  h+='</div>';
   return h;
 }
 function setFilter(cat){_filterCat=cat;render();}
 function setTxnType(type){
   _txnType=type;
-  const eBtn=document.getElementById('t-exp');const iBtn=document.getElementById('t-inc');
+  var eBtn=document.getElementById('t-exp');var iBtn=document.getElementById('t-inc');
   if(eBtn){eBtn.className='btn '+(type==='expense'?'btn-r':'btn-s');eBtn.style.width='100%';}
   if(iBtn){iBtn.className='btn '+(type==='income'?'btn-g':'btn-s');iBtn.style.width='100%';}
 }
 function openAddTxn(){
   document.getElementById('t-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('t-amt').value='';
-  document.getElementById('t-desc').value='';
-  // Populate account dropdown
+  document.getElementById('t-amt').value='';document.getElementById('t-desc').value='';
   var sel=document.getElementById('t-acct');
   sel.innerHTML='<option value="">None</option>';
-  S.accounts.forEach(function(a){
-    var opt=document.createElement('option');
-    opt.value=a.id;
-    opt.textContent=a.icon+' '+a.name+' ('+a.type+')';
-    sel.appendChild(opt);
-  });
-  // Also list debts as card options
-  S.debts.filter(function(d){return !d.cleared;}).forEach(function(d){
-    var opt=document.createElement('option');
-    opt.value='debt_'+d.id;
-    opt.textContent='💳 '+d.name+' (card — updates balance)';
-    sel.appendChild(opt);
-  });
-  setTxnType('expense');
-  openM('txn');
+  S.accounts.forEach(function(a){var o=document.createElement('option');o.value=a.id;o.textContent=a.name+' ('+a.type+')';sel.appendChild(o);});
+  S.debts.filter(function(d){return !d.cleared;}).forEach(function(d){var o=document.createElement('option');o.value='debt_'+d.id;o.textContent=d.name+' (card - updates debt)';sel.appendChild(o);});
+  setTxnType('expense');openM('txn');
 }
 function saveTxn(){
   var desc=document.getElementById('t-desc').value.trim();
@@ -1022,100 +684,87 @@ function saveTxn(){
   var cat=document.getElementById('t-cat').value;
   var acctVal=document.getElementById('t-acct').value;
   if(!desc||isNaN(amt)||amt<=0){toast('Fill in description and amount','err');return;}
-
-  var acctId=null;
-  var debtId=null;
-  if(acctVal.indexOf('debt_')===0){
-    debtId=parseInt(acctVal.replace('debt_',''));
-  } else if(acctVal){
-    acctId=parseInt(acctVal);
-  }
-
+  var acctId=null,debtId=null;
+  if(acctVal.indexOf('debt_')===0){debtId=parseInt(acctVal.replace('debt_',''));}
+  else if(acctVal){acctId=parseInt(acctVal);}
   S.transactions.push({id:Date.now(),desc:desc,amt:amt,type:_txnType,cat:cat,date:date,acctId:acctId,debtId:debtId});
-
-  // Update account balance
-  if(acctId){
-    var a=S.accounts.find(function(x){return x.id===acctId;});
-    if(a){
-      if(_txnType==='income') a.bal=+(a.bal+amt).toFixed(2);
-      else a.bal=+(a.bal-amt).toFixed(2);
-    }
-  }
-
-  // Update debt balance if expense charged to a card
-  if(debtId&&_txnType==='expense'){
-    var d=S.debts.find(function(x){return x.id===debtId;});
-    if(d){
-      d.bal=+(d.bal+amt).toFixed(2);
-      if(d.bal>d.orig) d.orig=d.bal;
-      d.cleared=false;
-      toast('💳 $'+amt.toFixed(2)+' charged to '+d.name+' — balance updated!');
-    }
-  } else if(debtId&&_txnType==='income'){
-    // Paying off a card via income entry
-    var d=S.debts.find(function(x){return x.id===debtId;});
-    if(d){
-      d.bal=Math.max(0,+(d.bal-amt).toFixed(2));
-      if(d.bal===0) d.cleared=true;
-      toast('💸 $'+amt.toFixed(2)+' payment to '+d.name+' — balance updated!');
-    }
-  } else {
-    toast((_txnType==='income'?'💵 +':'💸 -')+'$'+amt.toFixed(2)+' logged!');
-  }
-
+  if(acctId){var a=S.accounts.find(function(x){return x.id===acctId;});if(a){if(_txnType==='income')a.bal=+(a.bal+amt).toFixed(2);else a.bal=+(a.bal-amt).toFixed(2);}}
+  if(debtId){var d=S.debts.find(function(x){return x.id===debtId;});if(d){if(_txnType==='expense'){d.bal=+(d.bal+amt).toFixed(2);if(d.bal>d.orig)d.orig=d.bal;d.cleared=false;toast('$'+amt.toFixed(2)+' charged to '+d.name+'!');}else{d.bal=Math.max(0,+(d.bal-amt).toFixed(2));if(d.bal===0)d.cleared=true;toast('$'+amt.toFixed(2)+' payment on '+d.name+'!');}}}
+  else if(!acctId){toast((_txnType==='income'?'+':'-')+'$'+amt.toFixed(2)+' logged!');}
   save();closeM('txn');render();
 }
-function delTxn(id){if(!confirm('Delete this transaction?'))return;S.transactions=S.transactions.filter(x=>x.id!==id);save();render();toast('🗑 Transaction removed');}
-function saveAcct(){const name=document.getElementById('a-name').value.trim();const type=document.getElementById('a-type').value;const bal=parseFloat(document.getElementById('a-bal').value)||0;const icon=document.getElementById('a-icon').value||'🏦';if(!name){toast('Enter account name','err');return;}S.accounts.push({id:Date.now(),name,type,bal,icon});save();closeM('acct');render();toast('🏦 '+name+' added!');['a-name','a-bal','a-icon'].forEach(id=>document.getElementById(id).value='');}
-function openUpdAcct(id){const a=S.accounts.find(x=>x.id===id);_updAcctId=id;document.getElementById('upd-acct-title').textContent='✏️ Update — '+a.name;document.getElementById('ua-bal').value=a.bal;openM('upd-acct');}
+function delTxn(id){if(!confirm('Delete?'))return;S.transactions=S.transactions.filter(function(x){return x.id!==id;});save();render();toast('Removed');}
+function saveAcct(){var name=document.getElementById('a-name').value.trim();var type=document.getElementById('a-type').value;var bal=parseFloat(document.getElementById('a-bal').value)||0;var icon=document.getElementById('a-icon').value||'bank';if(!name){toast('Enter account name','err');return;}S.accounts.push({id:Date.now(),name:name,type:type,bal:bal,icon:icon,linkedDebtId:null});save();closeM('acct');render();toast(name+' added!');['a-name','a-bal','a-icon'].forEach(function(id){document.getElementById(id).value='';});}
+function openUpdAcct(id){var a=S.accounts.find(function(x){return x.id===id;});if(!a)return;_updAcctId=id;document.getElementById('upd-acct-title').textContent='Update: '+a.name;document.getElementById('ua-bal').value=Math.abs(a.bal).toFixed(2);openM('upd-acct');}
 function doUpdAcct(){
   var bal=parseFloat(document.getElementById('ua-bal').value);
-  if(isNaN(bal)){toast('Enter a valid balance','err');return;}
+  if(isNaN(bal)||bal<0){toast('Enter a valid amount','err');return;}
   var a=S.accounts.find(function(x){return x.id===_updAcctId;});
-  // For credit cards, user enters positive amount owed
-  // We store as negative internally
-  if(a.type==='credit'){
-    a.bal = +(- Math.abs(bal)).toFixed(2);
-  } else {
-    a.bal = +bal.toFixed(2);
-  }
-  save();closeM('upd-acct');render();
-  toast('✓ '+a.name+' updated everywhere!');
+  if(!a)return;
+  if(a.type==='credit'&&a.linkedDebtId){
+    var d=S.debts.find(function(x){return x.id===a.linkedDebtId;});
+    if(d){d.bal=bal;if(bal>d.orig)d.orig=bal;d.cleared=(bal===0);}
+  }else if(a.type==='credit'){a.bal=-bal;}
+  else{a.bal=bal;}
+  save();closeM('upd-acct');render();toast(a.name+' updated everywhere!');
 }
-function delAcct(id){const a=S.accounts.find(x=>x.id===id);if(!confirm('Remove "'+a.name+'"?'))return;S.accounts=S.accounts.filter(x=>x.id!==id);save();render();toast('🗑 Account removed');}
+function delAcct(id){var a=S.accounts.find(function(x){return x.id===id;});if(!confirm('Remove "'+a.name+'"?'))return;S.accounts=S.accounts.filter(function(x){return x.id!==id;});save();render();toast('Removed');}
 
 // ── GOALS ──
-const GCOLS=['xb','xg','xp','xa','xr'];
+var GCOLS=['xb','xg','xp','xa','xr'];
 function rGoals(){
-  let h=`<div class="sh" style="margin-top:13px;"><div class="st">🎯 Goals</div><button class="ab ag" onclick="openAddGoal()">+ Add</button></div>`;
+  var h=sheadbtn('Goals','ag',"openAddGoal()",'+ Add');
   if(!S.goals.length)return h+'<div class="empty"><strong>NO GOALS SET</strong>Tap + Add to start</div>';
-  S.goals.forEach(g=>{const pct=Math.min(100,Math.round(g.cur/g.tgt*100));const rem=Math.max(0,g.tgt-g.cur);const days=g.date?Math.ceil((new Date(g.date)-new Date())/86400000):null;h+=`<div class="gcard"><div class="ghead"><div class="gname">${g.name}</div><div class="gpct">${pct}%</div></div><div class="xtrack" style="height:10px;"><div class="xfill ${g.col||'xb'}" style="width:${pct}%"></div></div><div class="gamts"><span>Saved: $${g.cur.toFixed(0)}</span><span>Target: $${g.tgt.toFixed(0)}</span></div><div style="font-size:10px;color:var(--muted);margin-top:4px;font-family:var(--mono);">$${rem.toFixed(0)} remaining${days!==null?' • '+Math.max(0,days)+' days left':''}</div><div class="gbtns"><button class="btn btn-g btn-sm" style="flex:1" onclick="openGoalDep(${g.id})">+ Add Funds</button><button class="btn btn-s btn-sm" onclick="openEditGoal(${g.id})">✏️ Edit</button><button class="btn-del" onclick="delGoal(${g.id})">🗑</button></div></div>`;});
+  S.goals.forEach(function(g){
+    var pct=Math.min(100,Math.round(g.cur/g.tgt*100));
+    var rem=Math.max(0,g.tgt-g.cur);
+    var days=g.date?Math.ceil((new Date(g.date)-new Date())/86400000):null;
+    h+='<div class="gcard">';
+    h+='<div class="ghead"><div class="gname">'+g.name+'</div><div class="gpct">'+pct+'%</div></div>';
+    h+=xbar(pct,g.col||'xb',10);
+    h+='<div class="gamts"><span>Saved: $'+g.cur.toFixed(0)+'</span><span>Target: $'+g.tgt.toFixed(0)+'</span></div>';
+    h+='<div style="font-size:10px;color:var(--muted);margin-top:4px;">$'+rem.toFixed(0)+' remaining'+(days!==null?' | '+Math.max(0,days)+' days left':'')+'</div>';
+    h+='<div class="gbtns"><button class="btn btn-g btn-sm" style="flex:1" onclick="openGoalDep('+g.id+')">+ Add Funds</button><button class="btn btn-s btn-sm" onclick="openEditGoal('+g.id+')">Edit</button><button class="btn-del" onclick="delGoal('+g.id+')">Remove</button></div>';
+    h+='</div>';
+  });
   return h;
 }
-function openAddGoal(){_editGoalId=null;document.getElementById('goal-title').textContent='🎯 Add Goal';document.getElementById('goal-btn').textContent='Add Goal';['g-name','g-tgt','g-cur','g-date'].forEach(id=>document.getElementById(id).value='');openM('goal');}
-function openEditGoal(id){const g=S.goals.find(x=>x.id===id);_editGoalId=id;document.getElementById('goal-title').textContent='✏️ Edit — '+g.name;document.getElementById('goal-btn').textContent='Save Changes';document.getElementById('g-name').value=g.name;document.getElementById('g-tgt').value=g.tgt;document.getElementById('g-cur').value=g.cur;document.getElementById('g-date').value=g.date;openM('goal');}
-function saveGoal(){const name=document.getElementById('g-name').value.trim();const tgt=parseFloat(document.getElementById('g-tgt').value);const cur=parseFloat(document.getElementById('g-cur').value)||0;const date=document.getElementById('g-date').value||'';if(!name||isNaN(tgt)){toast('Fill in name and target','err');return;}if(_editGoalId!==null){const g=S.goals.find(x=>x.id===_editGoalId);Object.assign(g,{name,tgt,cur,date});toast('✏️ '+name+' updated!');}else{S.goals.push({id:Date.now(),name,tgt,cur,date,col:GCOLS[S.goals.length%GCOLS.length]});toast('🎯 New goal: '+name);}save();closeM('goal');render();}
-function delGoal(id){const g=S.goals.find(x=>x.id===id);if(!confirm('Remove "'+g.name+'"?'))return;S.goals=S.goals.filter(x=>x.id!==id);save();render();toast('🗑 Goal removed');}
-function openGoalDep(id){const g=S.goals.find(x=>x.id===id);_goalDepId=id;document.getElementById('gd-title').textContent='🎯 Add to — '+g.name;document.getElementById('gd-cur').textContent='$'+g.cur.toFixed(2)+' / $'+g.tgt.toFixed(2);document.getElementById('gd-amt').value='';openM('gd');}
-function doGoalDep(){const amt=parseFloat(document.getElementById('gd-amt').value);if(!amt||amt<=0){toast('Enter a valid amount','err');return;}const g=S.goals.find(x=>x.id===_goalDepId);g.cur=Math.min(g.tgt,+(g.cur+amt).toFixed(2));save();closeM('gd');render();const pct=Math.round(g.cur/g.tgt*100);toast(pct>=100?'🏆 GOAL REACHED: '+g.name+'!':'✓ +$'+amt.toFixed(0)+' added! '+pct+'%!');}
+function openAddGoal(){_editGoalId=null;document.getElementById('goal-title').textContent='Add Goal';document.getElementById('goal-btn').textContent='Add Goal';['g-name','g-tgt','g-cur','g-date'].forEach(function(id){document.getElementById(id).value='';});openM('goal');}
+function openEditGoal(id){var g=S.goals.find(function(x){return x.id===id;});_editGoalId=id;document.getElementById('goal-title').textContent='Edit: '+g.name;document.getElementById('goal-btn').textContent='Save';document.getElementById('g-name').value=g.name;document.getElementById('g-tgt').value=g.tgt;document.getElementById('g-cur').value=g.cur;document.getElementById('g-date').value=g.date;openM('goal');}
+function saveGoal(){var name=document.getElementById('g-name').value.trim();var tgt=parseFloat(document.getElementById('g-tgt').value);var cur=parseFloat(document.getElementById('g-cur').value)||0;var date=document.getElementById('g-date').value||'';if(!name||isNaN(tgt)){toast('Fill in name and target','err');return;}if(_editGoalId!==null){var g=S.goals.find(function(x){return x.id===_editGoalId;});Object.assign(g,{name:name,tgt:tgt,cur:cur,date:date});toast('Updated: '+name);}else{S.goals.push({id:Date.now(),name:name,tgt:tgt,cur:cur,date:date,col:GCOLS[S.goals.length%GCOLS.length]});toast('New goal: '+name);}save();closeM('goal');render();}
+function delGoal(id){var g=S.goals.find(function(x){return x.id===id;});if(!confirm('Remove "'+g.name+'"?'))return;S.goals=S.goals.filter(function(x){return x.id!==id;});save();render();toast('Removed');}
+function openGoalDep(id){var g=S.goals.find(function(x){return x.id===id;});_goalDepId=id;document.getElementById('gd-title').textContent='Add to: '+g.name;document.getElementById('gd-cur').textContent='$'+g.cur.toFixed(2)+' / $'+g.tgt.toFixed(2);document.getElementById('gd-amt').value='';openM('gd');}
+function doGoalDep(){var amt=parseFloat(document.getElementById('gd-amt').value);if(!amt||amt<=0){toast('Enter a valid amount','err');return;}var g=S.goals.find(function(x){return x.id===_goalDepId;});g.cur=Math.min(g.tgt,+(g.cur+amt).toFixed(2));save();closeM('gd');render();var pct=Math.round(g.cur/g.tgt*100);toast(pct>=100?'GOAL REACHED: '+g.name+'!':'+$'+amt.toFixed(0)+' added! '+pct+'%');}
 
 // ── PLAN ──
 function rPlan(){
-  const done=S.planItems.filter(p=>p.done).length,total=S.planItems.length;
-  const PC={high:'var(--red)',medium:'var(--amber)',low:'var(--green)'};
-  const sorted=[...S.planItems].sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;const po={high:0,medium:1,low:2};return(po[a.pri]||1)-(po[b.pri]||1);});
-  let h=`<div class="sh" style="margin-top:13px;"><div class="st">📋 Action Plan</div><button class="ab ap" onclick="openAddPlan()">+ Add</button></div>
-  <div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="flex:1;"><div class="xtrack" style="margin-bottom:4px;"><div class="xfill xg" style="width:${total?Math.round(done/total*100):0}%"></div></div><div style="font-size:10px;color:var(--muted);font-family:var(--mono);">${done}/${total} completed</div></div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--green);">${total?Math.round(done/total*100):0}%</div></div>`;
+  var done=S.planItems.filter(function(p){return p.done;}).length;
+  var total=S.planItems.length;
+  var pct=total?Math.round(done/total*100):0;
+  var PC={high:'var(--red)',medium:'var(--amber)',low:'var(--green)'};
+  var sorted=[].concat(S.planItems).sort(function(a,b){if(a.done!==b.done)return a.done?1:-1;var po={high:0,medium:1,low:2};return(po[a.pri]||1)-(po[b.pri]||1);});
+  var h=sheadbtn('Action Plan','ap',"openAddPlan()",'+ Add');
+  h+='<div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">';
+  h+='<div style="flex:1;">'+xbar(pct,'xg')+'<div style="font-size:10px;color:var(--muted);">'+done+'/'+total+' completed</div></div>';
+  h+='<div style="font-size:20px;font-weight:700;color:var(--green);">'+pct+'%</div></div>';
   if(!sorted.length)return h+'<div class="empty"><strong>NO ITEMS</strong>Tap + Add to build your plan</div>';
-  sorted.forEach(p=>{h+=`<div class="pitem ${p.done?'done':''}"><div class="pnum ${p.done?'dn':''}">${p.done?'✓':''}</div><div class="ptxt"><strong>${p.title}</strong><span>${p.desc||''}</span><div class="pbtns"><button class="btn btn-s btn-sm" onclick="togglePlan(${p.id})">${p.done?'↩ Undo':'✓ Done'}</button><button class="btn btn-s btn-sm" onclick="openEditPlan(${p.id})">✏️</button><button class="btn-del" onclick="delPlan(${p.id})">🗑</button></div></div><div class="pmeta"><div class="pdate">${p.date||''}</div><div class="pdot" style="background:${PC[p.pri]||'var(--muted)'}"></div></div></div>`;});
-  h+=`<div style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px;font-family:var(--mono);">🔴 High &nbsp;🟡 Medium &nbsp;🟢 Low</div>`;
+  sorted.forEach(function(p){
+    h+='<div class="pitem'+(p.done?' done':'')+'">';
+    h+='<div class="pnum'+(p.done?' dn':'')+'">'+(p.done?'&#10003;':'')+'</div>';
+    h+='<div class="ptxt"><strong>'+p.title+'</strong><span>'+(p.desc||'')+'</span>';
+    h+='<div class="pbtns"><button class="btn btn-s btn-sm" onclick="togglePlan('+p.id+')">'+(p.done?'Undo':'Done')+'</button><button class="btn btn-s btn-sm" onclick="openEditPlan('+p.id+')">Edit</button><button class="btn-del" onclick="delPlan('+p.id+')">Remove</button></div>';
+    h+='</div>';
+    h+='<div class="pmeta"><div class="pdate">'+(p.date||'')+'</div><div class="pdot" style="background:'+(PC[p.pri]||'var(--muted)')+'"></div></div>';
+    h+='</div>';
+  });
+  h+='<div style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px;">Red=High | Yellow=Medium | Green=Low</div>';
   return h;
 }
-function openAddPlan(){_editPlanId=null;document.getElementById('plan-title').textContent='📋 Add Action Item';document.getElementById('plan-btn').textContent='Add Item';['p-title','p-desc','p-date'].forEach(id=>document.getElementById(id).value='');openM('plan');}
-function openEditPlan(id){const p=S.planItems.find(x=>x.id===id);_editPlanId=id;document.getElementById('plan-title').textContent='✏️ Edit Item';document.getElementById('plan-btn').textContent='Save Changes';document.getElementById('p-title').value=p.title;document.getElementById('p-desc').value=p.desc||'';document.getElementById('p-date').value=p.date||'';document.getElementById('p-pri').value=p.pri||'medium';openM('plan');}
-function savePlanItem(){const title=document.getElementById('p-title').value.trim();const desc=document.getElementById('p-desc').value.trim();const date=document.getElementById('p-date').value||'TBD';const pri=document.getElementById('p-pri').value;if(!title){toast('Enter a title','err');return;}if(_editPlanId!==null){const p=S.planItems.find(x=>x.id===_editPlanId);Object.assign(p,{title,desc,date,pri});toast('✏️ Updated!');}else{S.planItems.push({id:Date.now(),title,desc,date,pri,done:false});toast('📋 Added: '+title);}save();closeM('plan');render();}
-function togglePlan(id){const p=S.planItems.find(x=>x.id===id);p.done=!p.done;save();render();toast(p.done?'✓ Done!':'↩ Marked incomplete');}
-function delPlan(id){const p=S.planItems.find(x=>x.id===id);if(!confirm('Delete "'+p.title+'"?'))return;S.planItems=S.planItems.filter(x=>x.id!==id);save();render();toast('🗑 Removed');}
+function openAddPlan(){_editPlanId=null;document.getElementById('plan-title').textContent='Add Action Item';document.getElementById('plan-btn').textContent='Add Item';['p-title','p-desc','p-date'].forEach(function(id){document.getElementById(id).value='';});openM('plan');}
+function openEditPlan(id){var p=S.planItems.find(function(x){return x.id===id;});_editPlanId=id;document.getElementById('plan-title').textContent='Edit Item';document.getElementById('plan-btn').textContent='Save';document.getElementById('p-title').value=p.title;document.getElementById('p-desc').value=p.desc||'';document.getElementById('p-date').value=p.date||'';document.getElementById('p-pri').value=p.pri||'medium';openM('plan');}
+function savePlanItem(){var title=document.getElementById('p-title').value.trim();var desc=document.getElementById('p-desc').value.trim();var date=document.getElementById('p-date').value||'TBD';var pri=document.getElementById('p-pri').value;if(!title){toast('Enter a title','err');return;}if(_editPlanId!==null){var p=S.planItems.find(function(x){return x.id===_editPlanId;});Object.assign(p,{title:title,desc:desc,date:date,pri:pri});toast('Updated!');}else{S.planItems.push({id:Date.now(),title:title,desc:desc,date:date,pri:pri,done:false});toast('Added: '+title);}save();closeM('plan');render();}
+function togglePlan(id){var p=S.planItems.find(function(x){return x.id===id;});p.done=!p.done;save();render();toast(p.done?'Done!':'Marked incomplete');}
+function delPlan(id){var p=S.planItems.find(function(x){return x.id===id;});if(!confirm('Delete "'+p.title+'"?'))return;S.planItems=S.planItems.filter(function(x){return x.id!==id;});save();render();toast('Removed');}
 
 // ── STRATEGY ──
 function rStrategy(){
@@ -1124,295 +773,189 @@ function rStrategy(){
   var extra=800,minP=25;
   var sim=active.map(function(d){return Object.assign({},d);});
   var mo=0;
-  while(sim.some(function(d){return d.bal>0;})&&mo<60){
-    mo++;
-    var tgt=sim.find(function(d){return d.bal>0;});
-    sim.forEach(function(d){
-      if(d.bal<=0)return;
-      var int=+(d.apr/100/12*d.bal).toFixed(2);
-      d.bal=Math.max(0,+(d.bal+int-(d===tgt?extra+minP:minP)).toFixed(2));
-    });
-  }
+  while(sim.some(function(d){return d.bal>0;})&&mo<60){mo++;var tgt=sim.find(function(d){return d.bal>0;});sim.forEach(function(d){if(d.bal<=0)return;var int=+(d.apr/100/12*d.bal).toFixed(2);d.bal=Math.max(0,+(d.bal+int-(d===tgt?extra+minP:minP)).toFixed(2));});}
   var simE=active.map(function(d){return Object.assign({},d);});
-  var moE=0;
-  var spl=Math.floor((extra+minP*Math.max(active.length,1))/Math.max(active.length,1));
-  while(simE.some(function(d){return d.bal>0;})&&moE<60){
-    moE++;
-    simE.forEach(function(d){
-      if(d.bal<=0)return;
-      var int=+(d.apr/100/12*d.bal).toFixed(2);
-      d.bal=Math.max(0,+(d.bal+int-spl).toFixed(2));
-    });
-  }
-
-  function tip(color,label,body){return '<div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border);"><span style="color:'+color+';font-weight:600;">'+label+'</span><br>'+body+'</div>';}
-  function tipL(color,label,body){return '<div><span style="color:'+color+';font-weight:600;">'+label+'</span><br>'+body+'</div>';}
-  function sec(icon,title,content){return '<div class="sh"><div class="st">'+icon+' '+title+'</div></div><div class="card"><div style="font-size:12px;color:var(--muted);line-height:1.9;">'+content+'</div></div>';}
-  function sRow(l,bg,br,c,v){return '<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;"><span style="color:var(--muted);">'+l+'</span><span style="background:'+bg+';border:1px solid '+br+';border-radius:4px;padding:2px 8px;font-size:10px;font-family:var(--mono);color:'+c+';">'+v+'</span></div>';}
-
-  var killOrder='';
+  var moE=0;var spl=Math.floor((extra+minP*Math.max(active.length,1))/Math.max(active.length,1));
+  while(simE.some(function(d){return d.bal>0;})&&moE<60){moE++;simE.forEach(function(d){if(d.bal<=0)return;var int=+(d.apr/100/12*d.bal).toFixed(2);d.bal=Math.max(0,+(d.bal+int-spl).toFixed(2));});}
+  var faster=moE-mo>0?(moE-mo)+' months faster':'On track!';
+  var util2=getUtil();var u2pct=util2?util2.pct:0;var u2c=u2pct>=70?'var(--red)':u2pct>=30?'var(--amber)':'var(--green)';
+  var h=shead('Strategy and Tips');
+  // Snowball comparison
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">';
+  h+='<div style="background:var(--rd);border:1px solid rgba(255,69,96,.3);border-radius:var(--r);padding:11px;">';
+  h+='<div style="font-size:8px;color:var(--red);margin-bottom:4px;">EVEN SPLIT - WRONG</div>';
+  h+='<div style="font-size:22px;font-weight:700;color:var(--red);">'+moE+'mo</div>';
+  h+='<div style="font-size:10px;color:var(--muted);">to debt free</div>';
+  h+='<div style="font-size:10px;color:var(--red);margin-top:5px;">All cards bleed interest at once.</div></div>';
+  h+='<div style="background:var(--gd);border:1px solid rgba(0,255,157,.3);border-radius:var(--r);padding:11px;">';
+  h+='<div style="font-size:8px;color:var(--green);margin-bottom:4px;">SNOWBALL - RIGHT</div>';
+  h+='<div style="font-size:22px;font-weight:700;color:var(--green);">'+mo+'mo</div>';
+  h+='<div style="font-size:10px;color:var(--muted);">to debt free</div>';
+  h+='<div style="font-size:10px;color:var(--green);margin-top:5px;">'+faster+'</div></div></div>';
+  // Kill order
+  h+=shead('Kill Order');
+  h+='<div class="card">';
   if(active.length){
     active.forEach(function(d,i){
-      var pct=d.orig>0?Math.min(100,Math.round((d.orig-d.bal)/d.orig*100)):100;
-      var isT=i===0;
-      var numBg=isT?'var(--red)':i===1?'var(--amber)':'var(--blue)';
-      var barCls=isT?'xr':i===1?'xa':'xb';
-      var bodyMsg=isT?'<span style="color:var(--red);">Every extra dollar goes here. Minimum only on the others.</span>':'Pay minimum only (~$'+minP+') — save your ammo for the target above.';
-      var targetBadge=isT?'<div style="background:var(--rd);border:1px solid rgba(255,69,96,.4);border-radius:3px;padding:2px 6px;font-size:8px;font-family:var(--mono);color:var(--red);flex-shrink:0;">TARGET NOW</div>':'';
-      var borderStyle=i===active.length-1?'border-bottom:none;':'';
-      killOrder+='<div style="padding:9px 0;border-bottom:1px solid var(--border);'+borderStyle+'">'+
-        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">'+
-        '<div style="width:20px;height:20px;border-radius:50%;background:'+numBg+';color:#0a0a0f;font-family:var(--mono);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+(i+1)+'</div>'+
-        '<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+d.name+'</div>'+
-        '<div style="font-size:9px;color:var(--muted);font-family:var(--mono);">$'+d.bal.toFixed(2)+' &bull; '+d.apr+'% APR</div></div>'+
-        targetBadge+'</div>'+
-        '<div style="font-size:10px;color:var(--muted);padding-left:28px;margin-bottom:4px;">'+bodyMsg+'</div>'+
-        '<div class="xtrack" style="margin-left:28px;"><div class="xfill '+barCls+'" style="width:'+pct+'%"></div></div>'+
-        '</div>';
+      var isT=i===0;var pct=d.orig>0?Math.min(100,Math.round((d.orig-d.bal)/d.orig*100)):100;
+      var nc=isT?'var(--red)':i===1?'var(--amber)':'var(--blue)';var xc=isT?'xr':i===1?'xa':'xb';
+      h+='<div style="padding:9px 0;border-bottom:1px solid var(--border);">';
+      h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">';
+      h+='<div style="width:20px;height:20px;border-radius:50%;background:'+nc+';color:#0a0a0f;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;">'+(i+1)+'</div>';
+      h+='<div style="flex:1;"><div style="font-size:12px;font-weight:600;">'+d.name+'</div><div style="font-size:9px;color:var(--muted);">$'+d.bal.toFixed(2)+' | '+d.apr+'% APR</div></div>';
+      if(isT)h+='<div style="background:var(--rd);border-radius:3px;padding:2px 6px;font-size:8px;color:var(--red);">TARGET</div>';
+      h+='</div>';
+      h+='<div style="font-size:10px;color:'+(isT?'var(--red)':'var(--muted)')+';padding-left:28px;margin-bottom:4px;">'+(isT?'Every extra dollar goes here. Minimum only on others.':'Pay minimum only (~$'+minP+').')+'</div>';
+      h+=xbar(pct,xc);
+      h+='</div>';
     });
-  } else {
-    killOrder='<div class="empty"><strong>ALL CLEARED 🔥</strong>Stack savings now.</div>';
-  }
-
-  var faster=moE-mo>0?(moE-mo)+' months faster. Each kill = more firepower.':'On track — stay aggressive.';
-
-  var html='';
-  html+='<div class="sh" style="margin-top:13px;"><div class="st">🧠 Strategy &amp; Tips</div></div>';
-
-  // Snowball vs Even Split
-  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">';
-  html+='<div style="background:var(--rd);border:1px solid rgba(255,69,96,.3);border-radius:var(--r);padding:11px;">';
-  html+='<div style="font-family:var(--mono);font-size:8px;color:var(--red);margin-bottom:4px;">&#10060; EVEN SPLIT</div>';
-  html+='<div style="font-size:11px;font-weight:600;margin-bottom:3px;">All cards evenly</div>';
-  html+='<div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--red);">'+moE+'mo</div>';
-  html+='<div style="font-size:10px;color:var(--muted);">to debt free</div>';
-  html+='<div style="font-size:10px;color:var(--red);margin-top:5px;">All cards bleed interest at once. Slowest approach.</div></div>';
-  html+='<div style="background:var(--gd);border:1px solid rgba(0,255,157,.3);border-radius:var(--r);padding:11px;">';
-  html+='<div style="font-family:var(--mono);font-size:8px;color:var(--green);margin-bottom:4px;">&#10003; SNOWBALL</div>';
-  html+='<div style="font-size:11px;font-weight:600;margin-bottom:3px;">Kill one at a time</div>';
-  html+='<div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--green);">'+mo+'mo</div>';
-  html+='<div style="font-size:10px;color:var(--muted);">to debt free</div>';
-  html+='<div style="font-size:10px;color:var(--green);margin-top:5px;">'+faster+'</div></div></div>';
-
-  // Kill Order
-  html+='<div class="sh"><div class="st">&#9889; Current Kill Order</div></div>';
-  html+='<div class="card">'+killOrder+'</div>';
-
-  // Interest cost
-  html+='<div class="sh"><div class="st">&#128184; What 27% APR Is Costing You</div></div>';
-  html+='<div class="ibar">';
-  html+='<div class="irow"><span class="ilbl">Monthly interest burning</span><span class="ival mn">~$'+ti.toFixed(2)+'</span></div>';
-  html+='<div class="irow"><span class="ilbl">Daily cost</span><span class="ival mn">~$'+(ti/30).toFixed(2)+'/day</span></div>';
-  html+='<div class="irow"><span class="ilbl">Annual if never paid</span><span class="ival mn">~$'+(ti*12).toFixed(0)+'/yr burned</span></div>';
-  html+='<div class="irow"><span class="ilbl">Every day you wait</span><span class="ival mn" style="color:var(--amber);">attack now</span></div></div>';
-
-  // Cards for bills
-  html+=sec('&#128179;','Cards For Bills — The Rule',
-    tip('var(--red)','&#10060; What you were doing:','Bills spread across multiple cards, carrying balances, 27% APR charged on your own rent and subscriptions. A 27% surcharge on every bill you own.')+
-    tip('var(--green)','&#10003; The one rule — forever:','ONE card for ALL bills. Pay the FULL statement balance before the closing date every single month. Zero interest. Positive payment history reported. Score climbs every month.')+
-    tip('var(--amber)','&#9889; Right now (while still paying off):','Put bills on Savor ONLY — it closes last (13th). Pay the full balance before the 13th. Do not use Quicksilver or Credit One for anything new — those are being executed.')+
-    tipL('var(--blue)','&#128200; After all 3 cards hit $0:','Move everything to Quicksilver — no annual fee, cashback on purchases. Treat it exactly like a debit card with a 30-day delay. The money must already exist in your account before you swipe. Never carry a balance again.')
-  );
-
-  // Credit score
-  html+='<div class="sh"><div class="st">&#128202; Credit Score Moves</div></div>';
-  html+='<div class="card">';
-  html+=sRow('Pay 1 card to $0 — kills utilization','var(--gd)','rgba(0,255,157,.3)','var(--green)','+20-40 pts');
-  html+=sRow('All 3 cards at $0','var(--gd)','rgba(0,255,157,.3)','var(--green)','+40-70 pts');
-  html+=sRow('Keep utilization below 30% per card','var(--gd)','rgba(0,255,157,.3)','var(--green)','critical rule');
-  html+=sRow('Never miss a payment (set autopay)','var(--gd)','rgba(0,255,157,.3)','var(--green)','protects score');
-  html+=sRow('Keep old cards open at $0','var(--gd)','rgba(0,255,157,.3)','var(--green)','history = pts');
-  html+=sRow('Dispute errors on credit report','var(--ad)','rgba(255,184,48,.3)','var(--amber)','+20-40 pts');
-  html+=sRow('Get a secured card after payoff','var(--bd)','rgba(0,180,255,.3)','var(--blue)','rebuilds faster');
-  html+=sRow('Open new cards right now','var(--rd)','rgba(255,69,96,.3)','var(--red)','-5 pts each');
-  html+=sRow('Close old accounts','var(--rd)','rgba(255,69,96,.3)','var(--red)','hurts history');
-  html+='<div style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7;"><strong style="color:var(--text);">Utilization rule:</strong> Keep each card below 30% of its limit — ideally under 10%. If your Quicksilver has a $2,000 limit, never carry more than $600 on it. This is the #2 factor in your score after payment history.</div>';
-  html+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.7;"><strong style="color:var(--text);">Secured card strategy:</strong> After all cards hit $0 and score climbs to 660+, open a Discover it Secured or Capital One Secured card. Put $200 down. Use it for gas only. Pay in full monthly. Rebuilds credit faster than anything else.</div>';
-  html+='</div>';
-
-  // Emergency fund
-  html+=sec('&#128737;','Emergency Fund — Why It Matters',
-    tip('var(--amber)','The rule:','3-6 months of expenses in a separate account you do not touch. For you that means $3,300-$6,600. Start with $1,000 as your first target — that covers most real emergencies without going back into debt.')+
-    tip('var(--blue)','Where to keep it:','High-yield savings account (HYSA). Ally Bank, Marcus by Goldman Sachs, or SoFi currently pay 4-5% APY. Significantly better than a regular savings account at 0.01%. Free to open, FDIC insured.')+
-    tipL('var(--green)','When to build it:','After all 3 cards hit $0 on July 22, split your extra income: 70% apartment fund, 30% emergency fund. Going into the apartment with zero emergency buffer is risky — one unexpected expense puts you back on credit cards.')
-  );
-
-  // High yield savings
-  html+=sec('&#128176;','High-Yield Savings — Stop Leaving Money on the Table',
-    tip('var(--red)','What a regular savings account pays:','0.01% APY. On $4,500 saved that is $0.45 per year. Your bank is holding your money for free.')+
-    tip('var(--green)','What an HYSA pays right now:','4-5% APY. On $4,500 saved that is $180-$225 per year just for keeping money there. Same FDIC protection as any bank. Takes 10 minutes to open online.')+
-    tipL('var(--blue)','Best options:','Ally Bank (no fees, great app), Marcus by Goldman Sachs, SoFi (bonus if you direct deposit). Open one before September so your apartment fund earns interest while it builds.')
-  );
-
-  // Car buying
-  html+=sec('&#128663;','Car Buying Strategy — Do Not Rush This',
-    tip('var(--red)','Your current situation:','580-669 credit score = 14-22% APR on a car loan. On a $20,000 car at 20% APR over 60 months you pay $32,000 total. That is $12,000 in interest. This is the trap.')+
-    tip('var(--green)','The right play:','Wait until your score hits 680+. At 680 you qualify for 8-11% APR. Same $20,000 car = $24,000-$26,000 total. You save $6,000-$8,000 just by waiting 3-4 months.')+
-    tip('var(--amber)','Sell the F-150 first:','Use that cash as a down payment. A $4,000-$6,000 down payment drops your loan amount, your monthly payment, and the total interest paid. Never finance more than you have to.')+
-    tipL('var(--blue)','What to buy:','Used certified pre-owned 2-4 years old. Let someone else take the depreciation hit. A $15,000-$18,000 CPO vehicle with a warranty is a better financial move than a $28,000 new car at 20% APR.')
-  );
-
-  // F-150 sale
-  html+=sec('&#128663;','Selling the F-150 — Do It Right',
-    tip('var(--green)','Where to list:','Facebook Marketplace (fastest), Craigslist (free), CarGurus (serious buyers), AutoTrader (widest reach). List on all of them the same day.')+
-    tip('var(--amber)','Pricing strategy:','Check KBB and CarGurus for your exact year, mileage, and trim. Price $500-$1,000 below market average to move it fast. Every week it sits costs you in insurance and potential repairs.')+
-    tip('var(--blue)','What to disclose:','Be upfront about the 226k miles and repairs done. Buyers respect honesty. Hiding issues causes deals to fall apart after inspection. Price it right for the mileage and it will sell.')+
-    tipL('var(--red)','Safety:','Meet at a bank or police station parking lot. Bring someone with you. Cash or verified bank transfer only. No Zelle from strangers, no personal checks. Take a photo of their license before any test drive.')
-  );
-
-  // Moving out of MA
-  html+=sec('&#128506;','Moving Out of Massachusetts — The Financial Case',
-    tip('var(--red)','What MA costs you:','5% state income tax on $48,000/yr = $2,400/year gone before you spend a dollar. Average 1BR rent in Boston area: $2,200-$2,800/mo. High cost across the board.')+
-    tip('var(--green)','Texas — No state income tax:','Keep that $2,400/yr immediately. Austin/Dallas 1BR rent: $1,100-$1,500/mo. Warm weather, major music scene, massive job market. Your $4K/mo goes dramatically further.')+
-    tip('var(--green)','Florida — No state income tax:','Orlando/Tampa 1BR rent: $1,200-$1,600/mo. No state tax. Strong job market. Humidity and hurricane season are the tradeoffs.')+
-    tip('var(--green)','Tennessee — No state income tax:','Nashville 1BR rent: $1,300-$1,700/mo. Major music industry city — directly relevant to your goals. Lower overall COL than TX or FL.')+
-    tipL('var(--amber)','When to move:','After the apartment fund hits $4,500 and all debt is cleared. Move with cash in hand, zero debt, and a rising credit score. That is the position of strength you want.')
-  );
-
-  // Tax tips
-  html+=sec('&#129534;','Maximize Your Tax Return',
-    tip('var(--green)','W-4 withholding:','If you got a large refund last year, you are over-withholding — giving the IRS an interest-free loan all year. Adjust your W-4 with your employer to get more in each paycheck instead.')+
-    tip('var(--blue)','IRS Free File:','If your income is under $79,000 you can file federal taxes 100% free at IRS.gov/freefile. Do not pay TurboTax or H&amp;R Block. Same result, zero cost.')+
-    tip('var(--amber)','Education credits:','If you are completing a degree, the American Opportunity Credit gives up to $2,500/year back on tuition and fees. The Lifetime Learning Credit gives up to $2,000. File Form 8863. Real money.')+
-    tip('var(--purple)','Side income deductions:','Any gig work, freelance, or music income — track every business expense: phone bill partial, equipment, software, home studio gear, streaming subscriptions used for work. Reduces taxable income dollar for dollar.')+
-    tipL('var(--green)','After debt — Roth IRA:','Open a Roth IRA at Fidelity or Vanguard. Contribute up to $7,000/year in after-tax dollars. Grows 100% tax-free. Withdraw in retirement with zero taxes owed. Best long-term wealth tool available.')
-  );
-
-  // After debt
-  html+=sec('&#128200;','After Debt Is Cleared — What To Do Next',
-    tip('var(--green)','Order of operations:','1. Emergency fund to $1,000. 2. Apartment fund to $4,500. 3. Move out. 4. Emergency fund to 3 months expenses (~$3,300). 5. Roth IRA contributions. 6. Index fund investing.')+
-    tip('var(--blue)','Investing basics:','Once emergency fund is solid, put money into index funds — not individual stocks. S&amp;P 500 index fund (VOO or FXAIX) averages 10% annual return historically. Fidelity and Vanguard have zero-fee options. Set it and do not touch it.')+
-    tip('var(--amber)','The 50/30/20 rule:','50% of take-home to Needs (rent, food, bills). 30% to Wants (dining, fun). 20% to Savings and investing. Right now you are in payoff mode so it is closer to 50% needs, 10% wants, 40% debt and savings. Use this after debt is cleared.')+
-    tipL('var(--purple)','Music career + finances:','Register with BMI (free) — every stream, sync, and performance earns royalties that go uncollected without registration. DistroKid ($23/yr) puts your music on every platform and you keep 100% of revenue. Zero-cost moves that pay you forever.')
-  );
-
-
+  }else{h+='<div class="empty"><strong>ALL CLEARED</strong>Stack savings now.</div>';}
+  h+='</div>';
   // 5 Credit Factors
-  html+='<div class="sh"><div class="st">📋 The 5 Credit Score Factors</div></div>';
-  html+='<div class="card">';
+  h+=shead('The 5 Credit Score Factors');
+  h+='<div class="card">';
+  h+='<div style="margin-bottom:11px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;">1. Payment History</span><span style="color:var(--green);">35% of score</span></div>'+xbar(35,'xg')+'<div style="font-size:11px;color:var(--muted);">#1 factor. Every on-time payment = points. One 30-day late = -60 to -110 pts. Set autopay for at least the minimum on every card today.</div></div>';
+  h+='<div style="margin-bottom:11px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;">2. Credit Utilization</span><span style="color:var(--green);">30% of score</span></div>'+xbar(30,'xa')+'<div style="font-size:11px;color:var(--muted);">Your utilization: <span style="color:'+u2c+';font-weight:600;">'+u2pct+'%</span> (target: under 30%, ideal: under 10%). $0 balance = 0% = maximum impact. Keep each individual card under 30% of its own limit.</div></div>';
+  h+='<div style="margin-bottom:11px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;">3. Length of Credit History</span><span style="color:var(--green);">15% of score</span></div>'+xbar(15,'xb')+'<div style="font-size:11px;color:var(--muted);">How long your accounts have been open. The older the better. Never close old cards even at $0. Closing Quicksilver or Savor deletes their history and tanks this factor.</div></div>';
+  h+='<div style="margin-bottom:11px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;">4. Credit Mix</span><span style="color:var(--green);">10% of score</span></div>'+xbar(10,'xp')+'<div style="font-size:11px;color:var(--muted);">Having different types of credit (cards + car loan + student loan) shows lenders you can handle multiple types. Let it build naturally over time.</div></div>';
+  h+='<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;">5. New Credit Inquiries</span><span style="color:var(--red);">10% of score</span></div>'+xbar(10,'xr')+'<div style="font-size:11px;color:var(--muted);">Every application = hard inquiry = -5 to -10 pts. Stays 2 years. Do NOT apply for any new credit right now. Wait until score hits 700+ first.</div></div>';
+  h+='</div>';
+  // Cards for bills
+  h+=shead('Cards For Bills - The Rule');
+  h+='<div class="card" style="font-size:12px;color:var(--muted);line-height:1.9;">';
+  h+='<div style="margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--border);"><span style="color:var(--red);font-weight:600;">WRONG - what you were doing:</span><br>Bills across multiple cards, carrying balances. 27% APR on your own rent. A 27% surcharge on every bill.</div>';
+  h+='<div style="margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--border);"><span style="color:var(--green);font-weight:600;">THE RULE - forever:</span><br>ONE card for ALL bills. Pay the FULL balance before closing date every month. Zero interest. Score climbs every month.</div>';
+  h+='<div style="margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--border);"><span style="color:var(--amber);font-weight:600;">RIGHT NOW:</span><br>Bills on Savor ONLY (closes 13th). Pay full balance before 13th. Do not use Quicksilver or Credit One for new charges.</div>';
+  h+='<div><span style="color:var(--blue);font-weight:600;">AFTER ALL CARDS HIT $0:</span><br>Move everything to Quicksilver. Treat it like a debit card with a 30-day delay. Money must already exist before you swipe.</div>';
+  h+='</div>';
+  // Interest cost
+  h+=shead('What 27% APR Costs You');
+  h+='<div class="ibar">'+row('Monthly interest burning','~$'+ti.toFixed(2),'mn')+row('Daily cost','~$'+(ti/30).toFixed(2)+'/day','mn')+row('Annual if never paid','~$'+(ti*12).toFixed(0)+'/yr','mn')+'</div>';
+  // Key tips
+  var tips=[
+    ['EMERGENCY FUND','3-6 months of expenses saved separately. For you that is $3,300-$6,600. Start with $1,000 first target. Go into the apartment with this in place or one unexpected expense puts you back on credit cards.'],
+    ['HIGH-YIELD SAVINGS (HYSA)','Your regular savings account pays 0.01% APY. Ally Bank, Marcus, or SoFi pay 4-5% APY. On $4,500 saved that is $180-$225/year for doing nothing. Same FDIC protection. Open one before September.'],
+    ['CAR BUYING - WAIT','580-669 score = 14-22% APR. On $20K car at 20% you pay $32K total - $12K in interest. Wait until score hits 680+. At 680 you pay $24-26K total. You save $6-8K by waiting 3-4 months. Sell the truck first, use that as down payment.'],
+    ['SELLING THE F-150','List on Facebook Marketplace, Craigslist, CarGurus, AutoTrader simultaneously. Check KBB for your year/mileage/trim. Price $500-$1K below market to move it fast. Meet buyers at bank or police station parking lot. Cash or verified bank transfer only.'],
+    ['MOVING OUT OF MA','5% state income tax = $2,400/yr gone. Texas, Florida, Tennessee have zero state income tax. Austin/Dallas 1BR rent $1,100-$1,500/mo. Nashville 1BR $1,300-$1,700/mo. Your $4K/mo goes dramatically further. Move after apartment fund hits $4,500 and all debt cleared.'],
+    ['MAXIMIZE TAX RETURN','IRS.gov/freefile = 100% free federal filing if income under $79K. American Opportunity Credit = up to $2,500/yr back on tuition (you qualify with your BS degree). W-4: if you got a big refund last year, adjust withholding to get more per paycheck now.'],
+    ['AFTER DEBT - ORDER OF OPERATIONS','1. Emergency fund to $1,000. 2. Apartment fund to $4,500. 3. Move out. 4. Emergency fund to 3 months. 5. Roth IRA at Fidelity or Vanguard ($7K/yr, grows tax-free). 6. S&P 500 index fund (VOO or FXAIX, 10% avg annual return).'],
+    ['MUSIC + MONEY','Register with BMI (free) - every stream and performance earns royalties without registration. DistroKid ($23/yr) puts your music on every platform and you keep 100% of revenue. These are permanent income streams with zero ongoing cost.']
+  ];
+  tips.forEach(function(t){
+    h+=shead(t[0]);
+    h+='<div class="card" style="font-size:12px;color:var(--muted);line-height:1.8;">'+t[1]+'</div>';
+  });
+  return h;
+}
 
-  // Factor 1: Payment History 35%
-  var allCards=S.debts.filter(function(d){return d.type==='credit_card';});
-  html+='<div style="margin-bottom:12px;">';
-  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
-  html+='<span style="font-size:12px;font-weight:600;">1. Payment History</span>';
-  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">35% of score</span></div>';
-  html+='<div class="xtrack"><div class="xfill xg" style="width:35%"></div></div>';
-  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">The #1 factor. Every on-time payment = points. Every missed payment = major damage. Set up autopay for at least the minimum on every card today. One 30-day late payment can drop your score 60-110 pts.</div></div>';
-
-  // Factor 2: Utilization 30%
-  var util2=getUtilization();
-  var util2pct=util2?util2.pct:0;
-  var util2color=util2pct>=70?'var(--red)':util2pct>=30?'var(--amber)':'var(--green)';
-  html+='<div style="margin-bottom:12px;">';
-  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
-  html+='<span style="font-size:12px;font-weight:600;">2. Credit Utilization</span>';
-  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">30% of score</span></div>';
-  html+='<div class="xtrack"><div class="xfill xa" style="width:30%"></div></div>';
-  html+='<div style="font-size:11px;margin-top:4px;line-height:1.6;">';
-  html+='<span style="color:'+util2color+';font-weight:600;">Your utilization: '+util2pct+'%</span>';
-  html+='<span style="color:var(--muted);"> (target: under 30%, ideal: under 10%)</span><br>';
-  html+='<span style="color:var(--muted);">How much of your available credit you are using. $0 balance = 0% = maximum score impact. Keep each individual card under 30% of its own limit.</span></div></div>';
-
-  // Factor 3: Credit Age 15%
-  html+='<div style="margin-bottom:12px;">';
-  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
-  html+='<span style="font-size:12px;font-weight:600;">3. Length of Credit History</span>';
-  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">15% of score</span></div>';
-  html+='<div class="xtrack"><div class="xfill xb" style="width:15%"></div></div>';
-  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">How long your accounts have been open. The older the better. This is why you NEVER close old cards even at $0 — Quicksilver and Savor stay open forever. Closing them deletes their history and tanks this factor.</div></div>';
-
-  // Factor 4: Credit Mix 10%
-  html+='<div style="margin-bottom:12px;">';
-  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
-  html+='<span style="font-size:12px;font-weight:600;">4. Credit Mix</span>';
-  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--green);">10% of score</span></div>';
-  html+='<div class="xtrack"><div class="xfill xp" style="width:10%"></div></div>';
-  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">Having different types of credit (credit cards + car loan + student loan) shows lenders you can manage multiple types of debt responsibly. You do not need to take on new debt just for this — let it build naturally over time.</div></div>';
-
-  // Factor 5: New Credit 10%
-  html+='<div>';
-  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">';
-  html+='<span style="font-size:12px;font-weight:600;">5. New Credit Inquiries</span>';
-  html+='<span style="font-family:var(--mono);font-size:11px;color:var(--red);">10% of score</span></div>';
-  html+='<div class="xtrack"><div class="xfill xr" style="width:10%"></div></div>';
-  html+='<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;">Every time you apply for credit a hard inquiry is added. Each one drops your score 5-10 pts and stays for 2 years. Do NOT apply for any new credit right now. Wait until your score hits 700+ before applying for anything new.</div></div>';
-
-  html+='</div>';
-
-  // Tax maximizer section
-  html+=sec('🧾','Maximize Your Tax Return — Action Items',
-    tip('var(--green)','Free federal filing:','AnnualCreditReport.com for credit — IRS.gov/freefile for taxes. Under $79K income = 100% free federal filing. Do not pay TurboTax or H&R Block.')+
-    tip('var(--blue)','Education credits (you qualify):','Pursuing a BS degree? File Form 8863. American Opportunity Credit = up to $2,500/yr back on tuition. Lifetime Learning Credit = up to $2,000. Stack both if eligible. This is real money every April.')+
-    tip('var(--amber)','W-4 adjustment:','If you got a big refund last year you are over-withholding — giving the IRS an interest-free loan. Ask your employer to adjust your W-4 to get more in each paycheck now instead of waiting.')+
-    tip('var(--purple)','Music and side income deductions:','Any income from music, gigs, or side work — track all expenses: home studio equipment, software, streaming subs used for work, phone bill percentage, DistroKid fees. All reduce taxable income dollar for dollar.')+
-    tipL('var(--green)','After debt: Roth IRA:','Open at Fidelity or Vanguard. Contribute up to $7,000/yr after-tax. Grows 100% tax-free. Withdraw in retirement with zero taxes. Single best long-term wealth move available to you right now.')
-  );
-
-  return html;
+// ── AWARDS (ACHIEVEMENTS) ──
+var AWARDS=[
+  {id:'first_pay',icon:'&#9876;',title:'First Blood',desc:'Make your first debt payment',check:function(){return S.debts.some(function(d){return d.orig>d.bal;});}},
+  {id:'card_cleared',icon:'&#128293;',title:'Debt Slayer I',desc:'Pay off your first card completely',check:function(){return S.debts.some(function(d){return d.cleared;});}},
+  {id:'all_cleared',icon:'&#127942;',title:'Debt Slayer II',desc:'All debts cleared to $0',check:function(){return S.debts.length>0&&S.debts.every(function(d){return d.cleared||d.bal===0;});}},
+  {id:'paid_500',icon:'&#128163;',title:'$500 Destroyed',desc:'Pay down $500 in total debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=500;}},
+  {id:'paid_1000',icon:'&#128176;',title:'$1,000 Destroyed',desc:'Pay down $1,000 in total debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=1000;}},
+  {id:'paid_2000',icon:'&#128081;',title:'$2,000 Destroyed',desc:'Pay down all current debt',check:function(){return S.debts.reduce(function(s,d){return s+(d.orig-d.bal);},0)>=2000;}},
+  {id:'save_100',icon:'&#127807;',title:'First Seed',desc:'Save $100 toward any goal',check:function(){return S.goals.some(function(g){return g.cur>=100;});}},
+  {id:'save_1000',icon:'&#128181;',title:'Grand Stack',desc:'Save $1,000 toward any goal',check:function(){return S.goals.some(function(g){return g.cur>=1000;});}},
+  {id:'save_4500',icon:'&#127968;',title:'Apartment Ready',desc:'Save $4,500 for the move',check:function(){return S.goals.some(function(g){return g.cur>=4500;});}},
+  {id:'save_10k',icon:'&#128640;',title:'10K Club',desc:'Save $10,000 total',check:function(){return S.goals.reduce(function(s,g){return s+g.cur;},0)>=10000;}},
+  {id:'credit_660',icon:'&#128200;',title:'Rising Star',desc:'Credit score reached 660',check:function(){return S.creditScore>=660;}},
+  {id:'credit_700',icon:'&#11088;',title:'Good Standing',desc:'Credit score reached 700',check:function(){return S.creditScore>=700;}},
+  {id:'credit_740',icon:'&#128142;',title:'Excellent Credit',desc:'Credit score reached 740+',check:function(){return S.creditScore>=740;}},
+  {id:'util_30',icon:'&#128737;',title:'Under Control',desc:'Credit utilization below 30%',check:function(){var u=getUtil();return u?u.pct<30:false;}},
+  {id:'first_txn',icon:'&#128221;',title:'Tracker Activated',desc:'Log your first transaction',check:function(){return S.transactions.length>=1;}},
+  {id:'net_positive',icon:'&#128202;',title:'Net Positive',desc:'Achieve a positive net worth',check:function(){return S.accounts.reduce(function(s,a){return s+a.bal;},0)>0;}},
+  {id:'plan_5',icon:'&#9989;',title:'Action Taker',desc:'Complete 5 plan items',check:function(){return S.planItems.filter(function(p){return p.done;}).length>=5;}},
+  {id:'plan_all',icon:'&#127937;',title:'Plan Complete',desc:'Complete all plan items',check:function(){return S.planItems.length>0&&S.planItems.every(function(p){return p.done;});}}
+];
+function checkAwards(){
+  var newOnes=[];
+  AWARDS.forEach(function(a){
+    if(S.achievements.indexOf(a.id)===-1&&a.check()){S.achievements.push(a.id);newOnes.push(a);}
+  });
+  if(newOnes.length){lSave();newOnes.forEach(function(a,i){setTimeout(function(){toast('Award Unlocked: '+a.icon+' '+a.title);},i*2500);});}
+}
+function rAwards(){
+  var earned=S.achievements;var total=AWARDS.length;var pct=total?Math.round(earned.length/total*100):0;
+  var h=shead('Awards ('+earned.length+'/'+total+')');
+  h+='<div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">';
+  h+='<div style="flex:1;">'+xbar(pct,'xp')+'<div style="font-size:10px;color:var(--muted);">'+earned.length+' of '+total+' unlocked</div></div>';
+  h+='<div style="font-size:20px;font-weight:700;color:var(--purple);">'+pct+'%</div></div>';
+  AWARDS.forEach(function(a){
+    var isEarned=earned.indexOf(a.id)!==-1;
+    h+='<div class="ach-item'+(isEarned?' earned':'')+'" style="opacity:'+(isEarned?'1':'0.45')+'">';
+    h+='<div style="font-size:28px;line-height:1;">'+(isEarned?a.icon:'&#128274;')+'</div>';
+    h+='<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:'+(isEarned?'var(--text)':'var(--muted)')+';">'+a.title+'</div>';
+    h+='<div style="font-size:11px;color:var(--muted);margin-top:2px;">'+a.desc+'</div></div>';
+    if(isEarned)h+='<div style="font-size:10px;color:var(--green);">EARNED</div>';
+    h+='</div>';
+  });
+  return h;
 }
 
 // ── SETTINGS ──
 function rSettings(){
-  return `<div class="sh" style="margin-top:13px;"><div class="st">⚙️ Settings</div></div>
-  <div class="card">
-    <div style="font-family:var(--mono);font-size:9px;color:var(--blue);margin-bottom:10px;">👤 PROFILE</div>
-    <div class="sett" onclick="openM('income')"><div><div class="sett-l">Income & Paycheck</div><div class="sett-s">$${S.income}/mo • $${S.paycheck} biweekly</div></div><span class="sett-ch">›</span></div>
-    <div class="sett" onclick="openM('credit')"><div><div class="sett-l">Credit Score</div><div class="sett-s">${S.creditScore} → target ${S.creditTarget}</div></div><span class="sett-ch">›</span></div>
-  </div>
-  <div class="card">
-    <div style="font-family:var(--mono);font-size:9px;color:var(--red);margin-bottom:10px;">🔒 SECURITY</div>
-    <div class="sett" onclick="openM('pin')"><div><div class="sett-l">Change PIN</div><div class="sett-s">Tap to update your 4-digit PIN</div></div><span class="sett-ch">›</span></div>
-    <div class="sett"><div><div class="sett-l">Auto-Lock</div><div class="sett-s">Lock after inactivity</div></div><button class="tog ${S.autoLock?'on':'off'}" onclick="toggleLock()"></button></div>
-    <div class="sett"><div><div class="sett-l">Lock Timer</div><div class="sett-s">${S.lockMins||5} minutes</div></div><select class="fs" style="width:85px;font-size:11px;" onchange="setLockMins(this.value)">${[1,2,5,10,15,30].map(m=>`<option value="${m}" ${(S.lockMins||5)===m?'selected':''}>${m} min</option>`).join('')}</select></div>
-    <div class="sett" onclick="lockApp()"><div><div class="sett-l">Lock Now</div><div class="sett-s">Immediately lock the app</div></div><span class="sett-ch">›</span></div>
-  </div>
-  <div class="card">
-    <div style="font-family:var(--mono);font-size:9px;color:var(--amber);margin-bottom:10px;">📦 DATA</div>
-    <div class="sett" onclick="exportData()"><div><div class="sett-l">Export Backup</div><div class="sett-s">Download your data as JSON file</div></div><span class="sett-ch">›</span></div>
-    <div class="sett" onclick="importData()"><div><div class="sett-l">Import Backup</div><div class="sett-s">Restore from a JSON backup</div></div><span class="sett-ch">›</span></div>
-    <div class="sett" onclick="resetBills()"><div><div class="sett-l" style="color:var(--amber);">Reset Bills (new month)</div><div class="sett-s">Mark all bills unpaid</div></div><span class="sett-ch">›</span></div>
-    <div class="sett" onclick="clearTxns()"><div><div class="sett-l" style="color:var(--amber);">Clear All Transactions</div><div class="sett-s">Remove transaction history</div></div><span class="sett-ch">›</span></div>
-  </div>
-  <div class="danger"><div style="font-family:var(--mono);font-size:9px;color:var(--red);margin-bottom:8px;">⚠️ DANGER ZONE</div><button class="btn btn-r btn-full" onclick="resetAll()">Reset Everything — Start Fresh</button></div>
-  <div style="text-align:center;margin-top:16px;font-family:var(--mono);font-size:9px;color:var(--dim);">Finance Quest v3.0 • Built for Ralique<br>🔒 PIN protected • Data stays on your device</div>`;
+  var h=shead('Settings');
+  h+='<div class="card">';
+  h+='<div style="font-size:9px;color:var(--blue);margin-bottom:10px;">PROFILE</div>';
+  h+='<div class="sett" onclick="openM(\'income\')"><div><div class="sett-l">Income and Paycheck</div><div class="sett-s">$'+S.income+'/mo | $'+S.paycheck+' biweekly</div></div><span class="sett-ch">></span></div>';
+  h+='<div class="sett" onclick="openM(\'credit\')"><div><div class="sett-l">Credit Score</div><div class="sett-s">'+S.creditScore+' to target '+S.creditTarget+'</div></div><span class="sett-ch">></span></div>';
+  h+='</div>';
+  h+='<div class="card">';
+  h+='<div style="font-size:9px;color:var(--red);margin-bottom:10px;">SECURITY</div>';
+  h+='<div class="sett" onclick="openM(\'pin\')"><div><div class="sett-l">Change PIN</div><div class="sett-s">Tap to update your 4-digit PIN</div></div><span class="sett-ch">></span></div>';
+  h+='<div class="sett"><div><div class="sett-l">Auto-Lock</div><div class="sett-s">Lock after inactivity</div></div><button class="tog '+(S.autoLock?'on':'off')+'" onclick="toggleLock()"></button></div>';
+  h+='<div class="sett"><div><div class="sett-l">Lock Timer</div><div class="sett-s">'+(S.lockMins||5)+' minutes</div></div><select class="fs" style="width:85px;font-size:11px;" onchange="setLockMins(this.value)">';
+  [1,2,5,10,15,30].forEach(function(m){h+='<option value="'+m+'"'+((S.lockMins||5)===m?' selected':'')+'>'+m+' min</option>';});
+  h+='</select></div>';
+  h+='<div class="sett" onclick="lockApp()"><div><div class="sett-l">Lock Now</div><div class="sett-s">Immediately lock the app</div></div><span class="sett-ch">></span></div>';
+  h+='</div>';
+  h+='<div class="card">';
+  h+='<div style="font-size:9px;color:var(--amber);margin-bottom:10px;">DATA</div>';
+  h+='<div class="sett" onclick="exportData()"><div><div class="sett-l">Export Backup</div><div class="sett-s">Download your data as JSON</div></div><span class="sett-ch">></span></div>';
+  h+='<div class="sett" onclick="importData()"><div><div class="sett-l">Import Backup</div><div class="sett-s">Restore from a JSON file</div></div><span class="sett-ch">></span></div>';
+  h+='<div class="sett" onclick="resetBills()"><div><div class="sett-l" style="color:var(--amber);">Reset Bills - New Month</div><div class="sett-s">Mark all bills unpaid</div></div><span class="sett-ch">></span></div>';
+  h+='<div class="sett" onclick="clearTxns()"><div><div class="sett-l" style="color:var(--amber);">Clear All Transactions</div><div class="sett-s">Remove transaction history</div></div><span class="sett-ch">></span></div>';
+  h+='</div>';
+  h+='<div class="danger"><div style="font-size:9px;color:var(--red);margin-bottom:8px;">DANGER ZONE</div><button class="btn btn-r btn-full" onclick="resetAll()">Reset Everything</button></div>';
+  h+='<div style="text-align:center;margin-top:16px;font-size:9px;color:var(--dim);">Finance Quest v4.0 | Built for Ralique | PIN protected</div>';
+  return h;
 }
 function toggleLock(){S.autoLock=!S.autoLock;save();render();}
 function setLockMins(v){S.lockMins=parseInt(v)||5;save();render();}
-function resetBills(){if(!confirm('Mark all bills as unpaid?'))return;S.bills.forEach(b=>b.paid=false);save();render();toast('✓ Bills reset for new month');}
-function clearTxns(){if(!confirm('Delete all transactions? Cannot undo.'))return;S.transactions=[];save();render();toast('🗑 Transactions cleared');}
-function resetAll(){if(!confirm('RESET EVERYTHING? Cannot undo.'))return;if(!confirm('Are you 100% sure? All data will be lost.'))return;S=JSON.parse(JSON.stringify(DEF));lSave();render();toast('🔄 App reset');}
-function exportData(){const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='finance-quest-backup-'+new Date().toISOString().split('T')[0]+'.json';a.click();toast('📦 Backup downloaded!');}
-function importData(){const input=document.createElement('input');input.type='file';input.accept='.json';input.onchange=e=>{const fr=new FileReader();fr.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(!d.name||!d.debts)throw new Error('Invalid');S=d;lSave();render();toast('✅ Data imported!');}catch{toast('Invalid backup file','err');}};fr.readAsText(e.target.files[0]);};input.click();}
+function resetBills(){if(!confirm('Mark all bills unpaid?'))return;S.bills.forEach(function(b){b.paid=false;});save();render();toast('Bills reset for new month');}
+function clearTxns(){if(!confirm('Delete all transactions?'))return;S.transactions=[];save();render();toast('Transactions cleared');}
+function resetAll(){if(!confirm('RESET EVERYTHING?'))return;if(!confirm('100% sure? All data lost.'))return;S=JSON.parse(JSON.stringify(DEF));lSave();render();toast('App reset');}
+function exportData(){var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='finance-quest-backup-'+new Date().toISOString().split('T')[0]+'.json';a.click();toast('Backup downloaded!');}
+function importData(){var input=document.createElement('input');input.type='file';input.accept='.json';input.onchange=function(e){var fr=new FileReader();fr.onload=function(ev){try{var d=JSON.parse(ev.target.result);if(!d.name||!d.debts)throw new Error();S=d;lSave();render();toast('Data imported!');}catch(ex){toast('Invalid backup file','err');}};fr.readAsText(e.target.files[0]);};input.click();}
 
 // ── INCOME / CREDIT SAVE ──
-function saveIncome(){const inc=parseFloat(document.getElementById('i-inc').value);const pay=parseFloat(document.getElementById('i-pay').value);const misc=parseFloat(document.getElementById('i-misc').value);if(!isNaN(inc)&&inc>0)S.income=inc;if(!isNaN(pay)&&pay>0)S.paycheck=pay;if(!isNaN(misc)&&misc>=0)S.misc=misc;save();closeM('income');render();toast('💰 Income updated!');}
-function saveCredit(){const sc=parseInt(document.getElementById('c-sc').value);const tg=parseInt(document.getElementById('c-tgt').value);if(!isNaN(sc)&&sc>=300&&sc<=850)S.creditScore=sc;if(!isNaN(tg)&&tg>=300&&tg<=850)S.creditTarget=tg;save();closeM('credit');render();toast('📊 Score updated: '+S.creditScore);}
+function saveIncome(){var inc=parseFloat(document.getElementById('i-inc').value);var pay=parseFloat(document.getElementById('i-pay').value);var misc=parseFloat(document.getElementById('i-misc').value);if(!isNaN(inc)&&inc>0)S.income=inc;if(!isNaN(pay)&&pay>0)S.paycheck=pay;if(!isNaN(misc)&&misc>=0)S.misc=misc;save();closeM('income');render();toast('Income updated!');}
+function saveCredit(){var sc=parseInt(document.getElementById('c-sc').value);var tg=parseInt(document.getElementById('c-tgt').value);if(!isNaN(sc)&&sc>=300&&sc<=850)S.creditScore=sc;if(!isNaN(tg)&&tg>=300&&tg<=850)S.creditTarget=tg;save();closeM('credit');render();toast('Score updated: '+S.creditScore);checkAwards();}
 
 // ── MODALS ──
 function openM(id){
   if(id==='income'){document.getElementById('i-inc').value=S.income;document.getElementById('i-pay').value=S.paycheck;document.getElementById('i-misc').value=S.misc;}
   if(id==='credit'){document.getElementById('c-sc').value=S.creditScore;document.getElementById('c-tgt').value=S.creditTarget;}
-  const el=document.getElementById('m-'+id);
-  if(el)el.classList.add('open');
+  var el=document.getElementById('m-'+id);if(el)el.classList.add('open');
 }
-function closeM(id){const el=document.getElementById('m-'+id);if(el)el.classList.remove('open');}
-document.querySelectorAll('.ov').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el){const id=el.id.replace('m-','');closeM(id);}});});
+function closeM(id){var el=document.getElementById('m-'+id);if(el)el.classList.remove('open');}
+document.querySelectorAll('.ov').forEach(function(el){el.addEventListener('click',function(e){if(e.target===el){var id=el.id.replace('m-','');closeM(id);}});});
 
 // ── TOAST ──
-function toast(msg,type=''){
-  const t=document.getElementById('toast');const m=document.getElementById('toast-msg');
+function toast(msg,type){
+  var t=document.getElementById('toast');var m=document.getElementById('toast-msg');
   if(!t||!m)return;
   m.textContent=msg;t.className='toast'+(type==='err'?' err':'');t.classList.add('show');
   clearTimeout(_toastTimer);_toastTimer=setTimeout(hideToast,4000);
 }
-function hideToast(){const t=document.getElementById('toast');if(t)t.classList.remove('show');clearTimeout(_toastTimer);}
+function hideToast(){var t=document.getElementById('toast');if(t)t.classList.remove('show');clearTimeout(_toastTimer);}
 
-// ── INIT ──
+// ── INIT ── runs last, after all functions defined
 lLoad();
-autoLinkDebtsToAccounts();
-const isFirst=!localStorage.getItem('fq5');
-document.getElementById('pinSub').textContent=isFirst?'DEFAULT PIN: 1234  (change in Settings)':'ENTER YOUR PIN';
+(function(){var el=document.getElementById('pinSub');if(el)el.textContent=localStorage.getItem('fq6')?'ENTER YOUR PIN':'DEFAULT PIN: 1234  (change in Settings)';})();
 </script>
 </body>
 </html>
