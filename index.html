@@ -183,7 +183,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 <div id="app">
   <div class="hdr">
     <div><div class="logo">FINANCE QUEST</div><div class="logo-sub">Your Money HUD</div></div>
-    <div class="hdr-r"><div class="lvl-b" id="lvlBadge">LVL 1</div><button class="hdr-icon" onclick="go('settings')">⚙️</button></div>
+    <div class="hdr-r"><div class="lvl-b" id="lvlBadge">LVL 1</div><button class="hdr-icon" id="undoBtn" onclick="undo()" style="display:none;">↩</button><button class="hdr-icon" onclick="go('settings')">⚙️</button></div>
   </div>
   <div class="scroll" id="scroll"><div id="main"></div></div>
   <nav class="bnav">
@@ -258,10 +258,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
     <option value="other_inc">💵 Other Income</option>
   </optgroup>
 </select></div>
-  <div class="fg"><label class="fl">Account (updates balance automatically)</label><select class="fs" id="t-acct"><option value="">None</option></select></div>
+  <div class="fg"><label class="fl">Account (money comes FROM)</label><select class="fs" id="t-acct"><option value="">None</option></select></div>
+  <div class="fg" id="t-card-pay-wrap" style="display:none"><label class="fl">💳 Credit Card Being Paid Off</label><select class="fs" id="t-card-pay"><option value="">None</option></select></div>
 <div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('txn')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="saveTxn()">Add</button></div></div></div>
 <div class="ov" id="m-bill"><div class="modal"><div class="mhandle" onclick="closeM('bill')"></div><div class="mtitle" id="bill-title">Add Bill</div><div class="fg"><label class="fl">Name</label><input class="fi" id="b-name" placeholder="e.g. Spotify"></div><div class="g2"><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="b-amt" type="number" placeholder="0.00" step="0.01"></div><div class="fg"><label class="fl">Due Day</label><input class="fi" id="b-due" type="number" placeholder="15" min="0" max="31"></div></div><div class="fg"><label class="fl">Icon</label><input class="fi" id="b-icon" placeholder="paste emoji" maxlength="4"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('bill')">Cancel</button><button class="btn btn-b" style="flex:2" id="bill-btn" onclick="saveBill()">Add Bill</button></div></div></div>
-<div class="ov" id="m-goal"><div class="modal"><div class="mhandle" onclick="closeM('goal')"></div><div class="mtitle" id="goal-title">Add Goal</div><div class="fg"><label class="fl">Goal Name</label><input class="fi" id="g-name" placeholder="e.g. Emergency Fund"></div><div class="g2"><div class="fg"><label class="fl">Target ($)</label><input class="fi" id="g-tgt" type="number" placeholder="0.00"></div><div class="fg"><label class="fl">Saved So Far ($)</label><input class="fi" id="g-cur" type="number" placeholder="0.00"></div></div><div class="fg"><label class="fl">Target Date</label><input class="fi" id="g-date" type="date"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('goal')">Cancel</button><button class="btn btn-g" style="flex:2" id="goal-btn" onclick="saveGoal()">Add Goal</button></div></div></div>
+<div class="ov" id="m-goal"><div class="modal"><div class="mhandle" onclick="closeM('goal')"></div><div class="mtitle" id="goal-title">Add Goal</div><div class="fg"><label class="fl">Goal Name</label><input class="fi" id="g-name" placeholder="e.g. Emergency Fund"></div><div class="g2"><div class="fg"><label class="fl">Target ($)</label><input class="fi" id="g-tgt" type="number" placeholder="0.00"></div><div class="fg"><label class="fl">Saved So Far ($)</label><input class="fi" id="g-cur" type="number" placeholder="0.00"></div></div><div class="fg"><label class="fl">Target Date</label><input class="fi" id="g-date" type="date"></div><div class="fg"><label class="fl">Notes (optional)</label><input class="fi" id="g-notes" placeholder="e.g. Open at Fidelity, use for emergency only..."></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('goal')">Cancel</button><button class="btn btn-g" style="flex:2" id="goal-btn" onclick="saveGoal()">Add Goal</button></div></div></div>
 <div class="ov" id="m-gd"><div class="modal"><div class="mhandle" onclick="closeM('gd')"></div><div class="mtitle" id="gd-title">Add Funds</div><div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Progress: <span id="gd-cur" style="color:var(--blue);font-family:var(--mono);font-size:14px;"></span></div><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="gd-amt" type="number" placeholder="0.00" step="0.01"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('gd')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="doGoalDep()">Add Funds</button></div></div></div>
 <div class="ov" id="m-plan"><div class="modal"><div class="mhandle" onclick="closeM('plan')"></div><div class="mtitle" id="plan-title">Add Action Item</div><div class="fg"><label class="fl">Title</label><input class="fi" id="p-title" placeholder="e.g. Open savings account"></div><div class="fg"><label class="fl">Description</label><textarea class="fi-ta" id="p-desc" placeholder="Details..."></textarea></div><div class="g2"><div class="fg"><label class="fl">When</label><input class="fi" id="p-date" placeholder="e.g. AUG 1"></div><div class="fg"><label class="fl">Priority</label><select class="fs" id="p-pri"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('plan')">Cancel</button><button class="btn btn-p" style="flex:2" id="plan-btn" onclick="savePlanItem()">Add Item</button></div></div></div>
 <div class="ov" id="m-pin"><div class="modal"><div class="mhandle" onclick="closeM('pin')"></div><div class="mtitle">Change PIN</div><div class="fg"><label class="fl">Current PIN</label><input class="fi" id="pin-old" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="fg"><label class="fl">New PIN (4 digits)</label><input class="fi" id="pin-new" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="fg"><label class="fl">Confirm New PIN</label><input class="fi" id="pin-cf" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('pin')">Cancel</button><button class="btn btn-g" style="flex:1" onclick="doChangePin()">Save</button></div></div></div>
@@ -286,34 +287,37 @@ var TYPE_ICONS={checking:'[CHK]',savings:'[SAV]',cash:'[$]',investment:'[INV]',c
 
 var DEF = {
   name:'Ralique', income:4000, paycheck:2000, misc:500,
-  creditScore:635, creditTarget:750, autoLock:true, lockMins:5,
+  creditScore:650, creditTarget:750, autoLock:true, lockMins:5,
   // UNIFIED ACCOUNTS - real data as of July 2026
   accounts:[
-    {id:1,name:'Chime Checking',type:'checking',bal:184.41,limit:0,apr:0,due:0,close:0,icon:'bank',notes:'Main checking account',pri:0},
+    {id:1,name:'Chime Checking',type:'checking',bal:1169.00,limit:0,apr:0,due:0,close:0,icon:'bank',notes:'Main checking account',pri:0},
     {id:2,name:'Chime Savings',type:'savings',bal:0,limit:0,apr:0,due:0,close:0,icon:'save',notes:'',pri:0},
-    {id:3,name:'Capital One Savor',type:'credit_card',bal:1007,limit:1996,apr:28,due:7,close:13,icon:'cc',notes:'Limit increased after credit line transfer from Quicksilver. Kill this first.',pri:1},
-    {id:4,name:'Capital One Quicksilver',type:'credit_card',bal:0,limit:504,apr:28,due:27,close:1,icon:'cc',notes:'Limit reduced after credit line transfer to Savor. Keep open - use monthly.',pri:2},
-    {id:5,name:'Credit One Visa',type:'credit_card',bal:0,limit:1200,apr:28,due:28,close:4,icon:'cc',notes:'Ending 5022. Keep open - use monthly.',pri:3},
-    {id:6,name:'Credit One AmEx',type:'credit_card',bal:0,limit:1000,apr:28,due:1,close:5,icon:'cc',notes:'Ending 5412. Keep open - use monthly.',pri:4},
-    {id:7,name:'Credit One AmEx 2',type:'credit_card',bal:0,limit:1500,apr:28,due:28,close:4,icon:'cc',notes:'Ending 7020. Keep open - use monthly.',pri:5}
+    {id:8,name:'Capital One Checking',type:'checking',bal:20.39,limit:0,apr:0,due:0,close:0,icon:'bank',notes:'',pri:0},
+    {id:3,name:'Capital One Savor',type:'credit_card',bal:99.22,limit:1996,apr:28,due:7,close:13,icon:'cc',notes:'Use monthly for bills. Pay full balance before 13th.',pri:1},
+    {id:4,name:'Capital One Quicksilver',type:'credit_card',bal:200.00,limit:504,apr:28,due:27,close:1,icon:'cc',notes:'Limit reduced after credit line transfer to Savor. Keep open - use monthly.',pri:2},
+    {id:5,name:'Credit One Visa',type:'credit_card',bal:149.00,limit:1200,apr:28,due:28,close:4,icon:'cc',notes:'Ending 5022. Keep open - use monthly.',pri:3},
+    {id:6,name:'Credit One AmEx',type:'credit_card',bal:259.00,limit:1000,apr:28,due:1,close:5,icon:'cc',notes:'Ending 5412. Keep open - use monthly.',pri:4},
+    {id:7,name:'Credit One AmEx 2',type:'credit_card',bal:30.00,limit:1500,apr:28,due:28,close:4,icon:'cc',notes:'Ending 7020. Keep open - use monthly.',pri:5}
   ],
   bills:[
-    {id:1,name:'Rent',amt:300,due:1,icon:'',paid:false},
-    {id:2,name:'Car Insurance',amt:253,due:17,icon:'',paid:false},
-    {id:3,name:'iCloud',amt:3,due:7,icon:'',paid:false},
-    {id:4,name:'Google Drive',amt:3,due:19,icon:'',paid:false},
-    {id:5,name:'Apple Care',amt:12,due:0,icon:'',paid:false},
-    {id:6,name:'AAA',amt:9,due:23,icon:'',paid:false},
-    {id:7,name:'Amazon Prime',amt:14.99,due:9,icon:'',paid:false},
-    {id:8,name:'Todolist x2',amt:10,due:9,icon:'',paid:false}
+    {id:1,name:'Rent',amt:300,due:1,icon:'',paid:false,paidDate:null},
+    {id:2,name:'Car Insurance',amt:253,due:17,icon:'',paid:false,paidDate:null},
+    {id:3,name:'iCloud',amt:3,due:7,icon:'',paid:false,paidDate:null},
+    {id:4,name:'Google Drive',amt:3,due:19,icon:'',paid:false,paidDate:null},
+    {id:5,name:'Apple Care',amt:12,due:0,icon:'',paid:false,paidDate:null},
+    {id:6,name:'AAA',amt:9,due:23,icon:'',paid:false,paidDate:null},
+    {id:7,name:'Amazon Prime',amt:14.99,due:9,icon:'',paid:false,paidDate:null},
+    {id:8,name:'Todolist x2',amt:10,due:9,icon:'',paid:false,paidDate:null}
   ],
   goals:[
-    {id:1,name:'Apartment Fund',cur:0,tgt:4500,date:'2025-09-01',col:'xb'},
-    {id:2,name:'Car Down Payment',cur:0,tgt:3000,date:'2025-10-01',col:'xp'},
-    {id:3,name:'Emergency Fund',cur:0,tgt:1000,date:'2025-12-01',col:'xg'}
+    {id:1,name:'Emergency Fund',cur:0,tgt:1000,date:'2026-09-01',col:'xg',longTerm:false,notes:'First milestone - 1 month expenses. Open Ally or SoFi HYSA.'},
+    {id:2,name:'Apartment Fund',cur:0,tgt:4500,date:'2026-10-01',col:'xb',longTerm:false,notes:'First + last month + security deposit. Target move Oct 2026.'},
+    {id:3,name:'New Car Fund',cur:0,tgt:3000,date:'2027-01-01',col:'xp',longTerm:false,notes:'Down payment after selling F-150. Wait until score hits 700+.'},
+    {id:4,name:'Emergency Fund 3mo',cur:0,tgt:6000,date:'2027-06-01',col:'xg',longTerm:true,notes:'Full 3-month buffer. Keep in HYSA at 4-5% APY.'},
+    {id:5,name:'Roth IRA',cur:0,tgt:7000,date:'2027-12-31',col:'xp',longTerm:true,notes:'Max contribution $7K/yr. Open at Fidelity. Invest in FXAIX (S&P 500).'}
   ],
   planItems:[
-    {id:1,title:'Pay off Capital One Savor',desc:'Current balance $1,007 at 28% APR. This is your only active balance. Every dollar over minimum kills it faster. Due the 7th every month.',date:'ASAP',pri:'high',done:false},
+    {id:1,title:'Savor paid off - DONE',desc:'All credit card debt cleared. Now focus on building emergency fund to $1,000 then apartment fund to $4,500.',date:'JUL 2026',pri:'high',done:true},
     {id:2,title:'Put 1 small charge on each card monthly',desc:'Quicksilver, Credit One Visa, Credit One AmEx x2 all need at least $1-5/mo to stay active. Closed inactive cards = lost credit history = score drop.',date:'MONTHLY',pri:'high',done:false},
     {id:3,title:'Pay each card FULL balance before closing date',desc:'Savor closes 13th. Quicksilver closes 1st. Credit One closes 4th and 5th. Pay full statement balance before closing date = zero interest forever.',date:'MONTHLY',pri:'high',done:false},
     {id:4,title:'Pull your free credit report',desc:'AnnualCreditReport.com - free. Check for errors. One disputed error = +20-40 pts fast.',date:'NOW',pri:'medium',done:false},
@@ -329,10 +333,10 @@ var DEF = {
 };
 
 // STORAGE
-function lSave(){try{localStorage.setItem('fq8',JSON.stringify(S));}catch(e){}}
+function lSave(){try{localStorage.setItem('fq11',JSON.stringify(S));}catch(e){}}
 function lLoad(){
   try{
-    var d=localStorage.getItem('fq8');
+    var d=localStorage.getItem('fq11');
     if(d){S=JSON.parse(d);}
     else{S=JSON.parse(JSON.stringify(DEF));}
     if(!S.accounts)S.accounts=JSON.parse(JSON.stringify(DEF.accounts));
@@ -343,6 +347,17 @@ function lLoad(){
     if(!S.achievements)S.achievements=[];
     if(S.autoLock===undefined)S.autoLock=true;
     if(!S.lockMins)S.lockMins=5;
+    // ensure bills have paidDate
+    S.bills.forEach(function(b){if(b.paidDate===undefined)b.paidDate=null;});
+    // auto-reset bills if it's a new month
+    var now=new Date();
+    var lastMonth=S._lastMonth;
+    var thisMonth=now.getFullYear()*100+now.getMonth();
+    if(lastMonth&&lastMonth!==thisMonth){
+      S.bills.forEach(function(b){b.paid=false;b.paidDate=null;});
+      toast('New month! Bills reset.');
+    }
+    S._lastMonth=thisMonth;
     // ensure all accounts have required fields
     S.accounts.forEach(function(a){
       if(a.limit===undefined)a.limit=0;
@@ -382,6 +397,9 @@ function getUtil(){
 
 // PIN
 var PK='fq_pin';
+var _undoStack=[];
+function pushUndo(label,fn){_undoStack.push({label:label,fn:fn});if(_undoStack.length>10)_undoStack.shift();}
+function undo(){if(!_undoStack.length){toast('Nothing to undo','err');return;}var u=_undoStack.pop();u.fn();save();render();toast('Undone: '+u.label);}
 function getPin(){return localStorage.getItem(PK)||'1234';}
 function pinKey(k){
   if(_pinBuf.length>=4)return;
@@ -409,7 +427,14 @@ document.addEventListener('click',function(){if(document.getElementById('app').s
 
 // NAVIGATION
 function go(tab){_tab=tab;document.querySelectorAll('.nb').forEach(function(b){b.classList.toggle('active',b.id==='nb-'+tab);});var s=document.getElementById('scroll');if(s)s.scrollTop=0;render();}
-function render(){var el=document.getElementById('main');if(!el)return;var map={hud:rHUD,credit:rCredit,money:rMoney,bills:rBills,goals:rGoals,plan:rPlan,tips:rTips,awards:rAwards,settings:rSettings};el.innerHTML=(map[_tab]||rHUD)();updateLvl();}
+function render(){
+  var el=document.getElementById('main');if(!el)return;
+  var map={hud:rHUD,credit:rCredit,money:rMoney,bills:rBills,goals:rGoals,plan:rPlan,tips:rTips,awards:rAwards,settings:rSettings};
+  el.innerHTML=(map[_tab]||rHUD)();
+  updateLvl();
+  var undoBtn=document.getElementById('undoBtn');
+  if(undoBtn)undoBtn.style.display=_undoStack.length?'flex':'none';
+}
 function updateLvl(){
   var cards=S.accounts.filter(isCreditCard);
   var totalDebt=S.accounts.filter(isDebt).reduce(function(s,a){return s+a.bal;},0);
@@ -823,10 +848,16 @@ function doPayment(){
   var amt=parseFloat(document.getElementById('pay-amt').value);
   if(!amt||amt<=0){toast('Enter a valid amount','err');return;}
   var a=S.accounts.find(function(x){return x.id===_payAcctId;});if(!a)return;
+  var prevBal=a.bal;var aName=a.name;
   a.bal=Math.max(0,+(a.bal-amt).toFixed(2));
-  S.transactions.push({id:Date.now(),desc:'Payment: '+a.name,amt:amt,type:'expense',cat:'debt_payment',date:new Date().toISOString().split('T')[0],acctId:null});
+  var txnId=Date.now();
+  S.transactions.push({id:txnId,desc:'Payment: '+aName,amt:amt,type:'expense',cat:'debt_payment',date:new Date().toISOString().split('T')[0],acctId:null});
+  pushUndo('payment on '+aName,function(){
+    a.bal=prevBal;
+    S.transactions=S.transactions.filter(function(t){return t.id!==txnId;});
+  });
   save();closeM('pay');render();
-  toast(a.bal===0?a.name+' CLEARED!':'$'+amt.toFixed(2)+' applied to '+a.name);
+  toast(a.bal===0?aName+' CLEARED!':'$'+amt.toFixed(2)+' applied to '+aName);
 }
 function openUpd(id){
   var a=S.accounts.find(function(x){return x.id===id;});if(!a)return;
@@ -840,9 +871,11 @@ function doUpdate(){
   var bal=parseFloat(document.getElementById('upd-bal').value);
   if(isNaN(bal)||bal<0){toast('Enter a valid amount','err');return;}
   var a=S.accounts.find(function(x){return x.id===_updAcctId;});if(!a)return;
+  var prevBal=a.bal;var aName=a.name;
   a.bal=+bal.toFixed(2);
+  pushUndo('balance update: '+aName,function(){a.bal=prevBal;});
   save();closeM('upd');render();
-  toast(a.name+' updated to $'+bal.toFixed(2));
+  toast(aName+' updated to $'+bal.toFixed(2));
 }
 
 // ── TRANSACTIONS ──
@@ -862,6 +895,15 @@ function openAddTxn(){
   var sel=document.getElementById('t-acct');
   sel.innerHTML='<option value="">None</option>';
   S.accounts.forEach(function(a){var o=document.createElement('option');o.value=a.id;o.textContent=a.name+' ('+TYPE_LABELS[a.type]+')';sel.appendChild(o);});
+  var cardSel=document.getElementById('t-card-pay');
+  cardSel.innerHTML='<option value="">Select card being paid...</option>';
+  S.accounts.filter(isCreditCard).forEach(function(a){var o=document.createElement('option');o.value=a.id;o.textContent=a.name+'  ($'+a.bal.toFixed(2)+' balance)';cardSel.appendChild(o);});
+  document.getElementById('t-card-pay-wrap').style.display='none';
+  // watch category change to show card-pay selector
+  document.getElementById('t-cat').onchange=function(){
+    var isDebtPmt=document.getElementById('t-cat').value==='debt_payment';
+    document.getElementById('t-card-pay-wrap').style.display=isDebtPmt?'block':'none';
+  };
   setTxnType('expense');openM('txn');
 }
 function saveTxn(){
@@ -870,8 +912,14 @@ function saveTxn(){
   var date=document.getElementById('t-date').value||new Date().toISOString().split('T')[0];
   var cat=document.getElementById('t-cat').value;
   var acctId=parseInt(document.getElementById('t-acct').value)||null;
+  var cardPayId=parseInt(document.getElementById('t-card-pay').value)||null;
   if(!desc||isNaN(amt)||amt<=0){toast('Fill in description and amount','err');return;}
-  S.transactions.push({id:Date.now(),desc:desc,amt:amt,type:_txnType,cat:cat,date:date,acctId:acctId});
+  var txnId=Date.now();
+  S.transactions.push({id:txnId,desc:desc,amt:amt,type:_txnType,cat:cat,date:date,acctId:acctId,cardPayId:cardPayId});
+  // snapshot for undo
+  var snapAccts=JSON.stringify(S.accounts);
+  var snapId=txnId;
+  // Update source account
   if(acctId){
     var a=S.accounts.find(function(x){return x.id===acctId;});
     if(a){
@@ -879,11 +927,23 @@ function saveTxn(){
         if(_txnType==='expense')a.bal=+(a.bal+amt).toFixed(2);
         else a.bal=Math.max(0,+(a.bal-amt).toFixed(2));
       }else{
+        // asset account: expense reduces balance, income increases
         if(_txnType==='income')a.bal=+(a.bal+amt).toFixed(2);
         else a.bal=+(a.bal-amt).toFixed(2);
       }
     }
   }
+  // If paying off a credit card: also reduce that card's balance
+  if(cardPayId&&cat==='debt_payment'){
+    var card=S.accounts.find(function(x){return x.id===cardPayId;});
+    if(card&&isCreditCard(card)){
+      card.bal=Math.max(0,+(card.bal-amt).toFixed(2));
+    }
+  }
+  pushUndo('transaction: '+desc,function(){
+    S.transactions=S.transactions.filter(function(t){return t.id!==snapId;});
+    S.accounts=JSON.parse(snapAccts);
+  });
   save();closeM('txn');render();
   toast((_txnType==='income'?'+':'-')+'$'+amt.toFixed(2)+' logged!');
 }
@@ -894,25 +954,70 @@ function delTxn(id){
 }
 
 function rBills(){
+  var now=new Date();
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function nextDueDate(dueDay){
+    if(!dueDay)return null;
+    var d=new Date();
+    var year=d.getFullYear(),month=d.getMonth();
+    // if today is past the due day, next due is next month
+    if(d.getDate()>dueDay)month++;
+    if(month>11){month=0;year++;}
+    return new Date(year,month,dueDay);
+  }
+  function fmtDate(d){if(!d)return 'Monthly';return MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();}
+  function daysUntil(d){if(!d)return null;return Math.ceil((d-new Date())/(1000*60*60*24));}
   var total=S.bills.reduce(function(s,b){return s+b.amt;},0);
   var paid=S.bills.filter(function(b){return b.paid;}).reduce(function(s,b){return s+b.amt;},0);
+  var unpaid=S.bills.filter(function(b){return !b.paid;});
   var sorted=[].concat(S.bills).sort(function(a,b){return (a.due||32)-(b.due||32);});
-  var h=shb('Monthly Bills','ab2',"openAddBill()",'+ Add');
+  var h=shb('Bills','ab2',"openAddBill()",'+ Add');
+  // summary bar
+  h+='<div class="sgrid" style="margin-bottom:12px;">';
+  h+='<div class="sb2"><div class="sb2-l">Total/mo</div><div class="sb2-v cr">$'+total.toFixed(0)+'</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Paid</div><div class="sb2-v cg">$'+paid.toFixed(0)+'</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Still Due</div><div class="sb2-v ca">$'+(total-paid).toFixed(0)+'</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Remaining</div><div class="sb2-v">'+unpaid.length+' bills</div></div>';
+  h+='</div>';
   if(!sorted.length)return h+'<div class="empty"><strong>NO BILLS ADDED</strong>Tap + Add to start</div>';
   sorted.forEach(function(b){
+    var nextDue=nextDueDate(b.due);
+    var days=daysUntil(nextDue);
+    var urgColor=b.paid?'var(--green)':days!==null&&days<=3?'var(--red)':days!==null&&days<=7?'var(--amber)':'var(--muted)';
+    var urgLabel=b.paid?'Paid - next due '+fmtDate(nextDue):days===0?'DUE TODAY':days===1?'DUE TOMORROW':days!==null?'Due in '+days+' days':'';
     h+='<div class="bitem'+(b.paid?' paid':'')+'">';
-    h+='<div class="bleft"><div class="bico">'+(b.icon||'$')+'</div><div><div class="bname">'+b.name+'</div><div class="bdate">'+(b.due?'Due '+ord(b.due):'Monthly')+'</div></div></div>';
+    h+='<div class="bleft"><div class="bico">'+(b.icon||'📄')+'</div>';
+    h+='<div><div class="bname">'+b.name+'</div>';
+    h+='<div class="bdate" style="color:'+urgColor+';">'+fmtDate(nextDue)+'</div>';
+    if(urgLabel&&!b.paid)h+='<div style="font-size:9px;color:'+urgColor+';font-family:var(--mono);">'+urgLabel+'</div>';
+    if(b.paid&&b.paidDate)h+='<div style="font-size:9px;color:var(--green);font-family:var(--mono);">Paid '+b.paidDate+'</div>';
+    h+='</div></div>';
     h+='<div class="bright"><div class="bamt">$'+b.amt.toFixed(2)+'</div>';
-    h+='<button class="ib" onclick="openEditBill('+b.id+')">E</button>';
-    h+='<button class="ib" style="color:var(--red)" onclick="delBill('+b.id+')">X</button>';
-    h+='<button class="btog'+(b.paid?' ck':'')+'" onclick="toggleBill('+b.id+')">'+(b.paid?'&#10003;':'')+'</button>';
+    h+='<button class="ib" onclick="openEditBill('+b.id+')">✏️</button>';
+    h+='<button class="ib" style="color:var(--red)" onclick="delBill('+b.id+')">🗑</button>';
+    h+='<button class="btog'+(b.paid?' ck':'')+'" onclick="toggleBill('+b.id+')">'+(b.paid?'✓':'')+'</button>';
     h+='</div></div>';
   });
-  h+=sh('Summary');
-  h+='<div class="ibar">'+r('Total monthly bills','$'+total.toFixed(2),'mn')+r('Paid this month','$'+paid.toFixed(2),'pl')+r('Still due','$'+(total-paid).toFixed(2))+'</div>';
+  // Undo button if stack has items
+  if(_undoStack.length){
+    var lastUndo=_undoStack[_undoStack.length-1];
+    h+='<button class="btn btn-s btn-full" style="margin-top:8px;" onclick="undo()">↩ Undo: '+lastUndo.label+'</button>';
+  }
   return h;
 }
-function toggleBill(id){var b=S.bills.find(function(x){return x.id===id;});b.paid=!b.paid;save();render();if(b.paid)toast(b.name+' marked paid!');}
+function toggleBill(id){
+  var b=S.bills.find(function(x){return x.id===id;});
+  var wasPaid=b.paid;
+  b.paid=!b.paid;
+  if(b.paid){
+    b.paidDate=new Date().toISOString().split('T')[0];
+    pushUndo('mark paid: '+b.name,function(){b.paid=false;b.paidDate=null;});
+  }else{
+    b.paidDate=null;
+  }
+  save();render();
+  if(b.paid)toast(b.name+' paid!');
+}
 function openAddBill(){_editBillId=null;document.getElementById('bill-title').textContent='Add Bill';document.getElementById('bill-btn').textContent='Add Bill';['b-name','b-amt','b-due','b-icon'].forEach(function(id){document.getElementById(id).value='';});openM('bill');}
 function openEditBill(id){var b=S.bills.find(function(x){return x.id===id;});_editBillId=id;document.getElementById('bill-title').textContent='Edit: '+b.name;document.getElementById('bill-btn').textContent='Save';document.getElementById('b-name').value=b.name;document.getElementById('b-amt').value=b.amt;document.getElementById('b-due').value=b.due;document.getElementById('b-icon').value=b.icon||'';openM('bill');}
 function saveBill(){var name=document.getElementById('b-name').value.trim();var amt=parseFloat(document.getElementById('b-amt').value);var due=parseInt(document.getElementById('b-due').value)||0;var icon=document.getElementById('b-icon').value||'';if(!name||isNaN(amt)){toast('Enter name and amount','err');return;}if(_editBillId!==null){var b=S.bills.find(function(x){return x.id===_editBillId;});Object.assign(b,{name:name,amt:amt,due:due,icon:icon});toast('Updated: '+name);}else{S.bills.push({id:Date.now(),name:name,amt:amt,due:due,icon:icon,paid:false});toast(name+' added!');}save();closeM('bill');render();}
@@ -921,21 +1026,109 @@ function delBill(id){var b=S.bills.find(function(x){return x.id===id;});if(!conf
 // GOALS
 var GCOLS=['xb','xg','xp','xa','xr'];
 function rGoals(){
-  var h=shb('Goals','ag',"openAddGoal()",'+ Add');
-  if(!S.goals.length)return h+'<div class="empty"><strong>NO GOALS SET</strong>Tap + Add to start</div>';
-  S.goals.forEach(function(g){
-    var pct=Math.min(100,Math.round(g.cur/g.tgt*100));var rem=Math.max(0,g.tgt-g.cur);var days=g.date?Math.ceil((new Date(g.date)-new Date())/86400000):null;
-    h+='<div class="gcard"><div class="ghead"><div class="gname">'+g.name+'</div><div class="gpct">'+pct+'%</div></div>';
-    h+=xb(pct,g.col||'xb',10);
-    h+='<div class="gamts"><span>Saved: $'+g.cur.toFixed(0)+'</span><span>Target: $'+g.tgt.toFixed(0)+'</span></div>';
-    h+='<div style="font-size:10px;color:var(--muted);margin-top:4px;">$'+rem.toFixed(0)+' remaining'+(days!==null?' | '+Math.max(0,days)+' days left':'')+'</div>';
-    h+='<div class="gbtns"><button class="btn btn-g btn-sm" style="flex:1" onclick="openGoalDep('+g.id+')">+ Add Funds</button><button class="btn btn-s btn-sm" onclick="openEditGoal('+g.id+')">Edit</button><button class="btn-del" onclick="delGoal('+g.id+')">Remove</button></div></div>';
+  var now=new Date();
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var totalSaved=S.goals.reduce(function(s,g){return s+g.cur;},0);
+  var totalTarget=S.goals.reduce(function(s,g){return s+g.tgt;},0);
+  var overallPct=totalTarget>0?Math.min(100,Math.round(totalSaved/totalTarget*100)):0;
+  // Estimated monthly surplus (rough)
+  var bills=S.bills.reduce(function(s,b){return s+b.amt;},0);
+  var surplus=S.income-bills-S.misc;
+  var paycheck=S.paycheck||2000;
+  function paychecksTo(rem){return surplus>0?Math.ceil(rem/(surplus)):null;}
+  // XP from goals
+  var xp=S.goals.reduce(function(s,g){return s+Math.round(g.cur/10);},0);
+  var lvl=xp<100?1:xp<500?2:xp<1000?3:xp<2500?4:5;
+  var h='';
+  // XP bar
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-top:13px;margin-bottom:12px;">';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">';
+  h+='<div><div style="font-size:10px;color:var(--muted);">SAVINGS XP</div><div style="font-size:18px;font-weight:700;color:var(--purple);">LVL '+lvl+'</div></div>';
+  h+='<div style="text-align:right;"><div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--green);">$'+totalSaved.toFixed(0)+'</div><div style="font-size:9px;color:var(--muted);">saved toward goals</div></div></div>';
+  h+='<div class="xtrack" style="height:10px;"><div class="xfill xp" style="width:'+overallPct+'%"></div></div>';
+  h+='<div style="font-size:10px;color:var(--muted);margin-top:4px;">'+overallPct+'% of all goals complete | $'+totalSaved.toFixed(0)+' / $'+totalTarget.toFixed(0)+'</div>';
+  h+='</div>';
+  // Short term goals
+  var shortGoals=S.goals.filter(function(g){return !g.longTerm;});
+  var longGoals=S.goals.filter(function(g){return g.longTerm;});
+  h+=shb('🎯 Short-Term Goals','ag',"openAddGoal(false)",'+ Add');
+  if(!shortGoals.length)h+='<div class="empty"><strong>NO SHORT-TERM GOALS</strong>Add Emergency Fund, Apartment, Car</div>';
+  shortGoals.forEach(function(g){
+    var pct=Math.min(100,Math.round(g.cur/g.tgt*100));
+    var rem=Math.max(0,g.tgt-g.cur);
+    var pcs=surplus>0?Math.ceil(rem/paycheck):null;
+    var days=g.date?Math.ceil((new Date(g.date)-now)/86400000):null;
+    h+='<div class="gcard" style="border-left:3px solid var(--green);">';
+    h+='<div class="ghead"><div class="gname">'+g.name+'</div><div class="gpct" style="color:'+(pct>=100?'var(--green)':'var(--blue)')+';">'+pct+'%</div></div>';
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;">';
+    h+='<div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center;"><div style="font-size:8px;color:var(--muted);">SAVED</div><div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green);">$'+g.cur.toFixed(0)+'</div></div>';
+    h+='<div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center;"><div style="font-size:8px;color:var(--muted);">TARGET</div><div style="font-family:var(--mono);font-size:13px;font-weight:700;">$'+g.tgt.toFixed(0)+'</div></div>';
+    h+='<div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center;"><div style="font-size:8px;color:var(--muted);">REMAINING</div><div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber);">$'+rem.toFixed(0)+'</div></div>';
+    h+='</div>';
+    h+='<div class="xtrack" style="height:10px;margin-bottom:6px;"><div class="xfill '+(g.col||'xg')+'" style="width:'+pct+'%"></div></div>';
+    if(pct<100){
+      h+='<div style="font-size:10px;color:var(--muted);margin-bottom:8px;">';
+      if(pcs)h+='~'+pcs+' paychecks away';
+      if(days!==null)h+=(pcs?' | ':'')+Math.max(0,days)+' days until target date';
+      if(!pcs&&days===null)h+='Add income to see countdown';
+      h+='</div>';
+    }else{
+      h+='<div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:8px;">🎉 GOAL REACHED!</div>';
+    }
+    if(g.notes)h+='<div style="font-size:10px;color:var(--muted);margin-bottom:8px;">'+g.notes+'</div>';
+    h+='<div class="gbtns"><button class="btn btn-g btn-sm" style="flex:1" onclick="openGoalDep('+g.id+')">+ Add Funds</button><button class="btn btn-s btn-sm" onclick="openEditGoal('+g.id+')">Edit</button><button class="btn-del" onclick="delGoal('+g.id+')">Remove</button></div>';
+    h+='</div>';
+  });
+  // Long term goals
+  h+=shb('📈 Long-Term Goals','ap',"openAddGoal(true)",'+ Add');
+  if(!longGoals.length){
+    h+='<div class="card" style="font-size:12px;color:var(--muted);line-height:1.9;">';
+    h+='Suggested long-term goals to add:<br>';
+    h+='<strong style="color:var(--purple);">Roth IRA</strong> — $7,000/yr max. Grows tax-free forever. Open at Fidelity or Vanguard.<br>';
+    h+='<strong style="color:var(--purple);">Emergency Fund 3mo</strong> — $3,300-$6,600 buffer for job loss or emergencies.<br>';
+    h+='<strong style="color:var(--purple);">Index Fund</strong> — S&P 500 (VOO or FXAIX). 10% avg annual return historically.';
+    h+='</div>';
+  }
+  longGoals.forEach(function(g){
+    var pct=Math.min(100,Math.round(g.cur/g.tgt*100));
+    var rem=Math.max(0,g.tgt-g.cur);
+    h+='<div class="gcard" style="border-left:3px solid var(--purple);">';
+    h+='<div class="ghead"><div class="gname">'+g.name+'</div><div class="gpct" style="color:var(--purple);">'+pct+'%</div></div>';
+    h+='<div class="xtrack" style="height:8px;margin-bottom:6px;"><div class="xfill xp" style="width:'+pct+'%"></div></div>';
+    h+='<div class="gamts"><span>$'+g.cur.toFixed(0)+' saved</span><span>$'+g.tgt.toFixed(0)+' target</span><span style="color:var(--amber);">$'+rem.toFixed(0)+' to go</span></div>';
+    if(g.notes)h+='<div style="font-size:10px;color:var(--muted);margin-top:4px;">'+g.notes+'</div>';
+    h+='<div class="gbtns"><button class="btn btn-p btn-sm" style="flex:1" onclick="openGoalDep('+g.id+')">+ Add Funds</button><button class="btn btn-s btn-sm" onclick="openEditGoal('+g.id+')">Edit</button><button class="btn-del" onclick="delGoal('+g.id+')">Remove</button></div>';
+    h+='</div>';
   });
   return h;
 }
-function openAddGoal(){_editGoalId=null;document.getElementById('goal-title').textContent='Add Goal';document.getElementById('goal-btn').textContent='Add Goal';['g-name','g-tgt','g-cur','g-date'].forEach(function(id){document.getElementById(id).value='';});openM('goal');}
+
+function openAddGoal(isLong){
+  _editGoalId=null;_goalIsLong=!!isLong;
+  document.getElementById('goal-title').textContent=isLong?'Add Long-Term Goal':'Add Short-Term Goal';
+  document.getElementById('goal-btn').textContent='Add Goal';
+  ['g-name','g-tgt','g-cur','g-date','g-notes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  openM('goal');
+}
+var _goalIsLong=false;
 function openEditGoal(id){var g=S.goals.find(function(x){return x.id===id;});_editGoalId=id;document.getElementById('goal-title').textContent='Edit: '+g.name;document.getElementById('goal-btn').textContent='Save';document.getElementById('g-name').value=g.name;document.getElementById('g-tgt').value=g.tgt;document.getElementById('g-cur').value=g.cur;document.getElementById('g-date').value=g.date||'';openM('goal');}
-function saveGoal(){var name=document.getElementById('g-name').value.trim();var tgt=parseFloat(document.getElementById('g-tgt').value);var cur=parseFloat(document.getElementById('g-cur').value)||0;var date=document.getElementById('g-date').value||'';if(!name||isNaN(tgt)){toast('Fill in name and target','err');return;}if(_editGoalId!==null){var g=S.goals.find(function(x){return x.id===_editGoalId;});Object.assign(g,{name:name,tgt:tgt,cur:cur,date:date});toast('Updated!');}else{S.goals.push({id:Date.now(),name:name,tgt:tgt,cur:cur,date:date,col:GCOLS[S.goals.length%GCOLS.length]});toast('New goal: '+name);}save();closeM('goal');render();}
+function saveGoal(){
+  var name=document.getElementById('g-name').value.trim();
+  var tgt=parseFloat(document.getElementById('g-tgt').value);
+  var cur=parseFloat(document.getElementById('g-cur').value)||0;
+  var date=document.getElementById('g-date').value||'';
+  var notes=document.getElementById('g-notes')?document.getElementById('g-notes').value||'':'';
+  if(!name||isNaN(tgt)){toast('Fill in name and target','err');return;}
+  if(_editGoalId!==null){
+    var g=S.goals.find(function(x){return x.id===_editGoalId;});
+    Object.assign(g,{name:name,tgt:tgt,cur:cur,date:date,notes:notes});
+    toast('Updated!');
+  }else{
+    S.goals.push({id:Date.now(),name:name,tgt:tgt,cur:cur,date:date,col:GCOLS[S.goals.length%GCOLS.length],longTerm:_goalIsLong,notes:notes});
+    toast('Goal added: '+name);
+  }
+  save();closeM('goal');render();
+}
 function delGoal(id){var g=S.goals.find(function(x){return x.id===id;});if(!confirm('Remove "'+g.name+'"?'))return;S.goals=S.goals.filter(function(x){return x.id!==id;});save();render();toast('Removed');}
 function openGoalDep(id){var g=S.goals.find(function(x){return x.id===id;});_goalDepId=id;document.getElementById('gd-title').textContent='Add to: '+g.name;document.getElementById('gd-cur').textContent='$'+g.cur.toFixed(2)+' / $'+g.tgt.toFixed(2);document.getElementById('gd-amt').value='';openM('gd');}
 function doGoalDep(){var amt=parseFloat(document.getElementById('gd-amt').value);if(!amt||amt<=0){toast('Enter a valid amount','err');return;}var g=S.goals.find(function(x){return x.id===_goalDepId;});g.cur=Math.min(g.tgt,+(g.cur+amt).toFixed(2));save();closeM('gd');render();var pct=Math.round(g.cur/g.tgt*100);toast(pct>=100?'GOAL REACHED: '+g.name+'!':'+$'+amt.toFixed(0)+' added! '+pct+'%');}
@@ -1088,9 +1281,12 @@ function addCreditCard(){openAddAcct('credit_card');}
 function addLoan(){openAddAcct('student_loan');}
 
 function openM_acct(){openM('acct');}
+// INIT - runs after all functions det_loan');}
+
+function openM_acct(){openM('acct');}
 // INIT - runs after all functions defined
 lLoad();
-(function(){var el=document.getElementById('pinSub');if(el)el.textContent=localStorage.getItem('fq8')?'ENTER YOUR PIN':'DEFAULT PIN: 1234  (change in Settings)';})();
+(function(){var el=document.getElementById('pinSub');if(el)el.textContent=localStorage.getItem('fq11')?'ENTER YOUR PIN':'DEFAULT PIN: 1234  (change in Settings)';})();
 </script>
 </body>
 </html>
