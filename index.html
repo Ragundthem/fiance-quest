@@ -184,6 +184,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
     <button class="nb" id="nb-goals" onclick="go('goals')"><span class="ni">&#127919;</span><span class="nl">Goals</span></button>
     <button class="nb" id="nb-plan" onclick="go('plan')"><span class="ni">&#128203;</span><span class="nl">Plan</span></button>
     <button class="nb" id="nb-tips" onclick="go('tips')"><span class="ni">&#129504;</span><span class="nl">Tips</span></button>
+    <button class="nb" id="nb-review" onclick="go('review')"><span class="ni">&#128202;</span><span class="nl">Review</span></button>
     <button class="nb" id="nb-awards" onclick="go('awards')"><span class="ni">&#127942;</span><span class="nl">Awards</span></button>
   </nav>
 </div>
@@ -207,11 +208,51 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
   <div class="fg"><label class="fl">Description</label><input class="fi" id="t-desc" placeholder="e.g. Grocery run"></div>
   <div class="g2"><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="t-amt" type="number" placeholder="0.00" step="0.01"></div><div class="fg"><label class="fl">Date</label><input class="fi" id="t-date" type="date"></div></div>
   <div class="fg"><label class="fl">Category</label><select class="fs" id="t-cat">
-    <optgroup label="HOUSING"><option value="rent">Home - Rent</option><option value="electric">Electric / Utilities</option><option value="internet">Internet</option><option value="phone">Phone Bill</option></optgroup>
-    <optgroup label="DAILY NEEDS"><option value="groceries">Groceries</option><option value="gas">Gas</option><option value="health">Health / Pharmacy</option><option value="needs">Other Needs</option></optgroup>
-    <optgroup label="WANTS"><option value="restaurants">Restaurants / Takeout</option><option value="entertainment">Entertainment</option><option value="clothing">Clothing / Streetwear</option><option value="watches">Watches</option><option value="subscriptions">Subscriptions</option><option value="wants">Other Wants</option></optgroup>
-    <optgroup label="MONEY MOVES"><option value="transport">Transport / Car</option><option value="debt_payment">Credit Card Payment</option><option value="savings_transfer">Transfer to Savings</option><option value="investment_dep">Investment Deposit</option><option value="other_exp">Other Expense</option></optgroup>
-    <optgroup label="INCOME"><option value="paycheck">Paycheck</option><option value="coaching">Coaching Income</option><option value="music_inc">Music Income</option><option value="side">Other Side Income</option><option value="other_inc">Other Income</option></optgroup>
+    <optgroup label="HOUSING">
+      <option value="rent">Rent</option>
+      <option value="electric">Electric / Utilities</option>
+      <option value="internet">Internet</option>
+      <option value="phone">Phone Bill</option>
+    </optgroup>
+    <optgroup label="DAILY NEEDS">
+      <option value="groceries">Groceries</option>
+      <option value="gas">Gas</option>
+      <option value="health">Health / Pharmacy</option>
+      <option value="pet">Pet / Supplies</option>
+      <option value="personal_care">Personal Care</option>
+      <option value="needs">Other Needs</option>
+    </optgroup>
+    <optgroup label="WANTS">
+      <option value="restaurants">Restaurants / Takeout</option>
+      <option value="entertainment">Entertainment</option>
+      <option value="clothing">Clothing / Streetwear</option>
+      <option value="watches">Watches</option>
+      <option value="subscriptions">Subscriptions</option>
+      <option value="music_expense">Music / Studio</option>
+      <option value="wants">Other Wants</option>
+    </optgroup>
+    <optgroup label="SAVING">
+      <option value="emergency_fund">Emergency Fund</option>
+      <option value="savings">General Savings</option>
+    </optgroup>
+    <optgroup label="INVESTING">
+      <option value="invest_robinhood">Robinhood Deposit</option>
+      <option value="invest_roth">Roth IRA Contribution</option>
+      <option value="invest_stock">Stocks / ETF Purchase</option>
+      <option value="invest_other">Other Investment</option>
+    </optgroup>
+    <optgroup label="OTHER">
+      <option value="transport">Transport / Car</option>
+      <option value="debt_payment">Credit Card Payment</option>
+      <option value="other_exp">Other Expense</option>
+    </optgroup>
+    <optgroup label="INCOME">
+      <option value="paycheck">Paycheck</option>
+      <option value="coaching">Coaching Income</option>
+      <option value="music_inc">Music Income</option>
+      <option value="side">Other Side Income</option>
+      <option value="other_inc">Other Income</option>
+    </optgroup>
   </select></div>
   <div class="fg"><label class="fl">Account (money comes FROM or GOES TO)</label><select class="fs" id="t-acct"><option value="">None</option></select></div>
   <div class="fg" id="t-card-pay-wrap" style="display:none"><label class="fl">Credit Card Being Paid Off</label><select class="fs" id="t-card-pay"><option value="">None</option></select></div>
@@ -220,10 +261,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);display:flex
 <div class="ov" id="m-goal"><div class="modal"><div class="mhandle" onclick="closeM('goal')"></div><div class="mtitle" id="goal-title">Add Goal</div><div class="fg"><label class="fl">Goal Name</label><input class="fi" id="g-name" placeholder="e.g. Emergency Fund"></div><div class="g2"><div class="fg"><label class="fl">Target ($)</label><input class="fi" id="g-tgt" type="number" placeholder="0.00"></div><div class="fg"><label class="fl">Saved So Far ($)</label><input class="fi" id="g-cur" type="number" placeholder="0.00"></div></div><div class="fg"><label class="fl">Target Date</label><input class="fi" id="g-date" type="date"></div><div class="fg"><label class="fl">Notes</label><input class="fi" id="g-notes" placeholder="Any details about this goal..."></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('goal')">Cancel</button><button class="btn btn-g" style="flex:2" id="goal-btn" onclick="saveGoal()">Add Goal</button></div></div></div>
 <div class="ov" id="m-gd"><div class="modal"><div class="mhandle" onclick="closeM('gd')"></div><div class="mtitle" id="gd-title">Add Funds</div><div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Progress: <span id="gd-cur" style="color:var(--blue);font-family:var(--mono);font-size:14px;"></span></div><div class="fg"><label class="fl">Amount ($)</label><input class="fi" id="gd-amt" type="number" placeholder="0.00" step="0.01"></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('gd')">Cancel</button><button class="btn btn-g" style="flex:2" onclick="doGoalDep()">Add Funds</button></div></div></div>
 <div class="ov" id="m-plan"><div class="modal"><div class="mhandle" onclick="closeM('plan')"></div><div class="mtitle" id="plan-title">Add Action Item</div><div class="fg"><label class="fl">Title</label><input class="fi" id="p-title" placeholder="e.g. Open savings account"></div><div class="fg"><label class="fl">Description</label><textarea class="fi-ta" id="p-desc" placeholder="Details..."></textarea></div><div class="g2"><div class="fg"><label class="fl">When</label><input class="fi" id="p-date" placeholder="e.g. AUG 1"></div><div class="fg"><label class="fl">Priority</label><select class="fs" id="p-pri"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('plan')">Cancel</button><button class="btn btn-p" style="flex:2" id="plan-btn" onclick="savePlanItem()">Add Item</button></div></div></div>
-<div class="ov" id="m-pin"><div class="modal"><div class="mhandle" onclick="closeM('pin')"></div><div class="mtitle">Change PIN</div><div class="fg"><label class="fl">Current PIN</label><input class="fi" id="pin-old" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="fg"><label class="fl">New PIN (4 digits)</label><input class="fi" id="pin-new" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="fg"><label class="fl">Confirm New PIN</label><input class="fi" id="pin-cf" type="password" inputmode="numeric" maxlength="4" placeholder="...."></div><div class="macts"><button class="btn btn-s" style="flex:1" onclick="closeM('pin')">Cancel</button><button class="btn btn-g" style="flex:1" onclick="doChangePin()">Save</button></div></div></div>
-<div class="toast" id="toast"><span id="toast-msg"></span><span class="tx" onclick="hideToast()">X</span></div>
-<script>
+<div class="ov" id="m-pin"><div class="modal"><div class="mhandle" onclick="closeM('pin')"></div><div class="mtitle">
 
+<script>
 var S = {};
 var _tab='hud', _txnType='expense', _filterCat='all';
 var _editAcctId=null, _editBillId=null, _editGoalId=null, _editPlanId=null;
@@ -236,12 +276,12 @@ var ASSET_TYPES=['checking','savings','cash','investment'];
 var TYPE_LABELS={checking:'Checking',savings:'Savings',cash:'Cash',investment:'Investment',credit_card:'Credit Card',student_loan:'Student Loan',car_loan:'Car Loan',personal_loan:'Personal Loan',medical_debt:'Medical Debt',other_debt:'Other Debt'};
 var TYPE_ICONS={checking:'[CHK]',savings:'[SAV]',cash:'[$]',investment:'[INV]',credit_card:'[CC]',student_loan:'[SL]',car_loan:'[CAR]',personal_loan:'[PL]',medical_debt:'[MED]',other_debt:'[DEB]'};
 
-var DEF = {name:'Ralique',income:4500,paycheck:2250,misc:500,creditScore:650,creditTarget:750,autoLock:true,lockMins:5,accounts:[{id:1,name:'Chime Checking',type:'checking',bal:683.88,limit:0,apr:0,due:0,close:0,icon:'bank',notes:'Main checking account',pri:0},{id:2,name:'Chime Savings',type:'savings',bal:634,limit:0,apr:0,due:0,close:0,icon:'save',notes:'',pri:0},{id:8,name:'Capital One Checking',type:'checking',bal:201.11,limit:0,apr:0,due:0,close:0,icon:'bank',notes:'',pri:0},{id:3,name:'Capital One Savor',type:'credit_card',bal:24.76,limit:1996,apr:28,due:7,close:13,icon:'cc',notes:'Use monthly for bills. Pay full balance before 13th.',pri:1},{id:4,name:'Capital One Quicksilver',type:'credit_card',bal:120,limit:1200,apr:28,due:27,close:1,icon:'cc',notes:'Limit reduced after credit line transfer to Savor. Keep open - use monthly.',pri:2},{id:5,name:'Credit One Visa',type:'credit_card',bal:20,limit:1200,apr:28,due:28,close:4,icon:'cc',notes:'Ending 5022. Keep open - use monthly.',pri:3},{id:6,name:'Credit One AmEx',type:'credit_card',bal:5,limit:1000,apr:28,due:1,close:5,icon:'cc',notes:'Ending 5412. Keep open - use monthly.',pri:4},{id:7,name:'Credit One AmEx 2',type:'credit_card',bal:33,limit:1500,apr:28,due:28,close:4,icon:'cc',notes:'Ending 7020. Keep open - use monthly.',pri:5}],bills:[{id:1,name:'Rent',amt:1425,due:1,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:9999,name:'Internet',amt:50,due:1,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:3,name:'iCloud',amt:3,due:7,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:1786115429095,name:'SoundCloud Artist +',amt:16.99,due:7,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:1786151727107,name:'Phone bill',amt:30,due:7,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:9998,name:'Amazon Prime',amt:14.99,due:9,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:4,name:'Google Drive',amt:3,due:14,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:2,name:'Car Insurance',amt:258,due:17,icon:'',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:6,name:'AAA',amt:16,due:24,icon:'',paid:false,paidDate:null,lastPaidMonth:null},{id:1784824327796,name:'Claude',amt:21.25,due:24,icon:'',paid:false,paidDate:null,lastPaidMonth:null},{id:5,name:'Apple Care',amt:12,due:0,icon:'',paid:false,paidDate:null,lastPaidMonth:null}],goals:[{id:1,name:'Emergency Fund',cur:634,tgt:3000,date:'2026-12-01',col:'xg',longTerm:false,notes:'Keep in Chime Savings. Do not touch.'},{id:2,name:'Apartment Furnishing',cur:0,tgt:1000,date:'2026-12-01',col:'xb',longTerm:false,notes:'$1,000 hard limit. Facebook Marketplace first.'},{id:3,name:'Car Fund',cur:475,tgt:8000,date:'2027-06-01',col:'xp',longTerm:false,notes:'Sold a car Aug 15. Add F-150 when sold.'},{id:4,name:'Robinhood Investments',cur:0,tgt:5000,date:'2027-06-01',col:'xa',longTerm:false,notes:'Start with VOO. Add monthly.'},{id:5,name:'Watch Budget 2026',cur:100,tgt:1000,date:'2026-12-31',col:'xa',longTerm:false,notes:'$900 remaining.'},{id:6,name:'Clothing Budget 2026',cur:0,tgt:700,date:'2026-12-31',col:'xp',longTerm:false,notes:'~$58/mo. ASOS, Uniqlo, H&M.'},{id:7,name:'Emergency Fund Full',cur:634,tgt:13500,date:'2027-12-01',col:'xg',longTerm:true,notes:'3 months expenses.'},{id:8,name:'Roth IRA',cur:0,tgt:7000,date:'2027-12-31',col:'xp',longTerm:true,notes:'Open at Fidelity in 2027.'}],planItems:[{id:1,title:'Savor paid off - DONE',desc:'All credit card debt cleared. Now focus on building emergency fund to $1,000 then apartment fund to $4,500.',date:'JUL 2026',pri:'high',done:true},{id:2,title:'Put 1 small charge on each card monthly',desc:'Quicksilver, Credit One Visa, Credit One AmEx x2 all need at least $1-5/mo to stay active. Closed inactive cards = lost credit history = score drop.',date:'MONTHLY',pri:'high',done:true},{id:3,title:'Pay each card FULL balance before closing date',desc:'Savor closes 13th. Quicksilver closes 1st. Credit One closes 4th and 5th. Pay full statement balance before closing date = zero interest forever.',date:'MONTHLY',pri:'high',done:true},{id:4,title:'Pull your free credit report',desc:'AnnualCreditReport.com - free. Check for errors. One disputed error = +20-40 pts fast.',date:'NOW',pri:'medium',done:true},{id:5,title:'Build emergency fund to $1,000',desc:'After Savor is paid off, stack $1,000 emergency fund in Chime Savings before anything else.',date:'AUG+',pri:'high',done:false},{id:6,title:'Stack apartment fund to $4,500',desc:'After emergency fund, every paycheck goes toward apartment fund. Target $4,500 for first + last + deposit.',date:'SEPT+',pri:'high',done:true},{id:7,title:'List the F-150 for sale',desc:'FB Marketplace, Craigslist, CarGurus. Every week it sits = money lost in insurance and depreciation.',date:'NOW',pri:'high',done:true},{id:9,title:'Buy car after score hits 680+',desc:'Every 20 pts above current score = better APR = thousands saved over the loan term. Sell truck first.',date:'LATE 2026',pri:'low',done:false},{id:10,title:'Open Roth IRA after debt cleared',desc:'Fidelity or Vanguard. $7,000/yr max. Grows 100% tax-free. Best long-term wealth move available.',date:'2027',pri:'low',done:false}],transactions:[{id:1784772393226,desc:'Payment: Capital One Quicksilver',amt:200,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:null},{id:1784772438170,desc:'Quicksilver payment',amt:199,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784772544925,desc:'Savor payment',amt:70,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:1,cardPayId:3},{id:1784772670672,desc:'Credit one visa payment',amt:128,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:1,cardPayId:5},{id:1784807807188,desc:'Lunch',amt:2.5,type:'expense',cat:'wants',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784817344244,desc:'Cookies',amt:1,type:'expense',cat:'wants',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784822616670,desc:'Amir payment',amt:115.01,type:'income',cat:'other_inc',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784822693062,desc:'Apple care',amt:1.99,type:'expense',cat:'subscriptions',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784823771191,desc:'Claude',amt:21.25,type:'expense',cat:'subscriptions',date:'2026-07-23',acctId:4,cardPayId:null},{id:1784831402735,desc:'Triple a',amt:13.09,type:'expense',cat:'needs',date:'2026-07-23',acctId:4,cardPayId:null},{id:1784867312094,desc:'Amex 2 payment',amt:230.31,type:'expense',cat:'debt_payment',date:'2026-07-24',acctId:1,cardPayId:6},{id:1784955329845,desc:'Food and drinks',amt:46.15,type:'expense',cat:'wants',date:'2026-07-25',acctId:1,cardPayId:null},{id:1784997568232,desc:'Subway',amt:3,type:'expense',cat:'transport',date:'2026-07-25',acctId:8,cardPayId:null},{id:1785005806074,desc:'Subway',amt:3,type:'expense',cat:'wants',date:'2026-07-25',acctId:1,cardPayId:null},{id:1785015924172,desc:'Subway',amt:3,type:'expense',cat:'transport',date:'2026-07-25',acctId:1,cardPayId:null},{id:1785021774250,desc:'Ebike',amt:10.34,type:'expense',cat:'transport',date:'2026-07-25',acctId:1,cardPayId:null},{id:1785031408377,desc:'Food',amt:16,type:'expense',cat:'wants',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785035967436,desc:'Ebike',amt:16.15,type:'expense',cat:'transport',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785079418434,desc:'Subway',amt:3,type:'expense',cat:'transport',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785109943757,desc:'Coffe roll',amt:4.19,type:'expense',cat:'wants',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785117825615,desc:'Parking',amt:40,type:'expense',cat:'transport',date:'2026-07-27',acctId:1,cardPayId:null},{id:1785122345866,desc:'Fuck',amt:99,type:'expense',cat:'subscriptions',date:'2026-07-27',acctId:4,cardPayId:null},{id:1785161452821,desc:'Cash',amt:60,type:'expense',cat:'wants',date:'2026-07-27',acctId:1,cardPayId:null},{id:1785251558943,desc:'QS card',amt:105,type:'expense',cat:'debt_payment',date:'2026-07-28',acctId:1,cardPayId:4},{id:1785329523089,desc:'Lunch',amt:2.5,type:'expense',cat:'wants',date:'2026-07-29',acctId:1,cardPayId:null},{id:1785355003071,desc:'Gas',amt:20,type:'expense',cat:'transport',date:'2026-07-29',acctId:1,cardPayId:null},{id:1785356277914,desc:'Dinner',amt:3.73,type:'expense',cat:'wants',date:'2026-07-29',acctId:1,cardPayId:null},{id:1785372434311,desc:'Gas',amt:38.18,type:'expense',cat:'wants',date:'2026-07-30',acctId:1,cardPayId:null},{id:1785412727161,desc:'Breakfast lunch',amt:4.5,type:'expense',cat:'wants',date:'2026-07-30',acctId:1,cardPayId:null},{id:1785499510943,desc:'Lunch',amt:3.5,type:'expense',cat:'wants',date:'2026-07-31',acctId:1,cardPayId:null},{id:1785756977423,desc:'Vpn',amt:5.77,type:'expense',cat:'needs',date:'2026-08-03',acctId:1,cardPayId:null},{id:1785762504676,desc:'Breakfast',amt:3.5,type:'expense',cat:'wants',date:'2026-08-03',acctId:1,cardPayId:null},{id:1785852273902,desc:'Lunch',amt:4.5,type:'expense',cat:'wants',date:'2026-08-04',acctId:1,cardPayId:null},{id:1785872695814,desc:'Gas',amt:50,type:'expense',cat:'transport',date:'2026-08-04',acctId:1,cardPayId:null},{id:1785888937792,desc:'PRN CHECK',amt:1474.97,type:'income',cat:'paycheck',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785892902822,desc:'Loan',amt:8,type:'expense',cat:'other_exp',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785930094913,desc:'Alex payback',amt:11,type:'expense',cat:'other_exp',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785930501528,desc:'Payback',amt:10,type:'income',cat:'other_inc',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785931085478,desc:'Lunch',amt:3.5,type:'expense',cat:'wants',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785931832930,desc:'Toothbrushes/chapstick/eman bites',amt:33,type:'expense',cat:'needs',date:'2026-08-05',acctId:4,cardPayId:null},{id:1785943044662,desc:'Ice cream',amt:1,type:'expense',cat:'wants',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785945850689,desc:'Jimmys check',amt:93.61,type:'income',cat:'paycheck',date:'2026-08-05',acctId:1,cardPayId:null},{id:1786029060198,desc:'Food',amt:3.5,type:'expense',cat:'wants',date:'2026-08-06',acctId:1,cardPayId:null},{id:1786103152168,desc:'Lunch',amt:3.5,type:'expense',cat:'wants',date:'2026-08-07',acctId:1,cardPayId:null},{id:1786114647619,desc:'iCloud',amt:2.99,type:'expense',cat:'subscriptions',date:'2026-08-07',acctId:7,cardPayId:null},{id:1786114709434,desc:'SoundCloud',amt:5.99,type:'expense',cat:'subscriptions',date:'2026-08-07',acctId:6,cardPayId:null},{id:1786115322781,desc:'SoundCloud artist pro',amt:16.99,type:'expense',cat:'subscriptions',date:'2026-08-07',acctId:7,cardPayId:null},{id:1786151754066,desc:'Phone bill',amt:30,type:'expense',cat:'needs',date:'2026-08-08',acctId:7,cardPayId:null},{id:1786164790515,desc:'Food',amt:12.87,type:'expense',cat:'wants',date:'2026-08-08',acctId:1,cardPayId:null},{id:1786236366416,desc:'Food',amt:15.46,type:'expense',cat:'wants',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786290410517,desc:'Gas',amt:55,type:'expense',cat:'transport',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786290808289,desc:'Food',amt:12.28,type:'expense',cat:'wants',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786292649382,desc:'Savor payment',amt:17.39,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:8,cardPayId:3},{id:1786292690355,desc:'Quicksilver payment',amt:52.48,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:1,cardPayId:4},{id:1786292823925,desc:'Amex payment',amt:30,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:1,cardPayId:6},{id:1786292948827,desc:'Amex 2 payment',amt:49.7,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:1,cardPayId:7},{id:1786300797232,desc:'tips',amt:288,type:'income',cat:'side',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786306080048,desc:'Food',amt:15.56,type:'expense',cat:'wants',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786374886579,desc:'Food',amt:3.5,type:'expense',cat:'wants',date:'2026-08-10',acctId:1,cardPayId:null},{id:1786449203341,desc:'Food',amt:3.5,type:'expense',cat:'wants',date:'2026-08-11',acctId:1,cardPayId:null},{id:1786487404040,desc:'Insurance',amt:257.99,type:'expense',cat:'needs',date:'2026-08-11',acctId:1,cardPayId:null},{id:1786547076235,desc:'Food',amt:3.5,type:'expense',cat:'needs',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786551689311,desc:'Security work',amt:207.11,type:'income',cat:'paycheck',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786551736525,desc:'Down payment apartment',amt:100,type:'expense',cat:'needs',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786562464171,desc:'Cash withdrawal',amt:40,type:'expense',cat:'wants',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786614079785,desc:'Experian',amt:24.99,type:'expense',cat:'wants',date:'2026-08-13',acctId:1,cardPayId:null},{id:1786631958487,desc:'Food',amt:5.5,type:'expense',cat:'wants',date:'2026-08-13',acctId:1,cardPayId:null},{id:1786632012550,desc:'Food',amt:0.25,type:'expense',cat:'wants',date:'2026-08-13',acctId:1,cardPayId:null},{id:1786707524265,desc:'Food',amt:6,type:'expense',cat:'wants',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786724319270,desc:'Apple oay',amt:98.3,type:'income',cat:'side',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786740931510,desc:'Gas',amt:50,type:'expense',cat:'transport',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786745659914,desc:'Savingd',amt:5,type:'expense',cat:'savings_transfer',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786745846454,desc:'Savings',amt:429,type:'expense',cat:'savings_transfer',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786746028145,desc:'Rent payment',amt:662.5,type:'expense',cat:'needs',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786768784316,desc:'Food',amt:9.66,type:'expense',cat:'wants',date:'2026-08-15',acctId:1,cardPayId:null},{id:1786806801862,desc:'Cashapp',amt:6,type:'expense',cat:'wants',date:'2026-08-15',acctId:8,cardPayId:null},{id:1786816340672,desc:'Pretzels',amt:12.93,type:'expense',cat:'wants',date:'2026-08-15',acctId:3,cardPayId:null},{id:1786817132473,desc:'Sold car',amt:475,type:'income',cat:'other_inc',date:'2026-08-15',acctId:1,cardPayId:null},{id:1786844881701,desc:'Fl studio bullshit fucking lissed',amt:95,type:'expense',cat:'wants',date:'2026-08-16',acctId:4,cardPayId:null},{id:1786889335087,desc:'Tips',amt:120,type:'income',cat:'side',date:'2026-08-16',acctId:1,cardPayId:null}],achievements:['util_under30','net_positive','first_pay','card_cleared','util_under10','first_txn','plan_5'],_lastMonth:null,_billResetMonth:null};
+var DEF = {name:'Ralique',income:4500,paycheck:2250,misc:500,creditScore:650,creditTarget:750,autoLock:true,lockMins:5,accounts:[{id:1,name:'Chime Checking',type:'checking',bal:471.38,limit:0,apr:0,due:0,close:0,icon:'bank',notes:'Main checking account',pri:0},{id:2,name:'Chime Savings',type:'savings',bal:634,limit:0,apr:0,due:0,close:0,icon:'save',notes:'',pri:0},{id:8,name:'Capital One Checking',type:'checking',bal:101.11,limit:0,apr:0,due:0,close:0,icon:'bank',notes:'',pri:0},{id:3,name:'Capital One Savor',type:'credit_card',bal:24.76,limit:1996,apr:28,due:7,close:13,icon:'cc',notes:'Use monthly for bills. Pay full balance before 13th.',pri:1},{id:4,name:'Capital One Quicksilver',type:'credit_card',bal:120,limit:1200,apr:28,due:27,close:1,icon:'cc',notes:'Limit reduced after credit line transfer to Savor. Keep open - use monthly.',pri:2},{id:5,name:'Credit One Visa',type:'credit_card',bal:20,limit:1200,apr:28,due:28,close:4,icon:'cc',notes:'Ending 5022. Keep open - use monthly.',pri:3},{id:6,name:'Credit One AmEx',type:'credit_card',bal:5,limit:1000,apr:28,due:1,close:5,icon:'cc',notes:'Ending 5412. Keep open - use monthly.',pri:4},{id:7,name:'Credit One AmEx 2',type:'credit_card',bal:33,limit:1500,apr:28,due:28,close:4,icon:'cc',notes:'Ending 7020. Keep open - use monthly.',pri:5},{id:9999,name:'Robinhood',type:'investment',bal:0,limit:0,apr:0,due:0,close:0,icon:'inv',notes:'S&P 500 ETF (VOO/FXAIX). Add monthly.',pri:0}],bills:[{id:1,name:'Rent',amt:1425,due:1,icon:'🏠',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:3,name:'iCloud',amt:3,due:7,icon:'☁️',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:1786115429095,name:'SoundCloud Artist +',amt:16.99,due:7,icon:'💳',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:1786151727107,name:'Phone bill',amt:30,due:8,icon:'📱',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:9998,name:'Amazon Prime',amt:14.99,due:9,icon:'📦',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:9999,name:'Internet',amt:50,due:1,icon:'🌐',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:2,name:'Car Insurance',amt:258,due:17,icon:'🚗',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:4,name:'Google Drive',amt:3,due:14,icon:'📁',paid:false,paidDate:'2026-08-16',lastPaidMonth:202608},{id:6,name:'AAA',amt:16,due:24,icon:'🔧',paid:false,paidDate:null,lastPaidMonth:null},{id:1784824327796,name:'Claude',amt:21.25,due:24,icon:'🤖',paid:false,paidDate:null,lastPaidMonth:null},{id:5,name:'Apple Care',amt:12,due:0,icon:'🍎',paid:false,paidDate:null,lastPaidMonth:null}],goals:[{id:1,name:'Emergency Fund',cur:634,tgt:3000,date:'2026-12-01',col:'xg',longTerm:false,notes:'Keep in Chime Savings. Do not touch.'},{id:2,name:'Apartment Furnishing',cur:0,tgt:1000,date:'2026-12-01',col:'xb',longTerm:false,notes:'$1,000 hard limit. Facebook Marketplace first.'},{id:3,name:'Car Fund',cur:475,tgt:8000,date:'2027-06-01',col:'xp',longTerm:false,notes:'Sold a car Aug 15. Add F-150 when sold.'},{id:4,name:'Robinhood Investments',cur:0,tgt:5000,date:'2027-06-01',col:'xa',longTerm:false,notes:'Start with VOO. Add monthly.'},{id:5,name:'Watch Budget 2026',cur:100,tgt:1000,date:'2026-12-31',col:'xa',longTerm:false,notes:'$900 remaining.'},{id:6,name:'Clothing Budget 2026',cur:0,tgt:700,date:'2026-12-31',col:'xp',longTerm:false,notes:'~$58/mo. ASOS, Uniqlo, H&M.'},{id:7,name:'Emergency Fund Full',cur:634,tgt:13500,date:'2027-12-01',col:'xg',longTerm:true,notes:'3 months expenses.'},{id:8,name:'Roth IRA',cur:0,tgt:7000,date:'2027-12-31',col:'xp',longTerm:true,notes:'Open at Fidelity in 2027.'}],planItems:[{id:1,title:'Savor paid off - DONE',desc:'All credit card debt cleared. Now focus on building emergency fund to $1,000 then apartment fund to $4,500.',date:'JUL 2026',pri:'high',done:true},{id:2,title:'Put 1 small charge on each card monthly',desc:'Quicksilver, Credit One Visa, Credit One AmEx x2 all need at least $1-5/mo to stay active. Closed inactive cards = lost credit history = score drop.',date:'MONTHLY',pri:'high',done:true},{id:3,title:'Pay each card FULL balance before closing date',desc:'Savor closes 13th. Quicksilver closes 1st. Credit One closes 4th and 5th. Pay full statement balance before closing date = zero interest forever.',date:'MONTHLY',pri:'high',done:true},{id:4,title:'Pull your free credit report',desc:'AnnualCreditReport.com - free. Check for errors. One disputed error = +20-40 pts fast.',date:'NOW',pri:'medium',done:true},{id:5,title:'Build emergency fund to $1,000',desc:'After Savor is paid off, stack $1,000 emergency fund in Chime Savings before anything else.',date:'AUG+',pri:'high',done:false},{id:6,title:'Stack apartment fund to $4,500',desc:'After emergency fund, every paycheck goes toward apartment fund. Target $4,500 for first + last + deposit.',date:'SEPT+',pri:'high',done:true},{id:7,title:'List the F-150 for sale',desc:'FB Marketplace, Craigslist, CarGurus. Every week it sits = money lost in insurance and depreciation.',date:'NOW',pri:'high',done:true},{id:9,title:'Buy car after score hits 680+',desc:'Every 20 pts above current score = better APR = thousands saved over the loan term. Sell truck first.',date:'LATE 2026',pri:'low',done:false},{id:10,title:'Open Roth IRA after debt cleared',desc:'Fidelity or Vanguard. $7,000/yr max. Grows 100% tax-free. Best long-term wealth move available.',date:'2027',pri:'low',done:false}],transactions:[{id:1784772393226,desc:'Payment: Capital One Quicksilver',amt:200,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:null},{id:1784772438170,desc:'Quicksilver payment',amt:199,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784772544925,desc:'Savor payment',amt:70,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:1,cardPayId:3},{id:1784772670672,desc:'Credit one visa payment',amt:128,type:'expense',cat:'debt_payment',date:'2026-07-23',acctId:1,cardPayId:5},{id:1784807807188,desc:'Lunch',amt:2.5,type:'expense',cat:'restaurants',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784817344244,desc:'Cookies',amt:1,type:'expense',cat:'wants',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784822616670,desc:'Amir payment',amt:115.01,type:'income',cat:'other_inc',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784822693062,desc:'Apple care',amt:1.99,type:'expense',cat:'subscriptions',date:'2026-07-23',acctId:1,cardPayId:null},{id:1784823771191,desc:'Claude',amt:21.25,type:'expense',cat:'subscriptions',date:'2026-07-23',acctId:4,cardPayId:null},{id:1784831402735,desc:'Triple a',amt:13.09,type:'expense',cat:'needs',date:'2026-07-23',acctId:4,cardPayId:null},{id:1784867312094,desc:'Amex 2 payment',amt:230.31,type:'expense',cat:'debt_payment',date:'2026-07-24',acctId:1,cardPayId:6},{id:1784955329845,desc:'Food and drinks',amt:46.15,type:'expense',cat:'restaurants',date:'2026-07-25',acctId:1,cardPayId:null},{id:1784997568232,desc:'Subway',amt:3,type:'expense',cat:'transport',date:'2026-07-25',acctId:8,cardPayId:null},{id:1785005806074,desc:'Subway',amt:3,type:'expense',cat:'wants',date:'2026-07-25',acctId:1,cardPayId:null},{id:1785015924172,desc:'Subway',amt:3,type:'expense',cat:'transport',date:'2026-07-25',acctId:1,cardPayId:null},{id:1785021774250,desc:'Ebike',amt:10.34,type:'expense',cat:'transport',date:'2026-07-25',acctId:1,cardPayId:null},{id:1785031408377,desc:'Food',amt:16,type:'expense',cat:'restaurants',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785035967436,desc:'Ebike',amt:16.15,type:'expense',cat:'transport',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785079418434,desc:'Subway',amt:3,type:'expense',cat:'transport',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785109943757,desc:'Coffe roll',amt:4.19,type:'expense',cat:'wants',date:'2026-07-26',acctId:1,cardPayId:null},{id:1785117825615,desc:'Parking',amt:40,type:'expense',cat:'transport',date:'2026-07-27',acctId:1,cardPayId:null},{id:1785122345866,desc:'Fuck',amt:99,type:'expense',cat:'subscriptions',date:'2026-07-27',acctId:4,cardPayId:null},{id:1785161452821,desc:'Cash',amt:60,type:'expense',cat:'wants',date:'2026-07-27',acctId:1,cardPayId:null},{id:1785251558943,desc:'QS card',amt:105,type:'expense',cat:'debt_payment',date:'2026-07-28',acctId:1,cardPayId:4},{id:1785329523089,desc:'Lunch',amt:2.5,type:'expense',cat:'restaurants',date:'2026-07-29',acctId:1,cardPayId:null},{id:1785355003071,desc:'Gas',amt:20,type:'expense',cat:'transport',date:'2026-07-29',acctId:1,cardPayId:null},{id:1785356277914,desc:'Dinner',amt:3.73,type:'expense',cat:'restaurants',date:'2026-07-29',acctId:1,cardPayId:null},{id:1785372434311,desc:'Gas',amt:38.18,type:'expense',cat:'gas',date:'2026-07-30',acctId:1,cardPayId:null},{id:1785412727161,desc:'Breakfast lunch',amt:4.5,type:'expense',cat:'restaurants',date:'2026-07-30',acctId:1,cardPayId:null},{id:1785499510943,desc:'Lunch',amt:3.5,type:'expense',cat:'restaurants',date:'2026-07-31',acctId:1,cardPayId:null},{id:1785756977423,desc:'Vpn',amt:5.77,type:'expense',cat:'subscriptions',date:'2026-08-03',acctId:1,cardPayId:null},{id:1785762504676,desc:'Breakfast',amt:3.5,type:'expense',cat:'restaurants',date:'2026-08-03',acctId:1,cardPayId:null},{id:1785852273902,desc:'Lunch',amt:4.5,type:'expense',cat:'restaurants',date:'2026-08-04',acctId:1,cardPayId:null},{id:1785872695814,desc:'Gas',amt:50,type:'expense',cat:'transport',date:'2026-08-04',acctId:1,cardPayId:null},{id:1785888937792,desc:'PRN CHECK',amt:1474.97,type:'income',cat:'paycheck',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785892902822,desc:'Loan',amt:8,type:'expense',cat:'other_exp',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785930094913,desc:'Alex payback',amt:11,type:'expense',cat:'other_inc',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785930501528,desc:'Payback',amt:10,type:'income',cat:'other_inc',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785931085478,desc:'Lunch',amt:3.5,type:'expense',cat:'restaurants',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785931832930,desc:'Toothbrushes/chapstick/eman bites',amt:33,type:'expense',cat:'personal_care',date:'2026-08-05',acctId:4,cardPayId:null},{id:1785943044662,desc:'Ice cream',amt:1,type:'expense',cat:'restaurants',date:'2026-08-05',acctId:1,cardPayId:null},{id:1785945850689,desc:'Jimmys check',amt:93.61,type:'income',cat:'paycheck',date:'2026-08-05',acctId:1,cardPayId:null},{id:1786029060198,desc:'Food',amt:3.5,type:'expense',cat:'restaurants',date:'2026-08-06',acctId:1,cardPayId:null},{id:1786103152168,desc:'Lunch',amt:3.5,type:'expense',cat:'restaurants',date:'2026-08-07',acctId:1,cardPayId:null},{id:1786114647619,desc:'iCloud',amt:2.99,type:'expense',cat:'subscriptions',date:'2026-08-07',acctId:7,cardPayId:null},{id:1786114709434,desc:'SoundCloud',amt:5.99,type:'expense',cat:'subscriptions',date:'2026-08-07',acctId:6,cardPayId:null},{id:1786115322781,desc:'SoundCloud artist pro',amt:16.99,type:'expense',cat:'subscriptions',date:'2026-08-07',acctId:7,cardPayId:null},{id:1786151754066,desc:'Phone bill',amt:30,type:'expense',cat:'phone',date:'2026-08-08',acctId:7,cardPayId:null},{id:1786164790515,desc:'Food',amt:12.87,type:'expense',cat:'restaurants',date:'2026-08-08',acctId:1,cardPayId:null},{id:1786236366416,desc:'Food',amt:15.46,type:'expense',cat:'restaurants',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786290410517,desc:'Gas',amt:55,type:'expense',cat:'transport',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786290808289,desc:'Food',amt:12.28,type:'expense',cat:'restaurants',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786292649382,desc:'Savor payment',amt:17.39,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:8,cardPayId:3},{id:1786292690355,desc:'Quicksilver payment',amt:52.48,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:1,cardPayId:4},{id:1786292823925,desc:'Amex payment',amt:30,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:1,cardPayId:6},{id:1786292948827,desc:'Amex 2 payment',amt:49.7,type:'expense',cat:'debt_payment',date:'2026-08-09',acctId:1,cardPayId:7},{id:1786300797232,desc:'tips',amt:288,type:'income',cat:'side',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786306080048,desc:'Food',amt:15.56,type:'expense',cat:'restaurants',date:'2026-08-09',acctId:1,cardPayId:null},{id:1786374886579,desc:'Food',amt:3.5,type:'expense',cat:'restaurants',date:'2026-08-10',acctId:1,cardPayId:null},{id:1786449203341,desc:'Food',amt:3.5,type:'expense',cat:'restaurants',date:'2026-08-11',acctId:1,cardPayId:null},{id:1786487404040,desc:'Insurance',amt:257.99,type:'expense',cat:'needs',date:'2026-08-11',acctId:1,cardPayId:null},{id:1786547076235,desc:'Food',amt:3.5,type:'expense',cat:'restaurants',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786551689311,desc:'Security work',amt:207.11,type:'income',cat:'paycheck',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786551736525,desc:'Down payment apartment',amt:100,type:'expense',cat:'rent',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786562464171,desc:'Cash withdrawal',amt:40,type:'expense',cat:'wants',date:'2026-08-12',acctId:1,cardPayId:null},{id:1786614079785,desc:'Experian',amt:24.99,type:'expense',cat:'wants',date:'2026-08-13',acctId:1,cardPayId:null},{id:1786631958487,desc:'Food',amt:5.5,type:'expense',cat:'restaurants',date:'2026-08-13',acctId:1,cardPayId:null},{id:1786632012550,desc:'Food',amt:0.25,type:'expense',cat:'restaurants',date:'2026-08-13',acctId:1,cardPayId:null},{id:1786707524265,desc:'Food',amt:6,type:'expense',cat:'restaurants',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786724319270,desc:'Apple oay',amt:98.3,type:'income',cat:'side',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786740931510,desc:'Gas',amt:50,type:'expense',cat:'transport',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786745659914,desc:'Savingd',amt:5,type:'expense',cat:'savings_transfer',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786745846454,desc:'Savings',amt:429,type:'expense',cat:'savings_transfer',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786746028145,desc:'Rent payment',amt:662.5,type:'expense',cat:'rent',date:'2026-08-14',acctId:1,cardPayId:null},{id:1786768784316,desc:'Food',amt:9.66,type:'expense',cat:'restaurants',date:'2026-08-15',acctId:1,cardPayId:null},{id:1786806801862,desc:'Cashapp',amt:6,type:'expense',cat:'wants',date:'2026-08-15',acctId:8,cardPayId:null},{id:1786816340672,desc:'Pretzels',amt:12.93,type:'expense',cat:'restaurants',date:'2026-08-15',acctId:3,cardPayId:null},{id:1786817132473,desc:'Sold car',amt:475,type:'income',cat:'other_inc',date:'2026-08-15',acctId:1,cardPayId:null},{id:1786844881701,desc:'Fl studio bullshit fucking lissed',amt:95,type:'expense',cat:'music_expense',date:'2026-08-16',acctId:4,cardPayId:null},{id:1786889335087,desc:'Tips',amt:120,type:'income',cat:'side',date:'2026-08-16',acctId:1,cardPayId:null},{id:1786921349271,desc:'Rent',amt:662.5,type:'expense',cat:'rent',date:'2026-08-16',acctId:1,cardPayId:null},{id:1786932452488,desc:'Refund',amt:450,type:'income',cat:'other_inc',date:'2026-08-17',acctId:1,cardPayId:null},{id:1786967438252,desc:'Loan ant',amt:100,type:'expense',cat:'other_exp',date:'2026-08-17',acctId:8,cardPayId:null}],achievements:['util_under30','net_positive','first_pay','card_cleared','util_under10','first_txn','plan_5','save_100'],_lastMonth:202608,_billResetMonth:202608};
 
 // STORAGE
 function lSave(){try{localStorage.setItem('fq_data',JSON.stringify(S));}catch(e){}}
 function lLoad(){
-  var VERSION='fqv1';
+  var VERSION='fqv2';
   try{
     var saved=localStorage.getItem('fq_data');
     var ver=localStorage.getItem('fq_ver');
@@ -400,7 +440,7 @@ document.addEventListener('click',function(){if(document.getElementById('app').s
 function go(tab){_tab=tab;document.querySelectorAll('.nb').forEach(function(b){b.classList.toggle('active',b.id==='nb-'+tab);});var s=document.getElementById('scroll');if(s)s.scrollTop=0;render();}
 function render(){
   var el=document.getElementById('main');if(!el)return;
-  var map={hud:rHUD,credit:rCredit,money:rMoney,bills:rBills,goals:rGoals,plan:rPlan,tips:rTips,awards:rAwards,settings:rSettings};
+  var map={hud:rHUD,credit:rCredit,money:rMoney,bills:rBills,goals:rGoals,plan:rPlan,tips:rTips,awards:rAwards,settings:rSettings,review:rReview};
   el.innerHTML=(map[_tab]||rHUD)();
   updateLvl();
   var undoBtn=document.getElementById('undoBtn');
@@ -454,6 +494,32 @@ function rHUD(){
   h+='</div>';
   h+=shb('Monthly Snapshot','ab2',"openM('income')",'Edit');
   h+='<div class="ibar">'+r('Monthly income','+$'+S.income.toLocaleString(),'pl')+r('Fixed bills','-$'+bt.toFixed(2),'mn')+r('Gas + misc','-$'+S.misc,'mn')+r('After bills + misc',(left>=0?'$':'-$')+Math.abs(left).toFixed(0),'hi')+'</div>';
+  // Monthly at-a-glance
+  var _now=new Date();
+  var _mTxns=S.transactions.filter(function(t){var d=new Date(t.date);return d.getMonth()===_now.getMonth()&&d.getFullYear()===_now.getFullYear();});
+  var _mFood=_mTxns.filter(function(t){return t.cat==='restaurants'||t.cat==='groceries';}).reduce(function(s,t){return s+t.amt;},0);
+  var _mGas=_mTxns.filter(function(t){return t.cat==='gas';}).reduce(function(s,t){return s+t.amt;},0);
+  var _mSave=_mTxns.filter(function(t){return t.cat==='savings'||t.cat==='emergency_fund'||t.cat==='savings_transfer';}).reduce(function(s,t){return s+t.amt;},0);
+  var _mInvest=_mTxns.filter(function(t){return t.cat&&t.cat.indexOf('invest')===0;}).reduce(function(s,t){return s+t.amt;},0);
+  var _mInc=_mTxns.filter(function(t){return INC_C.indexOf(t.cat)!==-1;}).reduce(function(s,t){return s+t.amt;},0);
+  var _mExp=_mTxns.filter(function(t){return EXP_C.indexOf(t.cat)!==-1;}).reduce(function(s,t){return s+t.amt;},0);
+  var _daysLeft=new Date(_now.getFullYear(),_now.getMonth()+1,0).getDate()-_now.getDate();
+  var _dailyLeft=_mInc>_mExp?Math.round((_mInc-_mExp)/Math.max(_daysLeft,1)):0;
+  h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px;margin-top:12px;margin-bottom:10px;">';
+  h+='<div style="font-size:9px;color:var(--muted);font-family:var(--mono);margin-bottom:10px;letter-spacing:.08em;">THIS MONTH AT A GLANCE</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">';
+  h+='<div style="background:var(--bg3);border-radius:8px;padding:9px;"><div style="font-size:9px;color:var(--muted);margin-bottom:3px;">FOOD + DRINKS</div><div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--amber);">$'+_mFood.toFixed(0)+'</div></div>';
+  h+='<div style="background:var(--bg3);border-radius:8px;padding:9px;"><div style="font-size:9px;color:var(--muted);margin-bottom:3px;">GAS</div><div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--amber);">$'+_mGas.toFixed(0)+'</div></div>';
+  h+='<div style="background:var(--bg3);border-radius:8px;padding:9px;"><div style="font-size:9px;color:var(--muted);margin-bottom:3px;">SAVED</div><div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--green);">$'+_mSave.toFixed(0)+'</div></div>';
+  h+='<div style="background:var(--bg3);border-radius:8px;padding:9px;"><div style="font-size:9px;color:var(--muted);margin-bottom:3px;">INVESTED</div><div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--blue);">$'+_mInvest.toFixed(0)+'</div></div>';
+  h+='</div>';
+  if(_mInc>0){
+    h+='<div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;padding-top:8px;border-top:1px solid var(--border);">';
+    h+='<span style="color:var(--muted);">Daily budget left ('+_daysLeft+' days remaining)</span>';
+    h+='<span style="font-family:var(--mono);font-weight:700;color:'+(_dailyLeft>50?'var(--green)':_dailyLeft>20?'var(--amber)':'var(--red)')+';">$'+_dailyLeft+'/day</span>';
+    h+='</div>';
+  }
+  h+='</div>';
   return h;
 }
 
@@ -693,7 +759,10 @@ function rMoney(){
   if(watchesT>0)h+='⌚ Watches $'+watchesT.toFixed(0)+' &nbsp;';
   if(subsT>0)h+='📺 Subscriptions $'+subsT.toFixed(0);
   h+='</div>';
-  h+=pBar(savingsT+investT,Math.round(incBase*0.2),'xg','🛡️ Savings + Investing','target 20% = $'+Math.round(incBase*0.2));
+  h+=pBar(savingsT,Math.round(incBase*0.1),'xg','🛡️ Savings (Emergency Fund / Cash)','target 10% = $'+Math.round(incBase*0.1));
+  h+='<div style="font-size:10px;color:var(--dim);margin-top:-6px;margin-bottom:10px;padding-left:4px;">Goes to Chime Savings. Keep liquid. Target: $3,000 emergency fund first.</div>';
+  h+=pBar(investT,Math.round(incBase*0.1),'xa','📈 Investing (Roth IRA / Robinhood)','target 10% = $'+Math.round(incBase*0.1));
+  h+='<div style="font-size:10px;color:var(--dim);margin-top:-6px;margin-bottom:10px;padding-left:4px;">Roth IRA first (FXAIX at Fidelity), then Robinhood. Contributions withdrawable anytime.</div>';
   h+='<div style="font-size:10px;color:var(--dim);margin-top:-6px;margin-bottom:10px;padding-left:4px;">';
   if(savingsT>0)h+='💰 Savings $'+savingsT.toFixed(0)+' &nbsp;';
   if(investT>0)h+='📈 Invested $'+investT.toFixed(0);
@@ -707,11 +776,22 @@ function rMoney(){
   if(watchGoal)h+=pBar(watchGoal.cur,watchGoal.tgt,'xa','⌚ Watch Budget (yearly)','$'+watchGoal.cur.toFixed(0)+' of $'+watchGoal.tgt+' spent');
   if(clothGoal)h+=pBar(clothGoal.cur,clothGoal.tgt,'xp','👟 Clothing Budget (yearly)','$'+clothGoal.cur.toFixed(0)+' of $'+clothGoal.tgt+' spent');
   h+='</div>';
-  var savingsRate=tInc>0?Math.round((savingsT+investT)/tInc*100):0;
-  h+='<div style="padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;">';
-  h+='<span style="color:var(--muted);">Savings + investing rate</span>';
-  h+='<span style="font-family:var(--mono);font-weight:600;color:'+(savingsRate>=20?'var(--green)':savingsRate>=10?'var(--amber)':'var(--red)')+';">'+savingsRate+'%</span>';
-  h+='</div></div>';
+  var savingsRate=tInc>0?Math.round(savingsT/tInc*100):0;
+  var investRate=tInc>0?Math.round(investT/tInc*100):0;
+  var totalRate=savingsRate+investRate;
+  h+='<div style="padding-top:8px;border-top:1px solid var(--border);margin-top:4px;">';
+  h+='<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;">';
+  h+='<span style="color:var(--muted);">Savings rate</span>';
+  h+='<span style="font-family:var(--mono);font-weight:600;color:'+(savingsRate>=10?'var(--green)':savingsRate>=5?'var(--amber)':'var(--red)')+';">'+savingsRate+'%</span>';
+  h+='</div>';
+  h+='<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;">';
+  h+='<span style="color:var(--muted);">Investing rate</span>';
+  h+='<span style="font-family:var(--mono);font-weight:600;color:'+(investRate>=10?'var(--green)':investRate>=5?'var(--amber)':'var(--red)')+';">'+investRate+'%</span>';
+  h+='</div>';
+  h+='<div style="display:flex;justify-content:space-between;font-size:11px;padding-top:5px;border-top:1px solid var(--border);">';
+  h+='<span style="color:var(--text);font-weight:600;">Total wealth-building rate</span>';
+  h+='<span style="font-family:var(--mono);font-weight:700;color:'+(totalRate>=20?'var(--green)':totalRate>=10?'var(--amber)':'var(--red)')+';">'+totalRate+'%</span>';
+  h+='</div></div></div>';
 
   // Income breakdown
   if(tInc>0){
@@ -871,9 +951,85 @@ function doUpdate(){
 }
 
 // ── TRANSACTIONS ──
-var CAT={rent:'Rent',groceries:'Groceries',gas:'Gas',electric:'Electric',internet:'Internet',phone:'Phone',needs:'Needs',restaurants:'Restaurants',entertainment:'Entertainment',clothing:'Clothing',watches:'Watches',subscriptions:'Subscriptions',wants:'Wants',transport:'Transport',health:'Health',debt_payment:'Debt Pmt',savings_transfer:'Savings',investment_dep:'Invest',other_exp:'Other',paycheck:'Paycheck',coaching:'Coaching',music_inc:'Music',side:'Side Income',other_inc:'Other Income'};
-var EXP_C=['rent','groceries','gas','electric','internet','phone','needs','restaurants','entertainment','clothing','watches','subscriptions','wants','transport','health','debt_payment','savings_transfer','investment_dep','other_exp'];
+var CAT={
+  rent:'Rent',groceries:'Groceries',gas:'Gas',electric:'Electric',internet:'Internet',
+  phone:'Phone',needs:'Needs',health:'Health',
+  restaurants:'Restaurants',entertainment:'Entertainment',clothing:'Clothing',
+  watches:'Watches',subscriptions:'Subscriptions',wants:'Wants',transport:'Transport',
+  debt_payment:'Debt Pmt',
+  savings:'Savings',emergency_fund:'Emergency Fund',
+  invest_roth:'Roth IRA',invest_stock:'Stocks/ETF',invest_robinhood:'Robinhood',
+  invest_other:'Other Investment',
+  music_expense:'Music/Studio',pet:'Pet/Supplies',personal_care:'Personal Care',
+  other_exp:'Other',
+  paycheck:'Paycheck',coaching:'Coaching',music_inc:'Music Income',
+  side:'Side Income',other_inc:'Other Income'
+};
+var EXP_C=['rent','groceries','gas','electric','internet','phone','needs','health','restaurants','entertainment','clothing','watches','subscriptions','wants','transport','debt_payment','savings','emergency_fund','invest_roth','invest_stock','invest_robinhood','invest_other','music_expense','pet','personal_care','other_exp'];
 var INC_C=['paycheck','coaching','music_inc','side','other_inc'];
+// ── AUTO-CATEGORIZER ──
+function autoCategory(desc){
+  var d=desc.toLowerCase().trim();
+  // Food / Restaurants
+  if(/\b(food|lunch|breakfast|dinner|meal|eat|taco|burger|pizza|sushi|chipotle|mcdonalds|wendys|subway|chick|kfc|popeyes|domino|papa|chinese|thai|indian|ramen|diner|cafe|coffee|starbucks|dunkin|donut|bagel|sandwich|pretzel|snack|ice cream|smoothie|boba|wings|bbq|grill|ihop|waffle|applebee|denny|olive garden|red lobster|cheesecake|outback|shake shack|five guys|culver|sonic|dairy queen|arbys|jack in|hardee|bojangle|cook|kitchen|eatery|bistro|brunch|hibachi|pho|falafel|gyro|kebab|noodle|soda|drink|juice|tea|latte|espresso|frappe|frappuccino|vending|snacks)\b/.test(d))return 'restaurants';
+  // Groceries
+  if(/\b(grocery|groceries|walmart|target|aldi|kroger|safeway|publix|whole foods|trader joe|costco|sam.s club|bj.s|food lion|stop.n.shop|meijer|heb|wegman|sprouts|fresh market|market|supermarket|aldi|lidl|hannaford|winn.dixie|albertson|ralphs|vons|giant|harris teeter|fry.s|food 4 less|smart.final|winco|shoprite|price chopper)\b/.test(d))return 'groceries';
+  // Gas
+  if(/\b(gas|fuel|shell|exxon|mobil|bp|chevron|sunoco|speedway|wawa|sheetz|racetrac|pilot|flying j|loves|circle k|marathon|kwik|quick|petro|petroleum|citgo|valero|76|ultramar|arco|ampm)\b/.test(d))return 'gas';
+  // Transport / Uber / Lyft
+  if(/\b(uber|lyft|taxi|cab|bus|metro|train|subway|transit|transport|parking|toll|e-zpass|fastrak|fare|amtrak|greyhound|zipcar|turo)\b/.test(d))return 'transport';
+  // Subscriptions / Streaming
+  if(/\b(netflix|hulu|disney|hbo|max|peacock|paramount|apple tv|spotify|tidal|amazon prime|youtube premium|twitch|crunchyroll|funimation|showtime|starz|espn|nfl|nba|mlb|sling|fubo|directv|xfinity|spectrum|cox|verizon fios|att|icloud|google one|dropbox|adobe|microsoft|office 365|notion|slack|zoom|canva|figma|grammarly|duolingo|headspace|calm|fitbit|peloton|beachbody|audible|kindle|scribd|linkedin premium|squarespace|wix|shopify|mailchimp|hubspot|dashlane|lastpass|nordvpn|expressvpn|vpn|antivirus|mcafee|norton)\b/.test(d))return 'subscriptions';
+  // Phone / Internet
+  if(/\b(phone|mobile|wireless|verizon|att|t.mobile|sprint|boost|metro pcs|cricket|mint|visible|straight talk|republic|ting|prepaid|cell|internet|wifi|broadband|comcast|spectrum|cox|optimum|frontier|century|windstream|wow|xfinity)\b/.test(d))return 'phone';
+  if(/\b(internet|wifi|broadband|comcast|spectrum|cox|optimum|frontier|century|windstream|wow|xfinity|router|isp)\b/.test(d)&&!/phone|mobile/.test(d))return 'internet';
+  // Rent / Housing
+  if(/\b(rent|lease|landlord|apartment|housing|mortgage|property|hoa|condo|housing payment|rent payment)\b/.test(d))return 'rent';
+  // Clothing
+  if(/\b(clothes|clothing|shirt|pants|jeans|shorts|shoes|sneakers|boots|jacket|hoodie|sweater|dress|outfit|fashion|nike|adidas|jordan|yeezy|supreme|off.white|fear of god|essentials|champion|carhartt|dickies|levis|gap|old navy|h&m|zara|uniqlo|forever 21|shein|fashion nova|asos|urban outfitters|nordstrom|macy|bloomingdale|saks|neiman|express|banana republic|j.crew|ralph lauren|tommy|calvin|guess|lacoste|puma|new balance|reebok|vans|converse|skechers|crocs|birkenstock|ugg)\b/.test(d))return 'clothing';
+  // Watches
+  if(/\b(watch|timepiece|casio|seiko|citizen|fossil|mvmt|daniel wellington|nixon|invicta|timex|rolex|omega|tag heuer|breitling|tissot|hamilton|bulova|armitron|g.shock|apple watch|smartwatch)\b/.test(d))return 'watches';
+  // Health / Medical
+  if(/\b(doctor|dentist|pharmacy|cvs|walgreens|rite aid|prescription|rx|medicine|medical|hospital|clinic|urgent care|copay|insurance health|therapy|vitamin|supplement|gym|planet fitness|la fitness|anytime fitness|24 hour fitness|ymca|crossfit|yoga|pilates|workout|fitness)\b/.test(d))return 'health';
+  // Pet
+  if(/\b(pet|dog|cat|vet|veterinary|petco|petsmart|pet supplies|animal|puppy|kitten|litter|kibble|treat|collar|leash|paw)\b/.test(d))return 'pet';
+  // Personal care
+  if(/\b(haircut|barber|salon|spa|nail|massage|wax|shave|razor|shampoo|conditioner|lotion|deodorant|cologne|perfume|makeup|cosmetic|skincare|beauty|ulta|sephora)\b/.test(d))return 'personal_care';
+  // Music / Studio
+  if(/\b(studio|recording|soundcloud|spotify artist|distrokid|tunecore|cd baby|beat|producer|microphone|audio|music gear|instrument|guitar|piano|fl studio|ableton|logic|protools|plugin|sample|mixing|mastering)\b/.test(d))return 'music_expense';
+  // Entertainment
+  if(/\b(movie|cinema|amc|regal|theater|concert|ticket|ticketmaster|stubhub|event|game|bowling|arcade|golf|mini golf|escape room|amusement|museum|zoo|aquarium|park|hiking|beach|bar|club|nightclub|karaoke|billiard|pool|sports|nba|nfl|mlb|nhl|espn|steam|playstation|xbox|nintendo|gaming|twitch)\b/.test(d))return 'entertainment';
+  // Savings
+  if(/\b(savings|save|emergency fund|transfer to savings|moving to savings|saving)\b/.test(d))return 'savings';
+  // Emergency fund specifically
+  if(/\b(emergency|emergency fund)\b/.test(d))return 'emergency_fund';
+  // Investment
+  if(/\b(robinhood|invest|stock|etf|voo|spy|fxaix|mutual fund|brokerage|crypto|bitcoin|ethereum|coinbase|roth|ira|fidelity|vanguard|schwab|td ameritrade|e.trade)\b/.test(d))return 'invest_robinhood';
+  // Debt payments
+  if(/\b(payment|pay off|payoff|credit card pmt|card payment|minimum|savor payment|quicksilver payment|amex payment|visa payment)\b/.test(d))return 'debt_payment';
+  // Paycheck / Income
+  if(/\b(paycheck|payroll|direct deposit|salary|wage|check|prn|w2|employer|work|job|company|corp|inc|llc|ltd)\b/.test(d))return 'paycheck';
+  if(/\b(tips|tip|gratuity|cash tip)\b/.test(d))return 'side';
+  if(/\b(coaching|referee|umpire|scorekeeper|football|basketball|soccer|baseball|track|athletic)\b/.test(d))return 'coaching';
+  if(/\b(sold|sale|refund|cashback|rebate|reward|bonus|commission|freelance|gig|side|hustle|venmo|cashapp|zelle|paypal)\b/.test(d))return 'other_inc';
+  // Default
+  return null;
+}
+
+// ── AUTO-CATEGORIZE existing transactions that use generic cats ──
+function reCategorizeAll(){
+  var generic=['wants','needs','other_exp','other_inc'];
+  var updated=0;
+  S.transactions.forEach(function(t){
+    if(generic.indexOf(t.cat)!==-1||!t.cat){
+      var guess=autoCategory(t.desc);
+      if(guess&&guess!==t.cat){t.cat=guess;updated++;}
+    }
+  });
+  if(updated){save();render();toast('Auto-categorized '+updated+' transactions!');}
+  else{toast('All transactions already categorized');}
+}
+
 function setFilter(cat){_filterCat=cat;render();}
 function setTxnType(type){
   _txnType=type;
@@ -897,12 +1053,28 @@ function openAddTxn(){
     document.getElementById('t-card-pay-wrap').style.display=isDebtPmt?'block':'none';
   };
   setTxnType('expense');openM('txn');
+  // Live auto-suggest on description input
+  setTimeout(function(){
+    var desc=document.getElementById('t-desc');
+    var catSel=document.getElementById('t-cat');
+    if(desc&&catSel){
+      desc.addEventListener('input',function(){
+        var guess=autoCategory(this.value);
+        if(guess){catSel.value=guess;}
+      });
+    }
+  },100);
 }
 function saveTxn(){
   var desc=document.getElementById('t-desc').value.trim();
   var amt=parseFloat(document.getElementById('t-amt').value);
   var date=document.getElementById('t-date').value||new Date().toISOString().split('T')[0];
   var cat=document.getElementById('t-cat').value;
+  // Auto-suggest category from description if user hasn't manually changed it
+  if(!cat||cat==='wants'||cat==='needs'){
+    var suggested=autoCategory(desc);
+    if(suggested)cat=suggested;
+  }
   var acctId=parseInt(document.getElementById('t-acct').value)||null;
   var cardPayId=parseInt(document.getElementById('t-card-pay').value)||null;
   if(!desc||isNaN(amt)||amt<=0){toast('Fill in description and amount','err');return;}
@@ -915,11 +1087,15 @@ function saveTxn(){
   if(acctId){
     var a=S.accounts.find(function(x){return x.id===acctId;});
     if(a){
+      var investCats=['invest_robinhood','invest_roth','invest_stock','invest_other','investment_dep'];
+      var saveCats=['savings','emergency_fund','savings_transfer'];
       if(isDebt(a)){
         if(_txnType==='expense')a.bal=+(a.bal+amt).toFixed(2);
         else a.bal=Math.max(0,+(a.bal-amt).toFixed(2));
+      }else if(investCats.indexOf(cat)!==-1||saveCats.indexOf(cat)!==-1){
+        // Investment/savings deposits always increase the target account balance
+        a.bal=+(a.bal+amt).toFixed(2);
       }else{
-        // asset account: expense reduces balance, income increases
         if(_txnType==='income')a.bal=+(a.bal+amt).toFixed(2);
         else a.bal=+(a.bal-amt).toFixed(2);
       }
@@ -1242,6 +1418,164 @@ function togglePlan(id){var p=S.planItems.find(function(x){return x.id===id;});p
 function delPlan(id){var p=S.planItems.find(function(x){return x.id===id;});if(!confirm('Delete?'))return;S.planItems=S.planItems.filter(function(x){return x.id!==id;});save();render();toast('Removed');}
 
 // TIPS
+function rReview(){
+  var now=new Date();
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var thisM=now.getMonth(),thisY=now.getFullYear();
+
+  // Get transactions for selected period (default: this month)
+  if(typeof _reviewMonth==='undefined')_reviewMonth=thisM;
+  if(typeof _reviewYear==='undefined')_reviewYear=thisY;
+
+  var mT=S.transactions.filter(function(t){
+    var d=new Date(t.date);
+    return d.getMonth()===_reviewMonth&&d.getFullYear()===_reviewYear;
+  });
+
+  var tInc=mT.filter(function(t){return INC_C.indexOf(t.cat)!==-1;}).reduce(function(s,t){return s+t.amt;},0);
+  var tExp=mT.filter(function(t){return EXP_C.indexOf(t.cat)!==-1;}).reduce(function(s,t){return s+t.amt;},0);
+
+  function catTotal(cats){return mT.filter(function(t){return cats.indexOf(t.cat)!==-1;}).reduce(function(s,t){return s+t.amt;},0);}
+
+  // Category groups
+  var groups=[
+    {label:'Housing',icon:'home',cats:['rent','electric','internet','phone'],col:'xb'},
+    {label:'Groceries',icon:'cart',cats:['groceries'],col:'xb'},
+    {label:'Gas',icon:'gas',cats:['gas'],col:'xb'},
+    {label:'Health + Personal',icon:'health',cats:['health','personal_care','pet'],col:'xb'},
+    {label:'Restaurants + Food',icon:'food',cats:['restaurants'],col:'xp'},
+    {label:'Entertainment',icon:'game',cats:['entertainment'],col:'xp'},
+    {label:'Clothing',icon:'shirt',cats:['clothing'],col:'xp'},
+    {label:'Watches',icon:'watch',cats:['watches'],col:'xp'},
+    {label:'Subscriptions',icon:'sub',cats:['subscriptions'],col:'xp'},
+    {label:'Music + Studio',icon:'music',cats:['music_expense'],col:'xp'},
+    {label:'Transport',icon:'car',cats:['transport'],col:'xa'},
+    {label:'Card Payments',icon:'card',cats:['debt_payment'],col:'xa'},
+    {label:'Savings',icon:'save',cats:['savings','emergency_fund','savings_transfer'],col:'xg'},
+    {label:'Investing',icon:'chart',cats:['invest_robinhood','invest_roth','invest_stock','invest_other','investment_dep'],col:'xa'},
+    {label:'Other',icon:'other',cats:['needs','wants','other_exp'],col:'xb'},
+  ];
+
+  var filled=groups.filter(function(g){return catTotal(g.cats)>0;});
+  var totalNeeds=catTotal(['rent','electric','internet','phone','groceries','gas','health','personal_care','pet','needs']);
+  var totalWants=catTotal(['restaurants','entertainment','clothing','watches','subscriptions','music_expense','wants']);
+  var totalSavings=catTotal(['savings','emergency_fund','savings_transfer']);
+  var totalInvest=catTotal(['invest_robinhood','invest_roth','invest_stock','invest_other','investment_dep']);
+  var totalDebt=catTotal(['debt_payment']);
+  var totalTransport=catTotal(['transport']);
+
+  var h='';
+
+  // Month selector
+  h+='<div style="display:flex;align-items:center;justify-content:space-between;margin-top:13px;margin-bottom:12px;">';
+  h+='<button class="btn btn-s btn-sm" onclick="shiftReview(-1)">&#8592; Prev</button>';
+  h+='<div style="font-family:var(--mono);font-size:13px;font-weight:600;">'+MONTHS[_reviewMonth]+' '+_reviewYear+'</div>';
+  h+='<button class="btn btn-s btn-sm" onclick="shiftReview(1)">Next &#8594;</button>';
+  h+='</div>';
+
+  // Summary cards
+  h+='<div class="sgrid" style="margin-bottom:14px;">';
+  h+='<div class="sb2"><div class="sb2-l">Income</div><div class="sb2-v cg">$'+tInc.toFixed(0)+'</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Expenses</div><div class="sb2-v cr">$'+tExp.toFixed(0)+'</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Saved</div><div class="sb2-v cg">$'+totalSavings.toFixed(0)+'</div></div>';
+  h+='<div class="sb2"><div class="sb2-l">Invested</div><div class="sb2-v ca">$'+totalInvest.toFixed(0)+'</div></div>';
+  h+='</div>';
+
+  // Allocation breakdown
+  if(tInc>0){
+    h+='<div class="card" style="margin-bottom:12px;">';
+    h+='<div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-bottom:10px;">INCOME ALLOCATION  —  $'+tInc.toFixed(0)+' income this month</div>';
+    function allocBar(label,amt,col){
+      if(!amt)return '';
+      var pct=Math.round(amt/tInc*100);
+      return '<div style="margin-bottom:9px;">'+
+        '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;">'+
+        '<span style="color:var(--muted);">'+label+'</span>'+
+        '<span style="font-family:var(--mono);">$'+amt.toFixed(0)+' <span style="color:var(--muted);">('+pct+'%)</span></span>'+
+        '</div>'+
+        '<div class="xtrack" style="height:8px;"><div class="xfill '+col+'" style="width:'+Math.min(100,pct)+'%;"></div></div>'+
+        '</div>';
+    }
+    h+=allocBar('Housing + Needs',totalNeeds,'xb');
+    h+=allocBar('Wants + Lifestyle',totalWants,'xp');
+    h+=allocBar('Transport',totalTransport,'xa');
+    h+=allocBar('Savings',totalSavings,'xg');
+    h+=allocBar('Investing',totalInvest,'xa');
+    h+=allocBar('Debt Payments',totalDebt,'xr');
+    // Unaccounted
+    var accounted=totalNeeds+totalWants+totalTransport+totalSavings+totalInvest+totalDebt+catTotal(['other_exp','needs','wants']);
+    var leftover=tInc-accounted;
+    if(leftover>0)h+=allocBar('Untracked / Cash',leftover,'xb');
+    // Savings + invest rate
+    var sRate=Math.round((totalSavings+totalInvest)/tInc*100);
+    h+='<div style="border-top:1px solid var(--border);padding-top:8px;margin-top:4px;display:flex;justify-content:space-between;font-size:12px;">';
+    h+='<span style="color:var(--muted);">Savings + Investing rate</span>';
+    h+='<span style="font-family:var(--mono);font-weight:700;color:'+(sRate>=20?'var(--green)':sRate>=10?'var(--amber)':'var(--red)')+';">'+sRate+'%</span>';
+    h+='</div></div>';
+  }
+
+  // Expense breakdown by category
+  h+='<div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-bottom:8px;">BREAKDOWN BY CATEGORY</div>';
+  if(!filled.length){
+    h+='<div class="empty"><strong>NO EXPENSES YET</strong>Log transactions in the Money tab</div>';
+  }else{
+    // Sort by amount desc
+    var sorted=filled.slice().sort(function(a,b){return catTotal(b.cats)-catTotal(a.cats);});
+    sorted.forEach(function(g){
+      var amt=catTotal(g.cats);
+      if(!amt)return;
+      var pct=tExp>0?Math.round(amt/tExp*100):0;
+      // Get individual transactions for this group
+      var txns=mT.filter(function(t){return g.cats.indexOf(t.cat)!==-1;}).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+      h+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:8px;">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">';
+      h+='<div style="font-size:13px;font-weight:600;">'+g.label+'</div>';
+      h+='<div style="font-family:var(--mono);font-size:14px;font-weight:700;">$'+amt.toFixed(2)+'</div>';
+      h+='</div>';
+      h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">';
+      h+='<div style="flex:1;"><div class="xtrack" style="height:5px;margin-bottom:0;"><div class="xfill '+g.col+'" style="width:'+Math.min(100,pct*3)+'%"></div></div></div>';
+      h+='<div style="font-size:10px;color:var(--muted);font-family:var(--mono);">'+pct+'% of expenses</div>';
+      h+='</div>';
+      // Individual transactions
+      txns.forEach(function(t){
+        h+='<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);padding:3px 0;border-top:1px solid var(--border);">';
+        h+='<span>'+t.desc+'</span>';
+        h+='<span style="font-family:var(--mono);">$'+t.amt.toFixed(2)+' &middot; '+t.date.slice(5)+'</span>';
+        h+='</div>';
+      });
+      h+='</div>';
+    });
+  }
+
+  // Saving vs Investing breakdown
+  h+='<div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin:12px 0 8px;">SAVING VS INVESTING</div>';
+  h+='<div class="card">';
+  h+='<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;">Savings (cash, emergency fund)</span><span style="font-family:var(--mono);">$'+totalSavings.toFixed(2)+'</span></div>';
+  h+='<div style="font-size:10px;color:var(--muted);">Goes to Chime Savings. Safe, liquid, FDIC insured. No risk. Target: 3 months expenses ($13,500).</div></div>';
+  h+='<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;">Investing (Robinhood, Roth IRA)</span><span style="font-family:var(--mono);">$'+totalInvest.toFixed(2)+'</span></div>';
+  h+='<div style="font-size:10px;color:var(--muted);">Goes to market. Higher risk, higher reward. VOO averages 10%/yr. Roth IRA: contributions withdrawable anytime. Start after emergency fund hits $1,500.</div></div>';
+  if(tInc>0){
+    h+='<div style="border-top:1px solid var(--border);margin-top:10px;padding-top:10px;">';
+    h+='<div style="font-size:11px;color:var(--muted);">Recommended split on $4,500/mo income after bills:</div>';
+    h+='<div style="font-size:11px;color:var(--green);margin-top:4px;">Emergency Fund: $500/mo until $3,000 reached</div>';
+    h+='<div style="font-size:11px;color:var(--amber);">Robinhood/Roth: $300/mo once emergency fund hits $1,500</div>';
+    h+='<div style="font-size:11px;color:var(--blue);">Car Fund: $300/mo until you sell the truck</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+
+  return h;
+}
+
+var _reviewMonth=new Date().getMonth();
+var _reviewYear=new Date().getFullYear();
+function shiftReview(dir){
+  _reviewMonth+=dir;
+  if(_reviewMonth>11){_reviewMonth=0;_reviewYear++;}
+  if(_reviewMonth<0){_reviewMonth=11;_reviewYear--;}
+  render();
+}
+
 function rTips(){
   var util=getUtil();var u=util?util.pct:0;var uc=u>=70?'var(--red)':u>=30?'var(--amber)':'var(--green)';
   var totalDebt=S.accounts.filter(isDebt).reduce(function(s,a){return s+a.bal;},0);
@@ -1370,6 +1704,28 @@ function openM_acct(){openM('acct');}
 // INIT - runs after all functions det_loan');}
 
 function openM_acct(){openM('acct');}
+// INIT - runs after all functions defined
+lLoad();
+(function(){
+  // Clear ALL old storage keys to force fresh load
+  ['fq5','fq6','fq7','fq8','fq9','fq10','fq11','fq12'].forEach(function(k){localStorage.removeItem(k);});
+  var el=document.getElementById('pinSub');
+  if(el)el.textContent=localStorage.getItem('fq_data')?'ENTER YOUR PIN':'DEFAULT PIN: 1234  (change in Settings)';
+})();
+function addCreditCard(){openAddAcct('credit_card');}
+function addLoan(){openAddAcct('student_loan');}
+
+function openM_acct(){openM('acct');}
+// INIT - runs after all functions det_loan');}
+
+function openM_acct(){openM('acct');}
+// INIT - runs after all functions defined
+lLoad();
+(function(){
+  var el=document.getElementById('pinSub');
+  if(el)el.textContent=localStorage.getItem('fq_data')?'ENTER YOUR PIN':'FIRST TIME? PIN IS 1234';
+})();
+
 // INIT - runs after all functions defined
 lLoad();
 (function(){
